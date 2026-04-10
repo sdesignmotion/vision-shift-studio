@@ -20,15 +20,32 @@ body{font-family:'Montserrat',sans-serif;background:var(--bg);color:#f0f0f0;min-
 
 /* NAV */
 nav{
-  display:flex;align-items:center;justify-content:center;
-  padding:1.2rem 2.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2.5rem;
   border-bottom:0.5px solid var(--border);
   position:fixed;top:0;left:0;right:0;z-index:100;
   background:rgba(11,13,20,0.88);
   backdrop-filter:blur(14px);
 }
-.nav-logo img{height:42px;width:auto;display:block;}
-.nav-logo-fallback{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;display:none;}
+.nav-logo img{height:52px;width:auto;display:block;}
+.nav-logo-fallback{font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;display:none;}
+.nav-contact{
+  color:rgba(255,255,255,0.55);
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:color .25s;
+  padding-bottom:2px;
+}
+.nav-contact::after{
+  content:'';
+  position:absolute;bottom:0;left:0;
+  width:0;height:0.5px;
+  background:var(--gold);
+  transition:width .3s ease;
+}
+.nav-contact:hover{color:var(--gold);}
+.nav-contact:hover::after{width:100%;}
 
 /* HERO */
 .hero{
@@ -41,22 +58,58 @@ nav{
 .hero-overlay{
   position:absolute;inset:0;z-index:1;
   background:linear-gradient(to bottom,
-    rgba(11,13,20,0.25) 0%,
+    rgba(11,13,20,0.2) 0%,
     rgba(11,13,20,0.45) 55%,
-    rgba(11,13,20,0.92) 100%);
+    rgba(11,13,20,0.95) 100%);
 }
 .hero-content{position:relative;z-index:2;padding:2rem;}
-.hero-tagline{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.2rem;animation:fadeUp .8s .1s ease both;}
-.hero-headline{font-size:clamp(40px,7vw,88px);font-weight:700;line-height:1;letter-spacing:-2px;color:#fff;margin-bottom:1.2rem;animation:fadeUp .8s .2s ease both;}
+.hero-tagline{
+  font-size:12px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);font-weight:500;margin-bottom:1.4rem;
+  animation:fadeUp .8s .1s ease both;
+}
+.hero-headline{
+  font-size:clamp(44px,8vw,96px);font-weight:700;line-height:1;
+  letter-spacing:-3px;color:#fff;margin-bottom:2.5rem;
+  animation:fadeUp .8s .2s ease both;
+}
 .hero-headline em{font-style:normal;color:var(--gold);}
-.hero-sub{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:2.5rem;font-weight:400;animation:fadeUp .8s .3s ease both;}
-.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .4s ease both;}
-.btn-primary{padding:13px 36px;background:var(--gold);color:#000;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;transition:opacity .2s;}
-.btn-primary:hover{opacity:.85;}
+
+/* CTA BUTTON — big with motion */
+.hero-cta{
+  position:relative;
+  display:inline-block;
+  padding:18px 56px;
+  background:var(--gold);
+  color:#000;
+  font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;
+  border:none;cursor:pointer;
+  font-family:'Montserrat',sans-serif;
+  overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+  animation:fadeUp .8s .3s ease both;
+}
+.hero-cta::before{
+  content:'';
+  position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:rgba(255,255,255,0.2);
+  transform:skewX(-20deg);
+  transition:left .4s ease;
+}
+.hero-cta:hover{
+  transform:scale(1.10) translateY(-4px);
+  box-shadow:0 16px 48px rgba(201,150,58,0.5);
+}
+.hero-cta:hover::before{left:120%;}
+.hero-cta:active{transform:scale(0.98);}
 
 /* SECTIONS */
 section{padding:5rem 2.5rem;}
-.section-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:3rem;display:flex;align-items:center;gap:1rem;}
+.section-label{
+  font-size:10px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:3rem;
+  display:flex;align-items:center;gap:1rem;
+}
 .section-label::after{content:'';flex:1;height:0.5px;background:var(--border);}
 
 /* SERVICES */
@@ -68,48 +121,60 @@ section{padding:5rem 2.5rem;}
 .svc p{font-size:12px;color:var(--muted);line-height:1.7;}
 
 /* PORTFOLIO */
-.portfolio-section{background:var(--bg2);padding:5rem 2.5rem;text-align:center;}
-.portfolio-section .section-label{text-align:left;}
+.portfolio-section{background:var(--bg2);padding:5rem 2.5rem;}
 .categories{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:center;}
-.cat-btn{padding:9px 22px;background:transparent;border:0.5px solid var(--border);color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
+.cat-btn{
+  padding:9px 28px;background:transparent;
+  border:0.5px solid var(--border);color:var(--muted);
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;
+  cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;
+}
 .cat-btn:hover{border-color:var(--gold);color:var(--gold);}
 .cat-btn.active{background:var(--gold);border-color:var(--gold);color:#000;}
-.cat-panel{display:none;text-align:left;}
+.cat-panel{display:none;}
 .cat-panel.active{display:block;}
 
 /* VIDEO GRID */
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:1rem;}
+.video-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:12px;margin-top:1rem;
+}
 .video-thumb{
   position:relative;aspect-ratio:16/9;overflow:hidden;
   background:var(--bg3);cursor:pointer;
   border:0.5px solid var(--border);
-  transition:border-color .2s;
+  transition:border-color .2s, transform .2s;
 }
-.video-thumb:hover{border-color:rgba(201,150,58,0.4);}
+.video-thumb:hover{border-color:rgba(201,150,58,0.5);transform:scale(1.01);}
 .video-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-.video-thumb .thumb-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,0.45);
+.thumb-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,0.5);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   opacity:0;transition:opacity .25s;
 }
 .video-thumb:hover .thumb-overlay{opacity:1;}
-.play-btn-ring{width:52px;height:52px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;margin-bottom:.4rem;}
-.thumb-title{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.8);text-transform:uppercase;text-align:center;padding:0 8px;}
-
-/* MODAL VIDEO PLAYER */
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:1000;align-items:center;justify-content:center;}
-.modal.open{display:flex;}
-.modal iframe{width:90vw;max-width:960px;aspect-ratio:16/9;border:none;}
-.modal video{max-width:90vw;max-height:85vh;outline:none;}
-.modal-close{position:fixed;top:1.5rem;right:1.5rem;background:none;border:0.5px solid rgba(255,255,255,0.3);color:#fff;font-size:18px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;}
+.play-btn-ring{
+  width:54px;height:54px;border:1.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:18px;margin-bottom:.5rem;
+}
+.thumb-title{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;text-align:center;padding:0 8px;}
+.coming-soon{color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:3rem 0;text-align:center;}
 
 /* HIDDEN UPLOAD */
-.upload-controls{display:none;margin-top:2rem;}
+.upload-controls{display:none;margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid var(--border);}
 .upload-controls.unlocked{display:block;}
-.cat-upload-btn{display:inline-flex;align-items:center;gap:.5rem;padding:9px 20px;border:0.5px solid rgba(201,150,58,0.4);background:transparent;color:var(--gold);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;margin-bottom:1rem;}
+.cat-upload-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:9px 20px;border:0.5px solid rgba(201,150,58,0.4);
+  background:transparent;color:var(--gold);font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;font-weight:600;
+  cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;margin-bottom:1rem;
+}
 .cat-upload-btn:hover{background:rgba(201,150,58,0.08);}
-.upload-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--border);}
-.video-card{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--bg3);cursor:pointer;}
+.upload-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin-top:.5rem;}
+.video-card{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--bg3);cursor:pointer;border:0.5px solid var(--border);}
 .video-card video{width:100%;height:100%;object-fit:cover;}
 .play-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.55);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .25s;}
 .video-card:hover .play-overlay{opacity:1;}
@@ -118,17 +183,36 @@ section{padding:5rem 2.5rem;}
 .video-card:hover .remove-btn{display:flex;}
 
 /* ABOUT */
-.about-wrap{display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:center;}
-.about-img-block{position:relative;overflow:hidden;border:0.5px solid var(--border);max-width:360px;}
-.about-img-block img{width:100%;height:auto;object-fit:cover;object-position:top center;display:block;max-height:500px;}
-.about-img-overlay{position:absolute;bottom:0;left:0;right:0;height:25%;background:linear-gradient(transparent,rgba(11,13,20,0.85));}
-.about-content h2{font-size:clamp(24px,3vw,38px);font-weight:700;line-height:1.2;margin-bottom:1.5rem;}
+.about-wrap{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:3.5rem;
+  align-items:center;
+  max-width:960px;
+  margin:0 auto;
+}
+.about-img-block{
+  position:relative;overflow:hidden;
+  border:0.5px solid var(--border);
+  width:320px;flex-shrink:0;
+}
+.about-img-block img{
+  width:100%;height:auto;
+  object-fit:cover;object-position:top center;
+  display:block;max-height:480px;
+}
+.about-img-overlay{position:absolute;bottom:0;left:0;right:0;height:20%;background:linear-gradient(transparent,rgba(11,13,20,0.85));}
+.about-content h2{font-size:clamp(22px,2.8vw,36px);font-weight:700;line-height:1.2;margin-bottom:1.2rem;}
 .about-content h2 span{color:var(--gold);}
-.about-content p{font-size:13px;color:var(--muted);line-height:1.95;margin-bottom:1rem;}
-.about-email{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;text-decoration:none;border-bottom:0.5px solid var(--gold);padding-bottom:2px;}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.about-content p{font-size:13px;color:var(--muted);line-height:1.95;margin-bottom:.9rem;}
+.about-email{
+  display:inline-flex;align-items:center;gap:.5rem;margin-top:1.2rem;
+  color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  font-weight:600;text-decoration:none;border-bottom:0.5px solid var(--gold);padding-bottom:2px;
+}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem;}
 .stat{border-top:0.5px solid rgba(201,150,58,0.3);padding-top:1rem;}
-.stat-n{font-size:30px;font-weight:700;color:var(--gold);}
+.stat-n{font-size:28px;font-weight:700;color:var(--gold);}
 .stat-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
 
 /* CONTACT */
@@ -136,26 +220,47 @@ section{padding:5rem 2.5rem;}
 .contact-section h2{font-size:clamp(30px,5vw,56px);font-weight:700;margin-bottom:1rem;line-height:1.1;}
 .contact-section h2 span{color:var(--gold);}
 .contact-section p{color:var(--muted);font-size:13px;margin-bottom:2rem;letter-spacing:.5px;}
-.about-email-center{display:inline-flex;align-items:center;gap:.5rem;color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;text-decoration:none;border-bottom:0.5px solid var(--gold);padding-bottom:2px;}
+.contact-email-link{
+  display:inline-flex;align-items:center;gap:.5rem;
+  color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  font-weight:600;text-decoration:none;border-bottom:0.5px solid var(--gold);padding-bottom:2px;
+}
 
-footer{padding:1.5rem 2.5rem;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+footer{
+  padding:1.5rem 2.5rem;border-top:0.5px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
 footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
-.socials{display:flex;gap:1.5rem;}
-.socials a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.socials a{
+  font-size:11px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .2s;
+}
 .socials a:hover{color:var(--gold);}
 
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:1000;align-items:center;justify-content:center;}
+.modal.open{display:flex;}
+.modal-close{position:fixed;top:1.5rem;right:1.5rem;background:none;border:0.5px solid rgba(255,255,255,0.3);color:#fff;font-size:18px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;}
+
 /* TOAST */
-.unlock-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(11,13,20,0.96);border:0.5px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;z-index:9999;opacity:0;transition:opacity .4s;pointer-events:none;font-family:'Montserrat',sans-serif;white-space:nowrap;}
+.unlock-toast{
+  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);
+  background:rgba(11,13,20,0.96);border:0.5px solid var(--gold);
+  color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  padding:10px 24px;z-index:9999;opacity:0;transition:opacity .4s;
+  pointer-events:none;font-family:'Montserrat',sans-serif;white-space:nowrap;
+}
 .unlock-toast.show{opacity:1;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
 
-@media(max-width:700px){
-  .about-wrap{grid-template-columns:1fr;}
-  .about-img-block{max-width:100%;}
+@media(max-width:760px){
+  .about-wrap{grid-template-columns:1fr;max-width:100%;}
+  .about-img-block{width:100%;max-width:360px;margin:0 auto;}
   nav{padding:1rem 1.2rem;}
   section{padding:3rem 1.2rem;}
   .portfolio-section{padding:3rem 1.2rem;}
+  .hero-headline{letter-spacing:-1px;}
 }
 </style>
 </head>
@@ -163,13 +268,14 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
 <div class="unlock-toast" id="toast"></div>
 
-<!-- NAV — logo centered, no links -->
+<!-- NAV -->
 <nav>
   <div class="nav-logo">
     <img src="VISION_SHIFT.png" alt="Vision Shift Studio"
       onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='block'">
-    <span class="nav-logo-fallback">Vision Shift Studio</span>
+    <span class="nav-logo-fallback">Vision Shift</span>
   </div>
+  <a class="nav-contact" href="#contact" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});return false;">Let's Work Together</a>
 </nav>
 
 <!-- HERO -->
@@ -181,10 +287,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   <div class="hero-content">
     <p class="hero-tagline">Video Editing &nbsp;·&nbsp; Motion Design &nbsp;·&nbsp; Visual Storytelling</p>
     <h1 class="hero-headline">Shifting your<br><em>vision</em> to life.</h1>
-    <p class="hero-sub">Design &nbsp;|&nbsp; Video Editing &nbsp;|&nbsp; Illustrations</p>
-    <div class="hero-btns">
-      <button class="btn-primary" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View My Work</button>
-    </div>
+    <button class="hero-cta" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View My Work</button>
   </div>
 </div>
 
@@ -202,7 +305,6 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <!-- PORTFOLIO -->
 <section class="portfolio-section" id="work">
   <div class="section-label">Selected work</div>
-
   <div class="categories">
     <button class="cat-btn active" onclick="switchCat('dance',this)">Dance</button>
     <button class="cat-btn" onclick="switchCat('events',this)">Events</button>
@@ -238,7 +340,6 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
       <div class="upload-grid" id="ugrid-commercial"></div>
     </div>
   </div>
-
 </section>
 
 <!-- ABOUT -->
@@ -254,11 +355,11 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
       <p>I'm Vasil, the creative force behind Vision Shift Studio. Whether it's a packed dance floor, a high-energy event, or a bold commercial concept — I bring the energy, the vision, and the craft to make every frame count.</p>
       <p>I give life to the party and life to the vision. My work isn't just edited — it's felt. From the first cut to the final frame, every project carries a pulse that moves people.</p>
       <p>Based in Sofia &nbsp;·&nbsp; Available worldwide for projects, collabs, and creative partnerships.</p>
-      <a class="about-email" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
+      <a class="about-email" href="/cdn-cgi/l/email-protection#c6b0a7b5afaab5aaa7b0ada9b0f486a1aba7afaae8a5a9ab"><span class="__cf_email__" data-cfemail="176176647e7b647b76617c78612557707a767e7b3974787a">[email&#160;protected]</span></a>
       <div class="stats-row">
-        <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Projects</div></div>
-        <div class="stat"><div class="stat-n">3+</div><div class="stat-l">Years exp.</div></div>
-        <div class="stat"><div class="stat-n">20+</div><div class="stat-l">Clients</div></div>
+        <div class="stat"><div class="stat-n">100+</div><div class="stat-l">Projects</div></div>
+        <div class="stat"><div class="stat-n">4+</div><div class="stat-l">Years exp.</div></div>
+        <div class="stat"><div class="stat-n">40+</div><div class="stat-l">Clients</div></div>
       </div>
     </div>
   </div>
@@ -268,48 +369,65 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <div class="contact-section" id="contact">
   <h2>Ready to shift<br>your <span>vision?</span></h2>
   <p>Open to freelance projects, collaborations, and creative partnerships.</p>
-  <a class="about-email-center" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
+  <a class="contact-email-link" href="/cdn-cgi/l/email-protection#3f495e4c56534c535e495450490d7f58525e5653115c5052"><span class="__cf_email__" data-cfemail="e1978092888d928d80978a8e97d3a1868c80888dcf828e8c">[email&#160;protected]</span></a>
 </div>
 
 <footer>
   <span>© 2025 Vision Shift Studio</span>
   <div class="socials">
-    <a href="#">Instagram</a>
-    <a href="#">YouTube</a>
-    <a href="#">Behance</a>
+    <a href="https://www.instagram.com/s_design_motion/" target="_blank" rel="noopener">Instagram</a>
   </div>
 </footer>
 
-<!-- MODAL -->
+<!-- MODAL for YouTube -->
 <div class="modal" id="modal">
   <button class="modal-close" onclick="closeModal()">✕</button>
   <div id="modal-content"></div>
 </div>
 
-<script>
-/* ── VIDEO DATA — paste YouTube IDs here ── */
+<!-- MODAL for local uploads -->
+<div class="modal" id="localModal">
+  <button class="modal-close" onclick="closeLocalModal()">✕</button>
+  <video id="localVid" controls style="max-width:90vw;max-height:85vh;outline:none;"></video>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── WISTIA VIDEO DATA ── */
 const videoData = {
   dance: [
-    /* Add YouTube video IDs here once you share them */
-    /* Example: {id:'wEGuPwKtZ0Q', title:'Dance 1'} */
+    {id:'vol0ixxtl6', title:'Dance 1'},
+    {id:'ffz2cx35aj', title:'Dance 2'},
+    {id:'j3wi77124k', title:'Dance 3'},
+    {id:'d57nea2mbj', title:'Dance 4'}
   ],
   events: [
-    /* Example: {id:'90sxQb5Ci-s', title:'Event 1'} */
+    {id:'3vfljmz38p', title:'Event 1'}
   ],
   commercial: [
-    /* Example: {id:'khfHyYjO_1M', title:'Commercial 1'} */
+    {id:'0dcmd2jgtj', title:'Commercial 1'},
+    {id:'jgr4o94e96', title:'Commercial 2'},
+    {id:'hzdk3kt8p6', title:'Commercial 3'}
   ]
 };
-
-function getThumb(id){ return `https://img.youtube.com/vi/${id}/hqdefault.jpg`; }
 
 function buildGrids(){
   ['dance','events','commercial'].forEach(cat => {
     const grid = document.getElementById('grid-' + cat);
-    if(!videoData[cat].length){ grid.innerHTML = '<p style="color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:2rem 0;">Coming soon</p>'; return; }
-    grid.innerHTML = videoData[cat].map((v,i) => `
-      <div class="video-thumb" onclick="openYT('${v.id}')">
-        <img src="${getThumb(v.id)}" alt="${v.title}" loading="lazy">
+    if(!videoData[cat].length){
+      grid.innerHTML = '<p class="coming-soon">Coming soon</p>';
+      return;
+    }
+    grid.innerHTML = videoData[cat].map((v) => `
+      <div class="video-thumb" onclick="openWistia('${v.id}')">
+        <div style="width:100%;height:100%;background:var(--bg3);display:flex;align-items:center;justify-content:center;">
+          <img src="https://embed-ssl.wistia.com/deliveries/${v.id}/image.jpg"
+               alt="${v.title}" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"
+               onerror="this.style.display='none'">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:.3;">
+            <div style="font-size:28px;color:var(--gold);">▶</div>
+          </div>
+        </div>
         <div class="thumb-overlay">
           <div class="play-btn-ring">▶</div>
           <div class="thumb-title">${v.title}</div>
@@ -328,30 +446,32 @@ function switchCat(cat, btn){
   document.getElementById('panel-' + cat).classList.add('active');
 }
 
-/* ── YOUTUBE MODAL ── */
-function openYT(id){
-  document.getElementById('modal-content').innerHTML =
-    `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" width="90vw" style="width:90vw;max-width:960px;aspect-ratio:16/9;border:none;" allow="autoplay;encrypted-media" allowfullscreen></iframe>`;
+/* ── WISTIA MODAL ── */
+function openWistia(id){
+  document.getElementById('modal-content').innerHTML = `
+    <div style="width:90vw;max-width:960px;aspect-ratio:16/9;position:relative;">
+      <script src="https://fast.wistia.com/embed/medias/${id}.jsonp" async><\/script>
+      <script src="https://fast.wistia.com/assets/external/E-v1.js" async><\/script>
+      <div class="wistia_embed wistia_async_${id} videoFoam=true autoPlay=true"
+           style="width:100%;height:100%;position:absolute;inset:0;"></div>
+    </div>`;
   document.getElementById('modal').classList.add('open');
 }
-
 function closeModal(){
   document.getElementById('modal').classList.remove('open');
   document.getElementById('modal-content').innerHTML = '';
 }
-document.getElementById('modal').addEventListener('click', e => { if(e.target === document.getElementById('modal')) closeModal(); });
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+document.getElementById('modal').addEventListener('click', e => { if(e.target===document.getElementById('modal')) closeModal(); });
 
-/* ── SECRET SHORTCUT: Shift + Option + V (Mac) ── */
+/* ── SECRET: Shift + Option + V ── */
 let unlocked = false;
 document.addEventListener('keydown', e => {
-  if(e.shiftKey && e.altKey && (e.key === 'V' || e.key === '√')){
+  if(e.shiftKey && e.altKey && (e.key==='V'||e.key==='√')){
     unlocked = !unlocked;
     document.querySelectorAll('.upload-controls').forEach(el => el.classList.toggle('unlocked', unlocked));
     showToast(unlocked ? '✦ Edit mode unlocked' : 'Edit mode locked');
   }
 });
-
 function showToast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -361,7 +481,6 @@ function showToast(msg){
 
 /* ── LOCAL UPLOAD ── */
 const localVids = {dance:[], events:[], commercial:[]};
-
 function handleFiles(cat, files){
   Array.from(files).forEach(file => {
     if(!file.type.startsWith('video/')) return;
@@ -369,10 +488,9 @@ function handleFiles(cat, files){
   });
   renderUploadGrid(cat);
 }
-
 function renderUploadGrid(cat){
   const grid = document.getElementById('ugrid-' + cat);
-  if(!localVids[cat].length){ grid.innerHTML = ''; return; }
+  if(!localVids[cat].length){ grid.innerHTML=''; return; }
   grid.innerHTML = localVids[cat].map((v,i) => `
     <div class="video-card" onclick="openLocalVid('${cat}',${i})">
       <video src="${v.url}" muted preload="metadata"></video>
@@ -384,24 +502,14 @@ function renderUploadGrid(cat){
     </div>
   `).join('');
 }
-
-const localModal = document.createElement('div');
-localModal.className = 'modal';
-localModal.id = 'localModal';
-localModal.innerHTML = '<button class="modal-close" onclick="closeLocalModal()">✕</button><video id="localVid" controls style="max-width:90vw;max-height:85vh;"></video>';
-document.body.appendChild(localModal);
-
 function openLocalVid(cat, i){
   document.getElementById('localVid').src = localVids[cat][i].url;
-  localModal.classList.add('open');
+  document.getElementById('localModal').classList.add('open');
   document.getElementById('localVid').play();
 }
 function closeLocalModal(){
-  localModal.classList.remove('open');
+  document.getElementById('localModal').classList.remove('open');
   document.getElementById('localVid').pause();
-  document.getElementById('localVid').src = '';
+  document.getElementById('localVid').src='';
 }
-localModal.addEventListener('click', e => { if(e.target === localModal) closeLocalModal(); });
-</script>
-</body>
-</html>
+document.getE
