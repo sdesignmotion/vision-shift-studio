@@ -15,24 +15,22 @@
   --muted:rgba(240,240,240,0.4);
   --border:rgba(255,255,255,0.08);
 }
+html{scroll-behavior:smooth;}
 body{font-family:'Montserrat',sans-serif;background:var(--bg);color:#f0f0f0;min-height:100vh;}
 
+/* NAV */
 nav{
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:center;
   padding:1.2rem 2.5rem;
   border-bottom:0.5px solid var(--border);
   position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(11,13,20,0.85);
-  backdrop-filter:blur(12px);
+  background:rgba(11,13,20,0.88);
+  backdrop-filter:blur(14px);
 }
 .nav-logo img{height:42px;width:auto;display:block;}
 .nav-logo-fallback{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;display:none;}
-.nav-links{display:flex;gap:2.5rem;align-items:center;}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;transition:color .2s;}
-.nav-links a:hover{color:#fff;}
-.nav-contact-btn{padding:8px 20px;border:0.5px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background .2s,color .2s;}
-.nav-contact-btn:hover{background:var(--gold);color:#000;}
 
+/* HERO */
 .hero{
   position:relative;height:100vh;
   display:flex;flex-direction:column;
@@ -42,7 +40,10 @@ nav{
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
 .hero-overlay{
   position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to bottom,rgba(11,13,20,0.3) 0%,rgba(11,13,20,0.5) 60%,rgba(11,13,20,0.9) 100%);
+  background:linear-gradient(to bottom,
+    rgba(11,13,20,0.25) 0%,
+    rgba(11,13,20,0.45) 55%,
+    rgba(11,13,20,0.92) 100%);
 }
 .hero-content{position:relative;z-index:2;padding:2rem;}
 .hero-tagline{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.2rem;animation:fadeUp .8s .1s ease both;}
@@ -52,13 +53,13 @@ nav{
 .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .4s ease both;}
 .btn-primary{padding:13px 36px;background:var(--gold);color:#000;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;transition:opacity .2s;}
 .btn-primary:hover{opacity:.85;}
-.btn-ghost{padding:13px 36px;background:transparent;color:#fff;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;border:0.5px solid rgba(255,255,255,0.3);cursor:pointer;font-family:'Montserrat',sans-serif;transition:border-color .2s;}
-.btn-ghost:hover{border-color:rgba(255,255,255,0.7);}
 
+/* SECTIONS */
 section{padding:5rem 2.5rem;}
 .section-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:3rem;display:flex;align-items:center;gap:1rem;}
 .section-label::after{content:'';flex:1;height:0.5px;background:var(--border);}
 
+/* SERVICES */
 .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;border:0.5px solid var(--border);}
 .svc{padding:2rem 1.5rem;border:0.5px solid var(--border);transition:background .2s;}
 .svc:hover{background:rgba(201,150,58,0.05);}
@@ -66,31 +67,57 @@ section{padding:5rem 2.5rem;}
 .svc h3{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:.6rem;}
 .svc p{font-size:12px;color:var(--muted);line-height:1.7;}
 
-.portfolio-section{background:var(--bg2);padding:5rem 2.5rem;}
-.categories{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+/* PORTFOLIO */
+.portfolio-section{background:var(--bg2);padding:5rem 2.5rem;text-align:center;}
+.portfolio-section .section-label{text-align:left;}
+.categories{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:center;}
 .cat-btn{padding:9px 22px;background:transparent;border:0.5px solid var(--border);color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
 .cat-btn:hover{border-color:var(--gold);color:var(--gold);}
 .cat-btn.active{background:var(--gold);border-color:var(--gold);color:#000;}
-.cat-panel{display:none;}
+.cat-panel{display:none;text-align:left;}
 .cat-panel.active{display:block;}
-.cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;}
-.cat-title{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:600;}
-.upload-controls{display:none;}
-.upload-controls.unlocked{display:flex;align-items:center;gap:.75rem;}
-.cat-upload-btn{display:flex;align-items:center;gap:.5rem;padding:8px 18px;border:0.5px solid rgba(201,150,58,0.4);background:transparent;color:var(--gold);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
-.cat-upload-btn:hover{background:rgba(201,150,58,0.08);}
 
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--border);}
+/* VIDEO GRID */
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:1rem;}
+.video-thumb{
+  position:relative;aspect-ratio:16/9;overflow:hidden;
+  background:var(--bg3);cursor:pointer;
+  border:0.5px solid var(--border);
+  transition:border-color .2s;
+}
+.video-thumb:hover{border-color:rgba(201,150,58,0.4);}
+.video-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.video-thumb .thumb-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,0.45);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .25s;
+}
+.video-thumb:hover .thumb-overlay{opacity:1;}
+.play-btn-ring{width:52px;height:52px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;margin-bottom:.4rem;}
+.thumb-title{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.8);text-transform:uppercase;text-align:center;padding:0 8px;}
+
+/* MODAL VIDEO PLAYER */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:1000;align-items:center;justify-content:center;}
+.modal.open{display:flex;}
+.modal iframe{width:90vw;max-width:960px;aspect-ratio:16/9;border:none;}
+.modal video{max-width:90vw;max-height:85vh;outline:none;}
+.modal-close{position:fixed;top:1.5rem;right:1.5rem;background:none;border:0.5px solid rgba(255,255,255,0.3);color:#fff;font-size:18px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;}
+
+/* HIDDEN UPLOAD */
+.upload-controls{display:none;margin-top:2rem;}
+.upload-controls.unlocked{display:block;}
+.cat-upload-btn{display:inline-flex;align-items:center;gap:.5rem;padding:9px 20px;border:0.5px solid rgba(201,150,58,0.4);background:transparent;color:var(--gold);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;margin-bottom:1rem;}
+.cat-upload-btn:hover{background:rgba(201,150,58,0.08);}
+.upload-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--border);}
 .video-card{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--bg3);cursor:pointer;}
 .video-card video{width:100%;height:100%;object-fit:cover;}
 .play-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.55);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .25s;}
 .video-card:hover .play-overlay{opacity:1;}
-.play-btn-ring{width:52px;height:52px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;margin-bottom:.5rem;}
-.vid-label{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);text-transform:uppercase;text-align:center;padding:0 8px;}
+.vid-label{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);text-transform:uppercase;text-align:center;padding:0 8px;margin-top:.4rem;}
 .remove-btn{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);border:0.5px solid rgba(255,255,255,0.2);color:#fff;width:26px;height:26px;font-size:12px;cursor:pointer;display:none;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;}
 .video-card:hover .remove-btn{display:flex;}
-.drop-zone{border:1px dashed rgba(201,150,58,0.15);padding:3.5rem;text-align:center;color:rgba(255,255,255,0.15);font-size:11px;letter-spacing:3px;text-transform:uppercase;}
 
+/* ABOUT */
 .about-wrap{display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:center;}
 .about-img-block{position:relative;overflow:hidden;border:0.5px solid var(--border);max-width:360px;}
 .about-img-block img{width:100%;height:auto;object-fit:cover;object-position:top center;display:block;max-height:500px;}
@@ -104,10 +131,12 @@ section{padding:5rem 2.5rem;}
 .stat-n{font-size:30px;font-weight:700;color:var(--gold);}
 .stat-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
 
+/* CONTACT */
 .contact-section{text-align:center;padding:6rem 2.5rem;border-top:0.5px solid var(--border);background:var(--bg2);}
 .contact-section h2{font-size:clamp(30px,5vw,56px);font-weight:700;margin-bottom:1rem;line-height:1.1;}
 .contact-section h2 span{color:var(--gold);}
 .contact-section p{color:var(--muted);font-size:13px;margin-bottom:2rem;letter-spacing:.5px;}
+.about-email-center{display:inline-flex;align-items:center;gap:.5rem;color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;text-decoration:none;border-bottom:0.5px solid var(--gold);padding-bottom:2px;}
 
 footer{padding:1.5rem 2.5rem;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
 footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
@@ -115,12 +144,8 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 .socials a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
 .socials a:hover{color:var(--gold);}
 
-.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:1000;align-items:center;justify-content:center;}
-.lightbox.open{display:flex;}
-.lightbox video{max-width:90vw;max-height:85vh;outline:none;}
-.lightbox-close{position:fixed;top:1.5rem;right:1.5rem;background:none;border:0.5px solid rgba(255,255,255,0.3);color:#fff;font-size:18px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;}
-
-.unlock-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(11,13,20,0.95);border:0.5px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;z-index:999;opacity:0;transition:opacity .4s;pointer-events:none;font-family:'Montserrat',sans-serif;white-space:nowrap;}
+/* TOAST */
+.unlock-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(11,13,20,0.96);border:0.5px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;z-index:9999;opacity:0;transition:opacity .4s;pointer-events:none;font-family:'Montserrat',sans-serif;white-space:nowrap;}
 .unlock-toast.show{opacity:1;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
@@ -129,7 +154,6 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   .about-wrap{grid-template-columns:1fr;}
   .about-img-block{max-width:100%;}
   nav{padding:1rem 1.2rem;}
-  .nav-links{gap:1rem;}
   section{padding:3rem 1.2rem;}
   .portfolio-section{padding:3rem 1.2rem;}
 }
@@ -139,19 +163,16 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
 <div class="unlock-toast" id="toast"></div>
 
+<!-- NAV — logo centered, no links -->
 <nav>
   <div class="nav-logo">
     <img src="VISION_SHIFT.png" alt="Vision Shift Studio"
       onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='block'">
-    <span class="nav-logo-fallback">Vision Shift</span>
-  </div>
-  <div class="nav-links">
-    <a href="#work">Work</a>
-    <a href="#about">About</a>
-    <button class="nav-contact-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
+    <span class="nav-logo-fallback">Vision Shift Studio</span>
   </div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
   <video class="hero-video" autoplay muted loop playsinline>
     <source src="LOOP.mp4" type="video/mp4">
@@ -159,15 +180,15 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-tagline">Video Editing &nbsp;·&nbsp; Motion Design &nbsp;·&nbsp; Visual Storytelling</p>
-    <h1 class="hero-headline">We shift your<br><em>vision</em> to life.</h1>
+    <h1 class="hero-headline">Shifting your<br><em>vision</em> to life.</h1>
     <p class="hero-sub">Design &nbsp;|&nbsp; Video Editing &nbsp;|&nbsp; Illustrations</p>
     <div class="hero-btns">
-      <button class="btn-primary" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View Our Work</button>
-      <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+      <button class="btn-primary" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View My Work</button>
     </div>
   </div>
 </div>
 
+<!-- SERVICES -->
 <section>
   <div class="section-label">What we do</div>
   <div class="services-grid">
@@ -178,51 +199,49 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </div>
 </section>
 
+<!-- PORTFOLIO -->
 <section class="portfolio-section" id="work">
   <div class="section-label">Selected work</div>
+
   <div class="categories">
-    <button class="cat-btn active" onclick="switchCat('commercial',this)">Commercial</button>
+    <button class="cat-btn active" onclick="switchCat('dance',this)">Dance</button>
     <button class="cat-btn" onclick="switchCat('events',this)">Events</button>
-    <button class="cat-btn" onclick="switchCat('dance',this)">Dance</button>
+    <button class="cat-btn" onclick="switchCat('commercial',this)">Commercial</button>
   </div>
-  <div class="category-panels">
 
-    <div class="cat-panel active" id="panel-commercial">
-      <div class="cat-header">
-        <span class="cat-title">Commercial &amp; Advertisement</span>
-        <div class="upload-controls" id="uc-commercial">
-          <button class="cat-upload-btn" onclick="document.getElementById('upload-commercial').click()">⬆ Upload videos</button>
-          <input type="file" id="upload-commercial" accept="video/*" multiple style="display:none" onchange="handleFiles('commercial',this.files)">
-        </div>
-      </div>
-      <div class="video-grid" id="grid-commercial"><div class="drop-zone">No videos yet</div></div>
+  <!-- DANCE -->
+  <div class="cat-panel active" id="panel-dance">
+    <div class="video-grid" id="grid-dance"></div>
+    <div class="upload-controls" id="uc-dance">
+      <button class="cat-upload-btn" onclick="document.getElementById('upload-dance').click()">⬆ Upload videos</button>
+      <input type="file" id="upload-dance" accept="video/*" multiple style="display:none" onchange="handleFiles('dance',this.files)">
+      <div class="upload-grid" id="ugrid-dance"></div>
     </div>
-
-    <div class="cat-panel" id="panel-events">
-      <div class="cat-header">
-        <span class="cat-title">Events</span>
-        <div class="upload-controls" id="uc-events">
-          <button class="cat-upload-btn" onclick="document.getElementById('upload-events').click()">⬆ Upload videos</button>
-          <input type="file" id="upload-events" accept="video/*" multiple style="display:none" onchange="handleFiles('events',this.files)">
-        </div>
-      </div>
-      <div class="video-grid" id="grid-events"><div class="drop-zone">No videos yet</div></div>
-    </div>
-
-    <div class="cat-panel" id="panel-dance">
-      <div class="cat-header">
-        <span class="cat-title">Dance</span>
-        <div class="upload-controls" id="uc-dance">
-          <button class="cat-upload-btn" onclick="document.getElementById('upload-dance').click()">⬆ Upload videos</button>
-          <input type="file" id="upload-dance" accept="video/*" multiple style="display:none" onchange="handleFiles('dance',this.files)">
-        </div>
-      </div>
-      <div class="video-grid" id="grid-dance"><div class="drop-zone">No videos yet</div></div>
-    </div>
-
   </div>
+
+  <!-- EVENTS -->
+  <div class="cat-panel" id="panel-events">
+    <div class="video-grid" id="grid-events"></div>
+    <div class="upload-controls" id="uc-events">
+      <button class="cat-upload-btn" onclick="document.getElementById('upload-events').click()">⬆ Upload videos</button>
+      <input type="file" id="upload-events" accept="video/*" multiple style="display:none" onchange="handleFiles('events',this.files)">
+      <div class="upload-grid" id="ugrid-events"></div>
+    </div>
+  </div>
+
+  <!-- COMMERCIAL -->
+  <div class="cat-panel" id="panel-commercial">
+    <div class="video-grid" id="grid-commercial"></div>
+    <div class="upload-controls" id="uc-commercial">
+      <button class="cat-upload-btn" onclick="document.getElementById('upload-commercial').click()">⬆ Upload videos</button>
+      <input type="file" id="upload-commercial" accept="video/*" multiple style="display:none" onchange="handleFiles('commercial',this.files)">
+      <div class="upload-grid" id="ugrid-commercial"></div>
+    </div>
+  </div>
+
 </section>
 
+<!-- ABOUT -->
 <section id="about">
   <div class="section-label">About</div>
   <div class="about-wrap">
@@ -245,10 +264,11 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </div>
 </section>
 
+<!-- CONTACT -->
 <div class="contact-section" id="contact">
   <h2>Ready to shift<br>your <span>vision?</span></h2>
   <p>Open to freelance projects, collaborations, and creative partnerships.</p>
-  <a class="about-email" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
+  <a class="about-email-center" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
 </div>
 
 <footer>
@@ -260,88 +280,128 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </div>
 </footer>
 
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <video id="lightboxVideo" controls></video>
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <button class="modal-close" onclick="closeModal()">✕</button>
+  <div id="modal-content"></div>
 </div>
 
 <script>
-let unlocked = false;
+/* ── VIDEO DATA — paste YouTube IDs here ── */
+const videoData = {
+  dance: [
+    /* Add YouTube video IDs here once you share them */
+    /* Example: {id:'wEGuPwKtZ0Q', title:'Dance 1'} */
+  ],
+  events: [
+    /* Example: {id:'90sxQb5Ci-s', title:'Event 1'} */
+  ],
+  commercial: [
+    /* Example: {id:'khfHyYjO_1M', title:'Commercial 1'} */
+  ]
+};
 
-document.addEventListener('keydown', e => {
-  if(e.shiftKey && e.altKey && e.key === 'V') {
-    unlocked = !unlocked;
-    document.querySelectorAll('.upload-controls').forEach(el => {
-      el.classList.toggle('unlocked', unlocked);
-    });
-    showToast(unlocked ? '✦ Edit mode unlocked' : 'Edit mode locked');
-  }
-});
+function getThumb(id){ return `https://img.youtube.com/vi/${id}/hqdefault.jpg`; }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+function buildGrids(){
+  ['dance','events','commercial'].forEach(cat => {
+    const grid = document.getElementById('grid-' + cat);
+    if(!videoData[cat].length){ grid.innerHTML = '<p style="color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:2rem 0;">Coming soon</p>'; return; }
+    grid.innerHTML = videoData[cat].map((v,i) => `
+      <div class="video-thumb" onclick="openYT('${v.id}')">
+        <img src="${getThumb(v.id)}" alt="${v.title}" loading="lazy">
+        <div class="thumb-overlay">
+          <div class="play-btn-ring">▶</div>
+          <div class="thumb-title">${v.title}</div>
+        </div>
+      </div>
+    `).join('');
+  });
 }
+buildGrids();
 
-function switchCat(cat, btn) {
+/* ── TABS ── */
+function switchCat(cat, btn){
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.cat-panel').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('panel-' + cat).classList.add('active');
 }
 
-const videos = {commercial:[], events:[], dance:[]};
-const lightboxVideo = document.getElementById('lightboxVideo');
-const lightbox = document.getElementById('lightbox');
-
-function handleFiles(cat, files) {
-  Array.from(files).forEach(file => {
-    if(!file.type.startsWith('video/')) return;
-    videos[cat].push({url: URL.createObjectURL(file), name: file.name.replace(/\.[^.]+$/, '')});
-  });
-  renderGrid(cat);
+/* ── YOUTUBE MODAL ── */
+function openYT(id){
+  document.getElementById('modal-content').innerHTML =
+    `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" width="90vw" style="width:90vw;max-width:960px;aspect-ratio:16/9;border:none;" allow="autoplay;encrypted-media" allowfullscreen></iframe>`;
+  document.getElementById('modal').classList.add('open');
 }
 
-function renderGrid(cat) {
-  const grid = document.getElementById('grid-' + cat);
-  if(!videos[cat].length) {
-    grid.innerHTML = '<div class="drop-zone">No videos yet</div>';
-    return;
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('modal-content').innerHTML = '';
+}
+document.getElementById('modal').addEventListener('click', e => { if(e.target === document.getElementById('modal')) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+/* ── SECRET SHORTCUT: Shift + Option + V (Mac) ── */
+let unlocked = false;
+document.addEventListener('keydown', e => {
+  if(e.shiftKey && e.altKey && (e.key === 'V' || e.key === '√')){
+    unlocked = !unlocked;
+    document.querySelectorAll('.upload-controls').forEach(el => el.classList.toggle('unlocked', unlocked));
+    showToast(unlocked ? '✦ Edit mode unlocked' : 'Edit mode locked');
   }
-  grid.innerHTML = videos[cat].map((v,i) => `
-    <div class="video-card" onclick="openLightbox('${cat}',${i})">
+});
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ── LOCAL UPLOAD ── */
+const localVids = {dance:[], events:[], commercial:[]};
+
+function handleFiles(cat, files){
+  Array.from(files).forEach(file => {
+    if(!file.type.startsWith('video/')) return;
+    localVids[cat].push({url: URL.createObjectURL(file), name: file.name.replace(/\.[^.]+$/, '')});
+  });
+  renderUploadGrid(cat);
+}
+
+function renderUploadGrid(cat){
+  const grid = document.getElementById('ugrid-' + cat);
+  if(!localVids[cat].length){ grid.innerHTML = ''; return; }
+  grid.innerHTML = localVids[cat].map((v,i) => `
+    <div class="video-card" onclick="openLocalVid('${cat}',${i})">
       <video src="${v.url}" muted preload="metadata"></video>
       <div class="play-overlay">
         <div class="play-btn-ring">▶</div>
         <div class="vid-label">${v.name}</div>
       </div>
-      ${unlocked ? `<button class="remove-btn" onclick="event.stopPropagation();removeVideo('${cat}',${i})">✕</button>` : ''}
+      <button class="remove-btn" onclick="event.stopPropagation();removeVid('${cat}',${i})">✕</button>
     </div>
   `).join('');
 }
 
-function openLightbox(cat, i) {
-  lightboxVideo.src = videos[cat][i].url;
-  lightbox.classList.add('open');
-  lightboxVideo.play();
-}
+const localModal = document.createElement('div');
+localModal.className = 'modal';
+localModal.id = 'localModal';
+localModal.innerHTML = '<button class="modal-close" onclick="closeLocalModal()">✕</button><video id="localVid" controls style="max-width:90vw;max-height:85vh;"></video>';
+document.body.appendChild(localModal);
 
-function closeLightbox() {
-  lightbox.classList.remove('open');
-  lightboxVideo.pause();
-  lightboxVideo.src = '';
+function openLocalVid(cat, i){
+  document.getElementById('localVid').src = localVids[cat][i].url;
+  localModal.classList.add('open');
+  document.getElementById('localVid').play();
 }
-
-function removeVideo(cat, i) {
-  URL.revokeObjectURL(videos[cat][i].url);
-  videos[cat].splice(i, 1);
-  renderGrid(cat);
+function closeLocalModal(){
+  localModal.classList.remove('open');
+  document.getElementById('localVid').pause();
+  document.getElementById('localVid').src = '';
 }
-
-lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+localModal.addEventListener('click', e => { if(e.target === localModal) closeLocalModal(); });
 </script>
 </body>
 </html>
