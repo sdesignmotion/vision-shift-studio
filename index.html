@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vision Shift Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --gold:#C9963A;
+  --gold-light:#E8C06A;
+  --bg:#0b0d14;
+  --bg2:#10131e;
+  --bg3:#161923;
+  --text:#f0f0f0;
+  --muted:rgba(240,240,240,0.4);
+  --border:rgba(255,255,255,0.08);
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2.5rem;border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:100;background:rgba(11,13,20,0.97);backdrop-filter:blur(8px);}
+.nav-logo{display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:36px;width:auto;}
+.nav-logo-text{font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#fff;display:none;}
+.nav-links{display:flex;gap:2.5rem;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-contact-btn{padding:8px 20px;border:0.5px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background .2s,color .2s;}
+.nav-contact-btn:hover{background:var(--gold);color:#000;}
+
+/* HERO */
+.hero{min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:4rem 2rem;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,150,58,0.08) 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(100,60,200,0.06) 0%,transparent 40%);}
+.hero-logo-wrap{margin-bottom:2.5rem;animation:fadeUp .8s ease both;}
+.hero-logo-wrap img{width:clamp(160px,30vw,280px);height:auto;}
+.hero-logo-text{font-size:clamp(28px,6vw,60px);font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#fff;}
+.hero-tagline{font-size:clamp(11px,1.5vw,13px);letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.5rem;animation:fadeUp .8s .1s ease both;}
+.hero-headline{font-size:clamp(36px,7vw,80px);font-weight:700;line-height:1;letter-spacing:-2px;color:#fff;margin-bottom:1.5rem;animation:fadeUp .8s .2s ease both;}
+.hero-headline em{font-style:normal;color:var(--gold);}
+.hero-sub{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:3rem;font-weight:400;animation:fadeUp .8s .3s ease both;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .4s ease both;}
+.btn-primary{padding:13px 36px;background:var(--gold);color:#000;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;transition:opacity .2s;}
+.btn-primary:hover{opacity:.85;}
+.btn-ghost{padding:13px 36px;background:transparent;color:#fff;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;border:0.5px solid rgba(255,255,255,0.25);cursor:pointer;font-family:'Montserrat',sans-serif;transition:border-color .2s;}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.6);}
+
+section{padding:5rem 2.5rem;}
+.section-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:3rem;display:flex;align-items:center;gap:1rem;}
+.section-label::after{content:'';flex:1;height:0.5px;background:var(--border);}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;border:0.5px solid var(--border);}
+.svc{padding:2rem 1.5rem;border:0.5px solid var(--border);transition:background .2s;}
+.svc:hover{background:rgba(201,150,58,0.05);}
+.svc-icon{font-size:20px;margin-bottom:1rem;color:var(--gold);}
+.svc h3{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:.6rem;}
+.svc p{font-size:12px;color:var(--muted);line-height:1.7;}
+
+/* PORTFOLIO */
+.portfolio-section{background:var(--bg2);padding:5rem 2.5rem;}
+.categories{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.cat-btn{padding:9px 22px;background:transparent;border:0.5px solid var(--border);color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
+.cat-btn:hover{border-color:var(--gold);color:var(--gold);}
+.cat-btn.active{background:var(--gold);border-color:var(--gold);color:#000;}
+.cat-panel{display:none;}
+.cat-panel.active{display:block;}
+.cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;}
+.cat-title{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.cat-upload-btn{display:flex;align-items:center;gap:.5rem;padding:8px 18px;border:0.5px solid rgba(201,150,58,0.4);background:transparent;color:var(--gold);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
+.cat-upload-btn:hover{background:rgba(201,150,58,0.08);}
+
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--border);}
+.video-card{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--bg3);cursor:pointer;}
+.video-card video{width:100%;height:100%;object-fit:cover;}
+.video-card .play-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.55);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .25s;}
+.video-card:hover .play-overlay{opacity:1;}
+.play-btn-ring{width:52px;height:52px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;margin-bottom:.5rem;}
+.vid-label{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);text-transform:uppercase;text-align:center;padding:0 8px;}
+.remove-btn{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);border:0.5px solid rgba(255,255,255,0.2);color:#fff;width:26px;height:26px;font-size:12px;cursor:pointer;display:none;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;}
+.video-card:hover .remove-btn{display:flex;}
+.drop-zone{border:1px dashed rgba(201,150,58,0.25);padding:3rem;text-align:center;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+
+/* ABOUT */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.about-img-block{aspect-ratio:3/4;overflow:hidden;border:0.5px solid var(--border);position:relative;}
+.about-img-block img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.about-img-overlay{position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(transparent,rgba(11,13,20,0.8));}
+.about-content h2{font-size:clamp(28px,4vw,42px);font-weight:700;line-height:1.15;margin-bottom:1.5rem;}
+.about-content h2 span{color:var(--gold);}
+.about-content p{font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:1rem;}
+.about-email{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;text-decoration:none;border-bottom:0.5px solid var(--gold);padding-bottom:2px;}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.stat{border-top:0.5px solid rgba(201,150,58,0.3);padding-top:1rem;}
+.stat-n{font-size:32px;font-weight:700;color:var(--gold);}
+.stat-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+
+/* CONTACT */
+.contact-section{text-align:center;padding:6rem 2.5rem;border-top:0.5px solid var(--border);background:var(--bg2);}
+.contact-section h2{font-size:clamp(32px,5vw,56px);font-weight:700;margin-bottom:1rem;line-height:1.1;}
+.contact-section h2 span{color:var(--gold);}
+.contact-section p{color:var(--muted);font-size:13px;margin-bottom:2rem;letter-spacing:.5px;}
+
+footer{padding:1.5rem 2.5rem;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
+.socials{display:flex;gap:1.5rem;}
+.socials a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.socials a:hover{color:var(--gold);}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:1000;align-items:center;justify-content:center;}
+.lightbox.open{display:flex;}
+.lightbox video{max-width:90vw;max-height:85vh;outline:none;}
+.lightbox-close{position:fixed;top:1.5rem;right:1.5rem;background:none;border:0.5px solid rgba(255,255,255,0.3);color:#fff;font-size:18px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:700px){
+  .about-wrap{grid-template-columns:1fr;}
+  .about-img-block{aspect-ratio:1/1;}
+  nav{padding:1rem 1.2rem;}
+  .nav-links{gap:1rem;}
+  section{padding:3rem 1.2rem;}
+  .portfolio-section{padding:3rem 1.2rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="logo_FINAL_new.png" alt="Vision Shift Studio" onerror="this.style.display='none';document.querySelector('.nav-logo-text').style.display='block'">
+    <span class="nav-logo-text">Vision Shift</span>
+  </div>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <button class="nav-contact-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-logo-wrap">
+    <img src="logo_FINAL_new.png" alt="Vision Shift Studio" onerror="this.parentElement.innerHTML='<div class=\'hero-logo-text\'>Vision Shift Studio</div>'">
+  </div>
+  <p class="hero-tagline">Video Editing &nbsp;·&nbsp; Motion Design &nbsp;·&nbsp; Visual Storytelling</p>
+  <h1 class="hero-headline">We shift your<br><em>vision</em> to life.</h1>
+  <p class="hero-sub">Design &nbsp;|&nbsp; Video Editing &nbsp;|&nbsp; Illustrations</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View Our Work</button>
+    <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+  </div>
+</div>
+
+<section>
+  <div class="section-label">What we do</div>
+  <div class="services-grid">
+    <div class="svc"><div class="svc-icon">▶</div><h3>Video Editing</h3><p>Music videos, short films, reels, and branded content with cinematic pacing.</p></div>
+    <div class="svc"><div class="svc-icon">◈</div><h3>Motion Graphics</h3><p>Animated titles, transitions, and visual effects that elevate your story.</p></div>
+    <div class="svc"><div class="svc-icon">◉</div><h3>Color Grading</h3><p>Signature cinematic looks and professional color correction for any genre.</p></div>
+    <div class="svc"><div class="svc-icon">◻</div><h3>Graphic Design</h3><p>Thumbnails, posters, and visual identity for creators and brands.</p></div>
+  </div>
+</section>
+
+<section class="portfolio-section" id="work">
+  <div class="section-label">Selected work</div>
+  <div class="categories">
+    <button class="cat-btn active" onclick="switchCat('commercial',this)">Commercial</button>
+    <button class="cat-btn" onclick="switchCat('events',this)">Events</button>
+    <button class="cat-btn" onclick="switchCat('dance',this)">Dance</button>
+  </div>
+  <div class="category-panels">
+    <div class="cat-panel active" id="panel-commercial">
+      <div class="cat-header">
+        <span class="cat-title">Commercial &amp; Advertisement</span>
+        <button class="cat-upload-btn" onclick="document.getElementById('upload-commercial').click()">⬆ Upload videos</button>
+        <input type="file" id="upload-commercial" accept="video/*" multiple style="display:none" onchange="handleFiles('commercial',this.files)">
+      </div>
+      <div class="video-grid" id="grid-commercial"><div class="drop-zone">Upload your commercial &amp; advertisement videos</div></div>
+    </div>
+    <div class="cat-panel" id="panel-events">
+      <div class="cat-header">
+        <span class="cat-title">Events</span>
+        <button class="cat-upload-btn" onclick="document.getElementById('upload-events').click()">⬆ Upload videos</button>
+        <input type="file" id="upload-events" accept="video/*" multiple style="display:none" onchange="handleFiles('events',this.files)">
+      </div>
+      <div class="video-grid" id="grid-events"><div class="drop-zone">Upload your event videos</div></div>
+    </div>
+    <div class="cat-panel" id="panel-dance">
+      <div class="cat-header">
+        <span class="cat-title">Dance</span>
+        <button class="cat-upload-btn" onclick="document.getElementById('upload-dance').click()">⬆ Upload videos</button>
+        <input type="file" id="upload-dance" accept="video/*" multiple style="display:none" onchange="handleFiles('dance',this.files)">
+      </div>
+      <div class="video-grid" id="grid-dance"><div class="drop-zone">Upload your dance videos</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-label">About</div>
+  <div class="about-wrap">
+    <div class="about-img-block">
+      <img src="Photo0734.jpeg" alt="Vasil Slavkov">
+      <div class="about-img-overlay"></div>
+    </div>
+    <div class="about-content">
+      <h2>A studio built on<br><span>bold vision.</span></h2>
+      <p>Vision Shift Studio is a creative video editing and motion design studio passionate about crafting visuals that connect, move, and leave a lasting impression.</p>
+      <p>From commercial ads to events and dance videos, we bring stories to life through precise editing, cinematic color, and bold design.</p>
+      <p>Based in Sofia, available for projects worldwide.</p>
+      <a class="about-email" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Projects</div></div>
+        <div class="stat"><div class="stat-n">3+</div><div class="stat-l">Years exp.</div></div>
+        <div class="stat"><div class="stat-n">20+</div><div class="stat-l">Clients</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contact-section" id="contact">
+  <h2>Ready to shift<br>your <span>vision?</span></h2>
+  <p>Open to freelance projects, collaborations, and creative partnerships.</p>
+  <a class="about-email" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
+</div>
+
+<footer>
+  <span>© 2025 Vision Shift Studio</span>
+  <div class="socials">
+    <a href="#">Instagram</a>
+    <a href="#">YouTube</a>
+    <a href="#">Behance</a>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <video id="lightboxVideo" controls></video>
+</div>
+
+<script>
+const videos={commercial:[],events:[],dance:[]};
+const lightboxVideo=document.getElementById('lightboxVideo');
+const lightbox=document.getElementById('lightbox');
+
+function switchCat(cat,btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.cat-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+cat).classList.add('active');
+}
+
+function handleFiles(cat,files){
+  Array.from(files).forEach(file=>{
+    if(!file.type.startsWith('video/'))return;
+    const url=URL.createObjectURL(file);
+    videos[cat].push({url,name:file.name.replace(/\.[^.]+$/,'')});
+  });
+  renderGrid(cat);
+}
+
+function renderGrid(cat){
+  const grid=document.getElementById('grid-'+cat);
+  const vids=videos[cat];
+  const labels={commercial:'commercial & advertisement',events:'event',dance:'dance'};
+  if(!vids.length){grid.innerHTML='<div class="drop-zone">Upload your '+labels[cat]+' videos</div>';return;}
+  grid.innerHTML=vids.map((v,i)=>`
+    <div class="video-card" onclick="openLightbox('${cat}',${i})">
+      <video src="${v.url}" muted preload="metadata"></video>
+      <div class="play-overlay">
+        <div class="play-btn-ring">▶</div>
+        <div class="vid-label">${v.name}</div>
+      </div>
+      <button class="remove-btn" onclick="event.stopPropagation();removeVideo('${cat}',${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+function openLightbox(cat,i){
+  lightboxVideo.src=videos[cat][i].url;
+  lightbox.classList.add('open');
+  lightboxVideo.play();
+}
+
+function closeLightbox(){
+  lightbox.classList.remove('open');
+  lightboxVideo.pause();
+  lightboxVideo.src='';
+}
+
+function removeVideo(cat,i){
+  URL.revokeObjectURL(videos[cat][i].url);
+  videos[cat].splice(i,1);
+  renderGrid(cat);
+}
+
+lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
+</script>
+</body>
+</html>
