@@ -51,7 +51,8 @@ section{padding:5rem 2.5rem;}
 .cat-panel{display:none;}
 .cat-panel.active{display:block;}
 
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:1rem;}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:1rem;justify-items:center;}
+.video-grid .video-thumb{width:100%;}
 .video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--bg3);cursor:pointer;border:0.5px solid var(--border);transition:border-color .2s,transform .2s;}
 .video-thumb:hover{border-color:rgba(201,150,58,0.5);transform:scale(1.01);}
 .video-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -99,9 +100,11 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 .socials a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
 .socials a:hover{color:var(--gold);}
 
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:1000;align-items:center;justify-content:center;}
+.modal{display:none;position:fixed;inset:0;z-index:1000;align-items:center;justify-content:center;}
 .modal.open{display:flex;}
-.modal-close{position:fixed;top:1.5rem;right:1.5rem;background:none;border:0.5px solid rgba(255,255,255,0.3);color:#fff;font-size:18px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;}
+.modal-backdrop{position:absolute;inset:0;background:rgba(11,13,20,0.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}
+.modal-inner{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;}
+.modal-close{position:fixed;top:1.5rem;right:1.5rem;background:rgba(11,13,20,0.7);border:0.5px solid rgba(255,255,255,0.3);color:#fff;font-size:18px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;z-index:3;backdrop-filter:blur(4px);}
 
 .unlock-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(11,13,20,0.96);border:0.5px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;z-index:9999;opacity:0;transition:opacity .4s;pointer-events:none;font-family:'Montserrat',sans-serif;white-space:nowrap;}
 .unlock-toast.show{opacity:1;}
@@ -223,13 +226,17 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 </footer>
 
 <div class="modal" id="modal">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
   <button class="modal-close" id="modal-close-btn">✕</button>
-  <div id="modal-content"></div>
+  <div class="modal-inner" id="modal-content"></div>
 </div>
 
 <div class="modal" id="localModal">
+  <div class="modal-backdrop" id="local-backdrop"></div>
   <button class="modal-close" id="local-close-btn">✕</button>
-  <video id="localVid" controls style="max-width:90vw;max-height:85vh;outline:none;"></video>
+  <div class="modal-inner">
+    <video id="localVid" controls style="max-width:90vw;max-height:85vh;outline:none;"></video>
+  </div>
 </div>
 
 <script>
@@ -315,7 +322,7 @@ function openWistia(id) {
   document.getElementById('modal-content').innerHTML =
     '<iframe src="https://fast.wistia.net/embed/iframe/' + id + '?autoplay=1" ' +
     'allow="autoplay; fullscreen" ' +
-    'style="width:90vw;max-width:960px;height:540px;border:none;"></iframe>';
+    'style="width:90vw;max-width:960px;height:54vw;max-height:540px;border:none;box-shadow:0 8px 60px rgba(0,0,0,0.6);"></iframe>';
   document.getElementById('modal').classList.add('open');
 }
 
@@ -323,11 +330,9 @@ document.getElementById('modal-close-btn').addEventListener('click', function() 
   document.getElementById('modal').classList.remove('open');
   document.getElementById('modal-content').innerHTML = '';
 });
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === document.getElementById('modal')) {
-    document.getElementById('modal').classList.remove('open');
-    document.getElementById('modal-content').innerHTML = '';
-  }
+document.getElementById('modal-backdrop').addEventListener('click', function() {
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('modal-content').innerHTML = '';
 });
 
 /* ── SECRET SHORTCUT: Shift + Option + V ── */
@@ -397,12 +402,10 @@ document.getElementById('local-close-btn').addEventListener('click', function() 
   document.getElementById('localVid').pause();
   document.getElementById('localVid').src = '';
 });
-document.getElementById('localModal').addEventListener('click', function(e) {
-  if (e.target === document.getElementById('localModal')) {
-    document.getElementById('localModal').classList.remove('open');
-    document.getElementById('localVid').pause();
-    document.getElementById('localVid').src = '';
-  }
+document.getElementById('local-backdrop').addEventListener('click', function() {
+  document.getElementById('localModal').classList.remove('open');
+  document.getElementById('localVid').pause();
+  document.getElementById('localVid').src = '';
 });
 </script>
 </body>
