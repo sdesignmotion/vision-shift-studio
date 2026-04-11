@@ -246,21 +246,37 @@ cats.forEach(cat => {
   if (btn) btn.addEventListener('click', () => switchTab(cat));
 });
 
+function loadThumb(id, imgEl) {
+  const script = document.createElement('script');
+  const cbName = 'wt_' + id;
+  window[cbName] = function(data) {
+    if (data && data.thumbnail_url) {
+      imgEl.src = data.thumbnail_url.replace('image_crop_resized=100x60', 'image_crop_resized=640x360');
+    }
+    delete window[cbName];
+    script.remove();
+  };
+  script.src = 'https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/' + id + '&callback=' + cbName;
+  document.head.appendChild(script);
+}
+
 function buildGrids() {
   Object.keys(videoData).forEach(cat => {
     const grid = document.getElementById('grid-' + cat);
-    videoData[cat].forEach((id, idx) => {
+    videoData[cat].forEach(id => {
       const box = document.createElement('div');
       box.className = 'video-box';
-      box.id = 'vbox-' + cat + '-' + idx;
-      /* Use Wistia's direct thumbnail endpoint — no fetch needed, no CORS issues */
-      const thumbUrl = 'https://embed-ssl.wistia.com/deliveries/' + id + '/image.jpg';
-      box.innerHTML =
-        '<img src="' + thumbUrl + '" alt="video" ' +
-        'onerror="this.style.opacity=\'0\'">' +
-        '<div class="video-overlay"><div class="play-icon">&#9654;</div></div>';
+      const img = document.createElement('img');
+      img.alt = 'video thumbnail';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      const overlay = document.createElement('div');
+      overlay.className = 'video-overlay';
+      overlay.innerHTML = '<div class="play-icon">&#9654;</div>';
+      box.appendChild(img);
+      box.appendChild(overlay);
       box.onclick = () => openWistia(id);
       grid.appendChild(box);
+      loadThumb(id, img);
     });
   });
 }
