@@ -80,9 +80,9 @@ section{padding:5rem 2.5rem;}
 .remove-btn{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);border:0.5px solid rgba(255,255,255,0.2);color:#fff;width:26px;height:26px;font-size:12px;cursor:pointer;display:none;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;}
 .video-card:hover .remove-btn{display:flex;}
 
-.about-wrap{display:grid;grid-template-columns:320px 1fr;gap:3.5rem;align-items:center;max-width:960px;margin:0 auto;}
-.about-img-block{position:relative;overflow:hidden;border:0.5px solid var(--border);width:320px;flex-shrink:0;}
-.about-img-block img{width:100%;height:auto;object-fit:cover;object-position:top center;display:block;max-height:480px;}
+.about-wrap{display:grid;grid-template-columns:320px 1fr;gap:3.5rem;align-items:stretch;max-width:960px;margin:0 auto;}
+.about-img-block{position:relative;overflow:hidden;border:0.5px solid var(--border);width:320px;flex-shrink:0;min-height:100%;}
+.about-img-block img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;position:absolute;inset:0;}
 .about-img-overlay{position:absolute;bottom:0;left:0;right:0;height:20%;background:linear-gradient(transparent,rgba(11,13,20,0.85));}
 .about-content h2{font-size:clamp(22px,2.8vw,36px);font-weight:700;line-height:1.2;margin-bottom:1.2rem;}
 .about-content h2 span{color:var(--gold);}
@@ -180,7 +180,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   <div class="section-label">About</div>
   <div class="about-wrap">
     <div class="about-img-block">
-      <img src="Photo0734.jpeg" alt="Vasil Slavkov">
+      <img src="Photo0734_new.jpeg" alt="Vasil Slavkov">
       <div class="about-img-overlay"></div>
     </div>
     <div class="about-content">
@@ -188,7 +188,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
       <p>I'm Vasil, the creative force behind Vision Shift Studio. Whether it's a packed dance floor, a high-energy event, or a bold commercial concept — I bring the energy, the vision, and the craft to make every frame count.</p>
       <p>I give life to the party and life to the vision. My work isn't just edited — it's felt. From the first cut to the final frame, every project carries a pulse that moves people.</p>
       <p>Based in Sofia &nbsp;·&nbsp; Available worldwide for projects, collabs, and creative partnerships.</p>
-      <a class="about-email" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
+      <a class="about-email" href="/cdn-cgi/l/email-protection#6b1d0a18020718070a1d00041d592b0c060a020745080406"><span class="__cf_email__" data-cfemail="87f1e6f4eeebf4ebe6f1ece8f1b5c7e0eae6eeeba9e4e8ea">[email&#160;protected]</span></a>
       <div class="stats-row">
         <div class="stat"><div class="stat-n">100+</div><div class="stat-l">Projects</div></div>
         <div class="stat"><div class="stat-n">4+</div><div class="stat-l">Years exp.</div></div>
@@ -201,7 +201,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <div class="contact-section" id="contact">
   <h2>Ready to shift<br>your <span>vision?</span></h2>
   <p>Open to freelance projects, collaborations, and creative partnerships.</p>
-  <a class="contact-email-link" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
+  <a class="contact-email-link" href="/cdn-cgi/l/email-protection#265047554f4a554a47504d49501466414b474f4a0845494b"><span class="__cf_email__" data-cfemail="f48295879d98879895829f9b82c6b49399959d98da979b99">[email&#160;protected]</span></a>
 </div>
 
 <footer>
@@ -225,7 +225,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const videoData = {
   events: ['d55rd8i57p','21pz3thqub','pet8kzo2z8','u35yoio9s9','30fz4el1tj','olkrivi2qt','z2dbxs20br','e8xeibgkv9','50xe73tr9z'],
   dance:  ['j3wi77124k','mzcj4p3gdr','0ly4vbju1k','47rnvuwo09','vol0ixxtl6','d57nea2mbj','02oircll7q','5kz6ga0ab4','bqv53tnvv7','25kmfw82tw'],
@@ -308,18 +308,4 @@ document.addEventListener('keydown', e => {
     document.getElementById('modal').classList.remove('open');
     document.getElementById('modal-content').innerHTML = '';
     document.getElementById('localModal').classList.remove('open');
-    document.getElementById('localVid').pause();
-    document.getElementById('localVid').src = '';
-  }
-  if (e.shiftKey && e.altKey && (e.key === 'V' || e.key === '\u221a')) {
-    const t = document.getElementById('toast');
-    t.textContent = '\u2726 Edit mode — add videos via Wistia';
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-  }
-});
-
-buildGrids();
-</script>
-</body>
-</html>
+    document.getElementById('l
