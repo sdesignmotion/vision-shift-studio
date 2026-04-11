@@ -55,11 +55,11 @@ section{padding:5rem 2.5rem;}
 .cat-panel{display:none;}
 .cat-panel.active{display:block;}
 
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:2rem;}
-.video-box{position:relative;cursor:pointer;overflow:visible;border-radius:10px;transition:transform .35s ease;}
-.video-box:hover{transform:scale(1.14);}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:2rem;position:relative;}
+.video-box{position:relative;cursor:pointer;overflow:visible;border-radius:10px;transition:transform .35s ease,z-index 0s;z-index:1;}
+.video-box:hover{transform:scale(1.18);z-index:50;}
 .video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:10px;border:0.5px solid rgba(255,255,255,0.08);transition:box-shadow .35s ease;}
-.video-box:hover .video-thumb{box-shadow:-8px 0 28px rgba(201,150,58,0.55), 8px 0 28px rgba(201,150,58,0.55);}
+.video-box:hover .video-thumb{box-shadow:-8px 0 36px rgba(201,150,58,0.6), 8px 0 36px rgba(201,150,58,0.6);}
 .video-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
 .video-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 65%);display:flex;align-items:flex-end;padding:14px 16px;pointer-events:none;opacity:0;transition:opacity .35s ease;}
 .video-box:hover .video-overlay{opacity:1;}
@@ -283,14 +283,14 @@ const videoData = {
   const intro = document.getElementById('intro-screen');
   const vid = document.getElementById('intro-video');
   function dismiss() {
-    /* Step 1: slow fade video to black over 1.4s */
-    if (vid) { vid.style.transition = 'opacity 1.4s ease-in'; vid.style.opacity = '0'; }
-    /* Step 2: hold on black briefly, then fade entire intro out slowly */
+    /* Step 1: fast fade video to black */
+    if (vid) { vid.style.transition = 'opacity 0.7s ease-in'; vid.style.opacity = '0'; }
+    /* Step 2: brief hold on black, then snap intro away */
     setTimeout(() => {
-      intro.style.transition = 'opacity 1.2s ease';
+      intro.style.transition = 'opacity 0.8s ease';
       intro.style.opacity = '0';
-      setTimeout(() => { intro.style.display = 'none'; }, 1200);
-    }, 1600);
+      setTimeout(() => { intro.style.display = 'none'; }, 800);
+    }, 800);
   }
   if (vid) {
     vid.addEventListener('ended', dismiss);
