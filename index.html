@@ -23,7 +23,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
 .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(11,13,20,0.2) 0%,rgba(11,13,20,0.45) 55%,rgba(11,13,20,0.95) 100%);}
 .hero-content{position:relative;z-index:2;padding:2rem;}
-.hero-tagline{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.4rem;animation:fadeUp .8s .1s ease both;}
+.hero-tagline{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.4rem;animation:fadeUp .8s .1s ease both;white-space:nowrap;}
+@media(max-width:600px){
+  .hero-tagline{font-size:9px;letter-spacing:2px;white-space:normal;display:flex;flex-direction:column;align-items:center;gap:0;line-height:2;}
+  .hero-tagline .tagline-dot{display:none;}
+}
 .hero-headline{font-size:clamp(44px,8vw,96px);font-weight:700;line-height:1;letter-spacing:-3px;color:#fff;margin-bottom:2.5rem;animation:fadeUp .8s .2s ease both;}
 .hero-headline em{font-style:normal;color:var(--gold);}
 .hero-cta{position:relative;display:inline-block;padding:18px 56px;background:var(--gold);color:#000;font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease;animation:fadeUp .8s .3s ease both;}
@@ -52,8 +56,9 @@ section{padding:5rem 2.5rem;}
 .cat-panel.active{display:block;}
 
 .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:2rem;}
-.video-box{position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;border-radius:8px;background:var(--bg3);border:0.5px solid var(--border);transition:all .3s ease;}
-.video-box:hover{transform:scale(1.06);z-index:3;border-color:var(--gold);box-shadow:0 12px 35px rgba(0,0,0,0.4);}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:2rem;}
+.video-box{position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;border-radius:8px;background:var(--bg3);border:0.5px solid var(--border);transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;z-index:1;}
+.video-box:hover{transform:scale(1.05);z-index:10;border-color:var(--gold);box-shadow:0 12px 40px rgba(0,0,0,0.6);}
 .video-box img{width:100%;height:100%;object-fit:cover;display:block;}
 .video-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:.3s;}
 .video-box:hover .video-overlay{opacity:1;}
@@ -137,7 +142,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </video>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="hero-tagline">Video Editing &nbsp;·&nbsp; Motion Design &nbsp;·&nbsp; Visual Storytelling</p>
+    <p class="hero-tagline"><span>Video Editing</span><span class="tagline-dot"> &nbsp;·&nbsp; </span><span>Motion Design</span><span class="tagline-dot"> &nbsp;·&nbsp; </span><span>Visual Storytelling</span></p>
     <h1 class="hero-headline">Shifting your<br><em>vision</em> to life.</h1>
     <button class="hero-cta" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View My Work</button>
   </div>
@@ -183,7 +188,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
       <p>I'm Vasil, the creative force behind Vision Shift Studio. Whether it's a packed dance floor, a high-energy event, or a bold commercial concept — I bring the energy, the vision, and the craft to make every frame count.</p>
       <p>I give life to the party and life to the vision. My work isn't just edited — it's felt. From the first cut to the final frame, every project carries a pulse that moves people.</p>
       <p>Based in Sofia &nbsp;·&nbsp; Available worldwide for projects, collabs, and creative partnerships.</p>
-      <a class="about-email" href="/cdn-cgi/l/email-protection#255344564c49564944534e4a5317654248444c490b464a48"><span class="__cf_email__" data-cfemail="5c2a3d2f35302f303d2a37332a6e1c3b313d3530723f3331">[email&#160;protected]</span></a>
+      <a class="about-email" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
       <div class="stats-row">
         <div class="stat"><div class="stat-n">100+</div><div class="stat-l">Projects</div></div>
         <div class="stat"><div class="stat-n">4+</div><div class="stat-l">Years exp.</div></div>
@@ -196,7 +201,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <div class="contact-section" id="contact">
   <h2>Ready to shift<br>your <span>vision?</span></h2>
   <p>Open to freelance projects, collaborations, and creative partnerships.</p>
-  <a class="contact-email-link" href="/cdn-cgi/l/email-protection#b3c5d2c0dadfc0dfd2c5d8dcc581f3d4ded2dadf9dd0dcde"><span class="__cf_email__" data-cfemail="8afcebf9e3e6f9e6ebfce1e5fcb8caede7ebe3e6a4e9e5e7">[email&#160;protected]</span></a>
+  <a class="contact-email-link" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
 </div>
 
 <footer>
@@ -244,28 +249,30 @@ cats.forEach(cat => {
 function buildGrids() {
   Object.keys(videoData).forEach(cat => {
     const grid = document.getElementById('grid-' + cat);
-    videoData[cat].forEach(id => {
+    /* Pre-create boxes in order so positions are fixed */
+    videoData[cat].forEach((id, idx) => {
+      const box = document.createElement('div');
+      box.className = 'video-box';
+      box.id = 'vbox-' + cat + '-' + idx;
+      box.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><div class="play-icon" style="opacity:0.3;">&#9654;</div></div><div class="video-overlay"><div class="play-icon">&#9654;</div></div>';
+      box.onclick = () => openWistia(id);
+      grid.appendChild(box);
+    });
+    /* Fetch thumbnails and slot into the pre-created boxes */
+    videoData[cat].forEach((id, idx) => {
       fetch('https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/' + id)
         .then(res => res.json())
         .then(data => {
-          const box = document.createElement('div');
-          box.className = 'video-box';
-          box.innerHTML =
-            '<img src="' + data.thumbnail_url + '" alt="video thumbnail">' +
-            '<div class="video-overlay"><div class="play-icon">&#9654;</div></div>';
-          box.onclick = () => openWistia(id);
-          grid.appendChild(box);
+          const box = document.getElementById('vbox-' + cat + '-' + idx);
+          if (!box || !data.thumbnail_url) return;
+          const overlay = box.querySelector('.video-overlay');
+          const img = document.createElement('img');
+          img.src = data.thumbnail_url;
+          img.alt = 'video thumbnail';
+          box.insertBefore(img, overlay);
+          box.firstChild.remove(); /* remove placeholder */
         })
-        .catch(() => {
-          const box = document.createElement('div');
-          box.className = 'video-box';
-          box.style.display = 'flex';
-          box.style.alignItems = 'center';
-          box.style.justifyContent = 'center';
-          box.innerHTML = '<div class="play-icon">&#9654;</div>';
-          box.onclick = () => openWistia(id);
-          grid.appendChild(box);
-        });
+        .catch(() => {});
     });
   });
 }
