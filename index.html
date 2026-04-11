@@ -249,30 +249,18 @@ cats.forEach(cat => {
 function buildGrids() {
   Object.keys(videoData).forEach(cat => {
     const grid = document.getElementById('grid-' + cat);
-    /* Pre-create boxes in order so positions are fixed */
     videoData[cat].forEach((id, idx) => {
       const box = document.createElement('div');
       box.className = 'video-box';
       box.id = 'vbox-' + cat + '-' + idx;
-      box.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><div class="play-icon" style="opacity:0.3;">&#9654;</div></div><div class="video-overlay"><div class="play-icon">&#9654;</div></div>';
+      /* Use Wistia's direct thumbnail endpoint — no fetch needed, no CORS issues */
+      const thumbUrl = 'https://embed-ssl.wistia.com/deliveries/' + id + '/image.jpg';
+      box.innerHTML =
+        '<img src="' + thumbUrl + '" alt="video" ' +
+        'onerror="this.style.opacity=\'0\'">' +
+        '<div class="video-overlay"><div class="play-icon">&#9654;</div></div>';
       box.onclick = () => openWistia(id);
       grid.appendChild(box);
-    });
-    /* Fetch thumbnails and slot into the pre-created boxes */
-    videoData[cat].forEach((id, idx) => {
-      fetch('https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/' + id)
-        .then(res => res.json())
-        .then(data => {
-          const box = document.getElementById('vbox-' + cat + '-' + idx);
-          if (!box || !data.thumbnail_url) return;
-          const overlay = box.querySelector('.video-overlay');
-          const img = document.createElement('img');
-          img.src = data.thumbnail_url;
-          img.alt = 'video thumbnail';
-          box.insertBefore(img, overlay);
-          box.firstChild.remove(); /* remove placeholder */
-        })
-        .catch(() => {});
     });
   });
 }
