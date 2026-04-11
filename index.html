@@ -124,6 +124,12 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
 @media(max-width:760px){
+.video-box:hover{transform:scale(1.08);z-index:50;}
+.video-box.is-centered{transform:scale(1.08);z-index:50;}
+.video-box.is-centered .video-thumb{box-shadow:-8px 0 36px rgba(201,150,58,0.6), 8px 0 36px rgba(201,150,58,0.6);}
+.video-box.is-centered .video-overlay{opacity:1;}
+}
+@media(max-width:760px){
   .about-wrap{grid-template-columns:1fr;max-width:100%;}
   .about-img-block{width:100%;max-width:360px;margin:0 auto;}
   nav{padding:1rem 1.2rem;}
@@ -432,6 +438,28 @@ document.addEventListener('keydown', e => {
 });
 
 buildGrids();
+
+/* ── MOBILE CENTER-TRIGGER ── */
+(function() {
+  if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 760) {
+    function initObserver() {
+      const boxes = document.querySelectorAll('.video-box');
+      if (!boxes.length) { setTimeout(initObserver, 300); return; }
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.intersectionRatio >= 0.6) {
+            document.querySelectorAll('.video-box.is-centered').forEach(b => b.classList.remove('is-centered'));
+            entry.target.classList.add('is-centered');
+          } else {
+            entry.target.classList.remove('is-centered');
+          }
+        });
+      }, { threshold: [0, 0.6], rootMargin: '-15% 0px -15% 0px' });
+      boxes.forEach(b => observer.observe(b));
+    }
+    setTimeout(initObserver, 400);
+  }
+})();
 </script>
 </body>
 </html>
