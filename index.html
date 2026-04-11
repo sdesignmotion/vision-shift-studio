@@ -59,8 +59,9 @@ section{padding:5rem 2.5rem;}
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:2rem;}
 .video-box{position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;border-radius:8px;background:var(--bg3);border:0.5px solid var(--border);transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;z-index:1;}
 .video-box:hover{transform:scale(1.05);z-index:10;border-color:var(--gold);box-shadow:0 12px 40px rgba(0,0,0,0.6);}
+.video-box .wistia_embed{width:100%;height:100%;position:absolute;inset:0;}
 .video-box img{width:100%;height:100%;object-fit:cover;display:block;}
-.video-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:.3s;}
+.video-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:.3s;pointer-events:none;}
 .video-box:hover .video-overlay{opacity:1;}
 .play-icon{width:60px;height:60px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gold);background:rgba(0,0,0,0.5);}
 .thumb-title{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;text-align:center;padding:0 8px;}
@@ -246,40 +247,30 @@ cats.forEach(cat => {
   if (btn) btn.addEventListener('click', () => switchTab(cat));
 });
 
-function loadThumb(id, imgEl) {
-  const script = document.createElement('script');
-  const cbName = 'wt_' + id;
-  window[cbName] = function(data) {
-    if (data && data.thumbnail_url) {
-      imgEl.src = data.thumbnail_url.replace('image_crop_resized=100x60', 'image_crop_resized=640x360');
-    }
-    delete window[cbName];
-    script.remove();
-  };
-  script.src = 'https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/' + id + '&callback=' + cbName;
-  document.head.appendChild(script);
-}
-
 function buildGrids() {
   Object.keys(videoData).forEach(cat => {
     const grid = document.getElementById('grid-' + cat);
     videoData[cat].forEach(id => {
       const box = document.createElement('div');
       box.className = 'video-box';
-      const img = document.createElement('img');
-      img.alt = 'video thumbnail';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-      const overlay = document.createElement('div');
-      overlay.className = 'video-overlay';
-      overlay.innerHTML = '<div class="play-icon">&#9654;</div>';
-      box.appendChild(img);
-      box.appendChild(overlay);
-      box.onclick = () => openWistia(id);
+      /* Wistia popover thumbnail — works with private videos, shows real thumbnail */
+      box.innerHTML =
+        '<div class="wistia_embed wistia_async_' + id + ' popover=true popoverContent=thumbnail" ' +
+        'style="width:100%;height:100%;position:relative;cursor:pointer;">' +
+        '<div class="video-overlay"><div class="play-icon">&#9654;</div></div>' +
+        '</div>';
       grid.appendChild(box);
-      loadThumb(id, img);
     });
   });
 }
+
+/* Load Wistia embed script once */
+(function(){
+  var s = document.createElement('script');
+  s.src = 'https://fast.wistia.com/assets/external/E-v1.js';
+  s.async = true;
+  document.head.appendChild(s);
+})();
 
 function openWistia(id) {
   document.getElementById('modal-content').innerHTML =
