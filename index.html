@@ -57,86 +57,22 @@ section{padding:5rem 2.5rem;}
 
 .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:2rem;}
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:2rem;}
-.video-box{
-display:flex;
-flex-direction:column;
-gap:10px;
-background:transparent;
-border:none;
-overflow:visible;
-cursor:pointer;
-transition:all .35s ease;
-}
-
-.video-thumb{
-position:relative;
-aspect-ratio:16/9;
-overflow:hidden;
-border-radius:8px;
-background:var(--bg3);
-border:0.5px solid var(--border);
-transition:all .35s cubic-bezier(.22,1,.36,1);
-}
-
-.video-thumb img{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block;
-}
-
-.video-box:hover .video-thumb{
-transform:scale(1.06);
-border-color:var(--gold);
-box-shadow:0 14px 45px rgba(0,0,0,0.6);
-}
-
-.video-title,
-.video-desc{
-transition:
-opacity .35s ease,
-transform .35s cubic-bezier(.22,1,.36,1);
-}
-
-.video-box:hover .video-title{
-opacity:0;
-transform:translateY(-12px);
-}
-
-.video-box:hover .video-desc{
-opacity:0;
-transform:translateY(12px);
-}
-
-.video-title{
-font-size:12px;
-font-weight:600;
-letter-spacing:1px;
-text-transform:uppercase;
-color:#fff;
-}
-
-.video-desc{
-font-size:11px;
-line-height:1.5;
-color:rgba(255,255,255,0.65);
-}
-
-.video-overlay{
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.35);
-display:flex;
-align-items:center;
-justify-content:center;
-opacity:0;
-transition:.35s ease;
-pointer-events:none;
-}
-
-.video-box:hover .video-overlay{
-opacity:1;
-}
+.video-box{position:relative;cursor:pointer;overflow:visible;border-radius:10px;transition:transform .3s ease;}
+.video-box:hover{transform:scale(1.03);}
+.video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:10px;border:0.5px solid rgba(255,255,255,0.08);transition:box-shadow .3s ease;}
+.video-box:hover .video-thumb{box-shadow:-8px 0 20px rgba(201,150,58,0.5), 8px 0 20px rgba(201,150,58,0.5);}
+.video-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.video-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 60%);display:flex;align-items:flex-end;padding:14px;pointer-events:none;}
+.video-text{color:#fff;text-align:left;transition:opacity .3s ease;}
+.video-box:hover .video-text{opacity:0;}
+.video-title{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.video-desc{display:none;}
+.video-caption{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:8px;padding:0 2px;transition:opacity .3s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.video-box:hover .video-caption{opacity:0;}
+.play-icon{width:60px;height:60px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gold);background:rgba(0,0,0,0.5);}
+.thumb-title{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;text-align:center;padding:0 8px;}
+.thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);}
+.coming-soon{color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:3rem 0;text-align:center;}
 
 .upload-controls{display:none;margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid var(--border);}
 .upload-controls.unlocked{display:block;}
@@ -259,7 +195,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
       <p>I'm Vasil, the creative force behind Vision Shift Studio. Whether it's a packed dance floor, a high-energy event, or a bold commercial concept — I bring the energy, the vision, and the craft to make every frame count.</p>
       <p>I give life to the party and life to the vision. My work isn't just edited — it's felt. From the first cut to the final frame, every project carries a pulse that moves people.</p>
       <p>Based in Sofia &nbsp;·&nbsp; Available worldwide for projects, collabs, and creative partnerships.</p>
-      <a class="about-email" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2&#64;gmail.com</a>
+      <a class="about-email" href="/cdn-cgi/l/email-protection#3d4b5c4e54514e515c4b56524b0f7d5a505c5451135e5250">vasilslavkov2&#64;gmail.com</a>
       <div class="stats-row">
         <div class="stat"><div class="stat-n">100+</div><div class="stat-l">Projects</div></div>
         <div class="stat"><div class="stat-n">4+</div><div class="stat-l">Years exp.</div></div>
@@ -272,7 +208,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <div class="contact-section" id="contact">
   <h2>Ready to shift<br>your <span>vision?</span></h2>
   <p>Open to freelance projects, collaborations, and creative partnerships.</p>
-  <a class="contact-email-link" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2&#64;gmail.com</a>
+  <a class="contact-email-link" href="/cdn-cgi/l/email-protection#d9afb8aab0b5aab5b8afb2b6afeb99beb4b8b0b5f7bab6b4">vasilslavkov2&#64;gmail.com</a>
 </div>
 
 <footer>
@@ -296,139 +232,159 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const videoData = {
   events: [
-    'd55rd8i57p','21pz3thqub','pet8kzo2z8',
-    'u35yoio9s9','30fz4el1tj','olkrivi2qt',
-    'z2dbxs20br','e8xeibgkv9','50xe73tr9z'
+    {id:'d55rd8i57p', title:"Summer Tour – Fox'n'Cats", desc:'Behind-the-scenes rehearsal for summer tour promo.'},
+    {id:'21pz3thqub', title:'Public Wedding Signing', desc:'Cinematic civil wedding signing moment.'},
+    {id:'pet8kzo2z8', title:'Christmas Dance Promo', desc:'Promo for seasonal dance event.'},
+    {id:'u35yoio9s9', title:'Mirela Ilieva Promo', desc:'Dance event promo featuring Mirela Ilieva.'},
+    {id:'30fz4el1tj', title:'Polina Pelipenko Promo', desc:'Dance event promo featuring Polina Pelipenko.'},
+    {id:'olkrivi2qt', title:'Studio Season Opening', desc:'New dance season launch video.'},
+    {id:'z2dbxs20br', title:'Pizza Place Ad – Sofia', desc:'Commercial for central Sofia pizza spot.'},
+    {id:'e8xeibgkv9', title:"Valentine's Private Event", desc:'Intimate 14th February event coverage.'},
+    {id:'50xe73tr9z', title:'Dance School Opening', desc:'Season start for dance school.'}
   ],
-
   dance: [
-    'j3wi77124k','mzcj4p3gdr','0ly4vbju1k',
-    '47rnvuwo09','vol0ixxtl6','d57nea2mbj',
-    '02oircll7q','5kz6ga0ab4','bqv53tnvv7',
-    '25kmfw82tw'
+    {id:'j3wi77124k', title:'Aquamarine', desc:'Concept dance film inspired by ocean tones.'},
+    {id:'mzcj4p3gdr', title:'Skyfall', desc:'Dance piece based on seasonal emotion.'},
+    {id:'0ly4vbju1k', title:'Club DJ Promo', desc:'High-energy club dance edit.'},
+    {id:'vol0ixxtl6', title:'Academy 360 Hip Hop Promo', desc:'Promo for hip-hop classes.'},
+    {id:'d57nea2mbj', title:'Academy 360 Workshop Promo', desc:'Dance workshop promotion.'},
+    {id:'47rnvuwo09', title:'KATSEYE – Gabriela Cover', desc:'K-pop choreography cover performance.'},
+    {id:'02oircll7q', title:'End of Season Film', desc:'Season recap dance video.'},
+    {id:'5kz6ga0ab4', title:'Workshop Session', desc:'Workshop dance footage.'},
+    {id:'bqv53tnvv7', title:'Club DJ Promo II', desc:'Second club dance edit.'},
+    {id:'25kmfw82tw', title:'Academy 360 Workshop II', desc:'Follow-up workshop promo.'}
   ],
-
   commercial: [
-    'zrbh6tuzg4','sygumeggso','hwvknhk57i',
-    'jgr4o94e96','hzdk3kt8p6','0dcmd2jgtj'
+    {id:'zrbh6tuzg4', title:'Lidl Ad', desc:'Commercial brand video.'},
+    {id:'jgr4o94e96', title:'MYX Platform Ad', desc:'Digital platform promo.'},
+    {id:'hwvknhk57i', title:'Knitted Bags Ad', desc:'Handmade product promo.'},
+    {id:'sygumeggso', title:'Airbnb Animation', desc:'Animated ad segment.'},
+    {id:'hzdk3kt8p6', title:'Maturata BG Ad', desc:'Service commercial video.'},
+    {id:'0dcmd2jgtj', title:'MYX Business Ad', desc:'Corporate promo video.'}
   ]
 };
 
-const cats = ['events','dance','commercial'];
+const cats = ['events', 'dance', 'commercial'];
 
-
-/* ---------- TAB SWITCHING ---------- */
-function switchTab(cat){
-
-  document.querySelectorAll('.cat-btn').forEach(btn=>{
-    btn.classList.remove('active');
-  });
-
-  document.querySelectorAll('.cat-panel').forEach(panel=>{
-    panel.classList.remove('active');
-  });
-
-  document.getElementById('btn-'+cat).classList.add('active');
-  document.getElementById('panel-'+cat).classList.add('active');
+function switchTab(cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + cat).classList.add('active');
+  document.querySelectorAll('.cat-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + cat).classList.add('active');
 }
 
-cats.forEach(cat=>{
-  document.getElementById('btn-'+cat).addEventListener('click',()=>{
-    switchTab(cat);
-  });
+cats.forEach(cat => {
+  const btn = document.getElementById('btn-' + cat);
+  if (btn) btn.addEventListener('click', () => switchTab(cat));
 });
 
-
-/* ---------- BUILD VIDEO GRID WITH WISTIA API ---------- */
-function buildGrids(){
-
-  Object.keys(videoData).forEach(cat=>{
-
-    const grid=document.getElementById('grid-'+cat);
-
-    videoData[cat].forEach(id=>{
-
-      fetch(`https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/${id}`)
-      .then(res=>res.json())
-      .then(data=>{
-
-        const box=document.createElement('div');
-        box.className='video-box';
-
-        box.innerHTML=`
-<div class="video-title">Sample Project</div>
-
-<div class="video-thumb">
-<img src="${data.thumbnail_url}" alt="">
-<div class="video-overlay">
-<div class="play-icon">▶</div>
-</div>
-</div>
-
-<div class="video-desc">Creative cinematic showcase</div>
-`;
-
-        box.addEventListener('click',()=>{
-          openWistia(id);
-        });
-
-        grid.appendChild(box);
-
-      })
-      .catch(err=>{
-        console.log("Thumbnail failed:",id);
-      });
-
-    });
-
-  });
-
+function loadThumb(id, imgEl) {
+  const cbName = 'wt_' + id;
+  window[cbName] = function(data) {
+    if (data && data.thumbnail_url) {
+      imgEl.src = data.thumbnail_url.split('?')[0] + '?image_crop_resized=640x360';
+    }
+    delete window[cbName];
+    const s = document.getElementById('cb_' + id);
+    if (s) s.remove();
+  };
+  const script = document.createElement('script');
+  script.id = 'cb_' + id;
+  script.src = 'https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/' + id + '&callback=' + cbName;
+  document.head.appendChild(script);
 }
 
+function buildGrids() {
+  Object.keys(videoData).forEach(cat => {
+    const grid = document.getElementById('grid-' + cat);
+    videoData[cat].forEach(v => {
+      const box = document.createElement('div');
+      box.className = 'video-box';
 
-/* ---------- OPEN MODAL ---------- */
-function openWistia(id){
+      const thumb = document.createElement('div');
+      thumb.className = 'video-thumb';
 
-  document.getElementById('modal-content').innerHTML=`
-    <iframe
-      src="https://fast.wistia.net/embed/iframe/${id}?autoplay=1"
-      allow="autoplay; fullscreen"
-      style="
-        width:90vw;
-        max-width:1000px;
-        height:56vw;
-        max-height:560px;
-        border:none;
-      ">
-    </iframe>
-  `;
+      const img = document.createElement('img');
+      img.alt = v.title;
 
+      const overlay = document.createElement('div');
+      overlay.className = 'video-overlay';
+      overlay.innerHTML =
+        '<div class="video-text">' +
+        '<div class="video-title">' + v.title + '</div>' +
+        '<div class="video-desc">' + v.desc + '</div>' +
+        '</div>';
+
+      thumb.appendChild(img);
+      thumb.appendChild(overlay);
+      box.appendChild(thumb);
+
+      const caption = document.createElement('div');
+      caption.className = 'video-caption';
+      caption.textContent = v.desc;
+      box.appendChild(caption);
+
+      box.onclick = () => openWistia(v.id);
+      grid.appendChild(box);
+
+      loadThumb(v.id, img);
+    });
+  });
+}
+
+(function(){
+  var s = document.createElement('script');
+  s.src = 'https://fast.wistia.com/assets/external/E-v1.js';
+  s.async = true;
+  document.head.appendChild(s);
+})();
+
+function openWistia(id) {
+  document.getElementById('modal-content').innerHTML =
+    '<iframe src="https://fast.wistia.net/embed/iframe/' + id + '?autoplay=1" ' +
+    'allow="autoplay; fullscreen" ' +
+    'style="width:90vw;max-width:1000px;height:56vw;max-height:560px;border:none;"></iframe>';
   document.getElementById('modal').classList.add('open');
 }
 
-
-/* ---------- CLOSE MODAL ---------- */
-function closeModal(){
-
+document.getElementById('modal-close-btn').addEventListener('click', () => {
   document.getElementById('modal').classList.remove('open');
-  document.getElementById('modal-content').innerHTML='';
-}
-
-document.getElementById('modal-close-btn').addEventListener('click',closeModal);
-document.getElementById('modal-backdrop').addEventListener('click',closeModal);
-
-
-/* ---------- ESC KEY ---------- */
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    closeModal();
+  document.getElementById('modal-content').innerHTML = '';
+});
+document.getElementById('modal-backdrop').addEventListener('click', () => {
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('modal-content').innerHTML = '';
+});
+document.getElementById('local-close-btn').addEventListener('click', () => {
+  document.getElementById('localModal').classList.remove('open');
+  document.getElementById('localVid').pause();
+  document.getElementById('localVid').src = '';
+});
+document.getElementById('local-backdrop').addEventListener('click', () => {
+  document.getElementById('localModal').classList.remove('open');
+  document.getElementById('localVid').pause();
+  document.getElementById('localVid').src = '';
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('modal').classList.remove('open');
+    document.getElementById('modal-content').innerHTML = '';
+    document.getElementById('localModal').classList.remove('open');
+    document.getElementById('localVid').pause();
+    document.getElementById('localVid').src = '';
+  }
+  if (e.shiftKey && e.altKey && (e.key === 'V' || e.key === '\u221a')) {
+    const t = document.getElementById('toast');
+    t.textContent = '\u2726 Edit mode — add videos via Wistia';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
   }
 });
 
-
-/* ---------- INIT ---------- */
 buildGrids();
 </script>
+</body>
+</html>
