@@ -243,176 +243,170 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const videoData = {
   events: [
-    {id:'d55rd8i57p', title:"Summer Tour – Fox'n'Cats", desc:'Behind-the-scenes rehearsal for summer tour promo.'},
-    {id:'21pz3thqub', title:'Public Wedding Signing', desc:'Cinematic civil wedding signing moment.'},
-    {id:'pet8kzo2z8', title:'Christmas Dance Promo', desc:'Promo for seasonal dance event.'},
-    {id:'u35yoio9s9', title:'Mirela Ilieva Promo', desc:'Dance event promo featuring Mirela Ilieva.'},
-    {id:'30fz4el1tj', title:'Polina Pelipenko Promo', desc:'Dance event promo featuring Polina Pelipenko.'},
-    {id:'olkrivi2qt', title:'Studio Season Opening', desc:'New dance season launch video.'},
-    {id:'z2dbxs20br', title:'Pizza Place Ad – Sofia', desc:'Commercial for central Sofia pizza spot.'},
-    {id:'e8xeibgkv9', title:"Valentine's Private Event", desc:'Intimate 14th February event coverage.'},
-    {id:'50xe73tr9z', title:'Dance School Opening', desc:'Season start for dance school.'}
+    {id:'d55rd8i57p', title:"Summer Tour – Militsa Gladnishka"},
+    {id:'21pz3thqub', title:'Public Wedding Signing'},
+    {id:'pet8kzo2z8', title:'Christmas Dance Promo'},
+    {id:'u35yoio9s9', title:'Mirela Ilieva Promo'},
+    {id:'30fz4el1tj', title:'Polina Pelipenko Promo'},
+    {id:'olkrivi2qt', title:'Studio Season Opening'},
+    {id:'z2dbxs20br', title:'Pizza Place Ad – Sofia'},
+    {id:'e8xeibgkv9', title:"Valentine’s Private Event"},
+    {id:'50xe73tr9z', title:'Dance School Opening'}
   ],
+
   dance: [
-    {id:'j3wi77124k', title:'Aquamarine', desc:'Concept dance film inspired by ocean tones.'},
-    {id:'mzcj4p3gdr', title:'Skyfall', desc:'Dance piece based on seasonal emotion.'},
-    {id:'0ly4vbju1k', title:'Club DJ Promo', desc:'High-energy club dance edit.'},
-    {id:'vol0ixxtl6', title:'Academy 360 Hip Hop Promo', desc:'Promo for hip-hop classes.'},
-    {id:'d57nea2mbj', title:'Academy 360 Workshop Promo', desc:'Dance workshop promotion.'},
-    {id:'47rnvuwo09', title:'KATSEYE – Gabriela Cover', desc:'K-pop choreography cover performance.'},
-    {id:'02oircll7q', title:'End of Season Film', desc:'Season recap dance video.'},
-    {id:'5kz6ga0ab4', title:'Workshop Session', desc:'Workshop dance footage.'},
-    {id:'bqv53tnvv7', title:'Club DJ Promo II', desc:'Second club dance edit.'},
-    {id:'25kmfw82tw', title:'Academy 360 Workshop II', desc:'Follow-up workshop promo.'}
+    {id:'j3wi77124k', title:'Aquamarine'},
+    {id:'mzcj4p3gdr', title:'Skyfall'},
+    {id:'0ly4vbju1k', title:'Club DJ Promo'},
+    {id:'vol0ixxtl6', title:'Academy 360 Hip Hop Promo'},
+    {id:'d57nea2mbj', title:'Academy 360 Workshop Promo'},
+    {id:'47rnvuwo09', title:'KATSEYE Gabriela Cover'},
+    {id:'02oircll7q', title:'End of Season Film'},
+    {id:'5kz6ga0ab4', title:'Workshop Session'},
+    {id:'bqv53tnvv7', title:'Club DJ Promo II'},
+    {id:'25kmfw82tw', title:'Academy 360 Workshop II'}
   ],
+
   commercial: [
-    {id:'zrbh6tuzg4', title:'Lidl Ad', desc:'Commercial brand video.'},
-    {id:'jgr4o94e96', title:'MYX Platform Ad', desc:'Digital platform promo.'},
-    {id:'hwvknhk57i', title:'Airbnb Animation', desc:'Animated ad segment.'},
-    {id:'sygumeggso', title:'Maturata BG Ad', desc:'Service commercial video.'},
-    {id:'hzdk3kt8p6', title:'Knitted Bags Ad', desc:'Handmade product promo.'},
-    {id:'0dcmd2jgtj', title:'MYX Business Ad', desc:'Corporate promo video.'}
+    {id:'zrbh6tuzg4', title:'Lidl Ad'},
+    {id:'jgr4o94e96', title:'MYX Platform Ad'},
+    {id:'hwvknhk57i', title:'Airbnb Animation'},
+    {id:'sygumeggso', title:'Maturata BG Ad'},
+    {id:'hzdk3kt8p6', title:'Knitted Bags Ad'},
+    {id:'0dcmd2jgtj', title:'MYX Business Ad'}
   ]
 };
 
-/* ── INTRO VIDEO ── */
+/* IMPORTANT FIX */
+const cats = ['events','dance','commercial'];
+
+
+/* INTRO VIDEO */
 (function() {
   const intro = document.getElementById('intro-screen');
   const vid = document.getElementById('intro-video');
+
   function dismiss() {
     intro.style.opacity = '0';
-    setTimeout(() => { intro.style.display = 'none'; }, 800);
+    setTimeout(() => intro.style.display = 'none', 800);
   }
+
   if (vid) {
     vid.addEventListener('ended', dismiss);
-    /* fallback: if video fails or takes too long */
     vid.addEventListener('error', dismiss);
     setTimeout(dismiss, 8000);
-  } else {
-    dismiss();
   }
 })();
 
-/* ── TAB SWITCHING ── */
 
-function switchTab(cat) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('btn-' + cat).classList.add('active');
-  document.querySelectorAll('.cat-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + cat).classList.add('active');
+/* TAB SWITCH */
+function switchTab(cat){
+  document.querySelectorAll('.cat-btn').forEach(btn=>btn.classList.remove('active'));
+  document.querySelectorAll('.cat-panel').forEach(panel=>panel.classList.remove('active'));
+
+  document.getElementById('btn-'+cat).classList.add('active');
+  document.getElementById('panel-'+cat).classList.add('active');
 }
 
-cats.forEach(cat => {
-  const btn = document.getElementById('btn-' + cat);
-  if (btn) btn.addEventListener('click', () => switchTab(cat));
+cats.forEach(cat=>{
+  document.getElementById('btn-'+cat).addEventListener('click',()=>{
+    switchTab(cat);
+  });
 });
 
-function loadThumb(id, imgEl) {
-  const cbName = 'wt_' + id;
-  window[cbName] = function(data) {
-    if (data && data.thumbnail_url) {
-      imgEl.src = data.thumbnail_url.split('?')[0] + '?image_crop_resized=640x360';
-    }
-    delete window[cbName];
-    const s = document.getElementById('cb_' + id);
-    if (s) s.remove();
-  };
-  const script = document.createElement('script');
-  script.id = 'cb_' + id;
-  script.src = 'https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/' + id + '&callback=' + cbName;
-  document.head.appendChild(script);
+
+/* LOAD THUMBNAILS */
+function loadThumb(id,imgEl){
+
+  fetch(`https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/${id}`)
+  .then(res=>res.json())
+  .then(data=>{
+    imgEl.src=data.thumbnail_url;
+  });
+
 }
 
-function buildGrids() {
-  Object.keys(videoData).forEach(cat => {
-    const grid = document.getElementById('grid-' + cat);
-    videoData[cat].forEach(v => {
-      const box = document.createElement('div');
-      box.className = 'video-box';
 
-      const thumb = document.createElement('div');
-      thumb.className = 'video-thumb';
+/* BUILD VIDEOS */
+function buildGrids(){
 
-      const img = document.createElement('img');
-      img.alt = v.title;
+  Object.keys(videoData).forEach(cat=>{
 
-      const overlay = document.createElement('div');
-      overlay.className = 'video-overlay';
-      overlay.innerHTML =
-        '<div class="video-text">' +
-        '<div class="video-title">' + v.title + '</div>' +
-        '</div>';
+    const grid=document.getElementById('grid-'+cat);
 
-      thumb.appendChild(img);
-      thumb.appendChild(overlay);
-      box.appendChild(thumb);
+    videoData[cat].forEach(video=>{
 
-      box.onclick = () => openWistia(v.id, v.title, v.desc);
+      const box=document.createElement('div');
+      box.className='video-box';
+
+      box.innerHTML=`
+        <div class="video-thumb">
+          <img alt="${video.title}">
+          <div class="video-overlay">
+            <div class="video-text">
+              <div class="video-title">${video.title}</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const img=box.querySelector('img');
+
+      loadThumb(video.id,img);
+
+      box.onclick=()=>openWistia(video.id);
+
       grid.appendChild(box);
 
-      loadThumb(v.id, img);
     });
+
   });
+
 }
 
-(function(){
-  var s = document.createElement('script');
-  s.src = 'https://fast.wistia.com/assets/external/E-v1.js';
-  s.async = true;
-  document.head.appendChild(s);
-})();
 
-function openWistia(id, title, desc) {
-  document.getElementById('modal-content').innerHTML =
-    '<div style="display:flex;flex-direction:column;align-items:center;gap:16px;">' +
-    '<iframe src="https://fast.wistia.net/embed/iframe/' + id + '?autoplay=1" ' +
-    'allow="autoplay; fullscreen" ' +
-    'style="width:90vw;max-width:1000px;height:56vw;max-height:560px;border:none;"></iframe>' +
-    '<div style="width:90vw;max-width:1000px;text-align:left;">' +
-    '<div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:6px;">' + (title || '') + '</div>' +
-    '<div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;letter-spacing:0.5px;">' + (desc || '') + '</div>' +
-    '</div>' +
-    '</div>';
+/* MODAL */
+function openWistia(id){
+
+  document.getElementById('modal-content').innerHTML=`
+    <iframe
+      src="https://fast.wistia.net/embed/iframe/${id}?autoplay=1"
+      allow="autoplay; fullscreen"
+      style="
+        width:90vw;
+        max-width:1000px;
+        height:56vw;
+        max-height:560px;
+        border:none;
+      ">
+    </iframe>
+  `;
+
   document.getElementById('modal').classList.add('open');
+
 }
 
-document.getElementById('modal-close-btn').addEventListener('click', () => {
+
+function closeModal(){
+
   document.getElementById('modal').classList.remove('open');
-  document.getElementById('modal-content').innerHTML = '';
-});
-document.getElementById('modal-backdrop').addEventListener('click', () => {
-  document.getElementById('modal').classList.remove('open');
-  document.getElementById('modal-content').innerHTML = '';
-});
-document.getElementById('local-close-btn').addEventListener('click', () => {
-  document.getElementById('localModal').classList.remove('open');
-  document.getElementById('localVid').pause();
-  document.getElementById('localVid').src = '';
-});
-document.getElementById('local-backdrop').addEventListener('click', () => {
-  document.getElementById('localModal').classList.remove('open');
-  document.getElementById('localVid').pause();
-  document.getElementById('localVid').src = '';
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.getElementById('modal').classList.remove('open');
-    document.getElementById('modal-content').innerHTML = '';
-    document.getElementById('localModal').classList.remove('open');
-    document.getElementById('localVid').pause();
-    document.getElementById('localVid').src = '';
-  }
-  if (e.shiftKey && e.altKey && (e.key === 'V' || e.key === '\u221a')) {
-    const t = document.getElementById('toast');
-    t.textContent = '\u2726 Edit mode — add videos via Wistia';
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-  }
+  document.getElementById('modal-content').innerHTML='';
+
+}
+
+
+document.getElementById('modal-close-btn').addEventListener('click',closeModal);
+document.getElementById('modal-backdrop').addEventListener('click',closeModal);
+
+document.addEventListener('keydown',e=>{
+  if(e.key==="Escape") closeModal();
 });
 
+
+/* INIT */
 buildGrids();
 </script>
 </body>
