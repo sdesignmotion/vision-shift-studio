@@ -23,14 +23,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
 .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(11,13,20,0.2) 0%,rgba(11,13,20,0.45) 55%,rgba(11,13,20,0.95) 100%);}
 .hero-content{position:relative;z-index:2;padding:2rem;}
-.hero-tagline{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.4rem;animation:fadeUp .8s .1s ease both;white-space:nowrap;}
+.hero-tagline{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.4rem;animation:fadeUp .8s ease both;animation-play-state:paused;white-space:nowrap;}
 @media(max-width:600px){
   .hero-tagline{font-size:9px;letter-spacing:2px;white-space:normal;display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.4;font-weight:500;}
   .hero-tagline .tagline-dot{display:none;}
 }
-.hero-headline{font-size:clamp(44px,8vw,96px);font-weight:700;line-height:1;letter-spacing:-3px;color:#fff;margin-bottom:2.5rem;animation:fadeUp .8s .2s ease both;}
+.hero-headline{font-size:clamp(44px,8vw,96px);font-weight:700;line-height:1;letter-spacing:-3px;color:#fff;margin-bottom:2.5rem;animation:fadeUp .8s ease both;animation-play-state:paused;}
 .hero-headline em{font-style:normal;color:var(--gold);}
-.hero-cta{position:relative;display:inline-block;padding:18px 56px;background:var(--gold);color:#000;font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease;animation:fadeUp .8s .3s ease both;}
+.hero-cta{position:relative;display:inline-block;padding:18px 56px;background:var(--gold);color:#000;font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease;animation:fadeUp .8s ease both;animation-play-state:paused;}
 .hero-cta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:rgba(255,255,255,0.2);transform:skewX(-20deg);transition:left .4s ease;}
 .hero-cta:hover{transform:scale(1.10) translateY(-4px);box-shadow:0 16px 48px rgba(201,150,58,0.5);}
 .hero-cta:hover::before{left:120%;}
@@ -282,10 +282,20 @@ const videoData = {
 (function() {
   const intro = document.getElementById('intro-screen');
   const vid = document.getElementById('intro-video');
+  function triggerHeroText() {
+    const tagline = document.querySelector('.hero-tagline');
+    const headline = document.querySelector('.hero-headline');
+    const cta = document.querySelector('.hero-cta');
+    if (tagline) tagline.style.animationPlayState = 'running';
+    setTimeout(() => { if (headline) headline.style.animationPlayState = 'running'; }, 120);
+    setTimeout(() => { if (cta) cta.style.animationPlayState = 'running'; }, 260);
+  }
   function dismiss() {
     /* Step 1: fast fade video to black */
     if (vid) { vid.style.transition = 'opacity 0.7s ease-in'; vid.style.opacity = '0'; }
-    /* Step 2: brief hold on black, then snap intro away */
+    /* Step 2: trigger hero text as video is nearly gone */
+    setTimeout(triggerHeroText, 500);
+    /* Step 3: brief hold on black, then snap intro away */
     setTimeout(() => {
       intro.style.transition = 'opacity 0.8s ease';
       intro.style.opacity = '0';
