@@ -229,14 +229,18 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <script>
 const videoData = {
   events: [
-    'd55rd8i57p','21pz3thqub','pet8kzo2z8','u35yoio9s9',
-    '30fz4el1tj','olkrivi2qt','z2dbxs20br','e8xeibgkv9','50xe73tr9z'
+    'd55rd8i57p','21pz3thqub','pet8kzo2z8',
+    'u35yoio9s9','30fz4el1tj','olkrivi2qt',
+    'z2dbxs20br','e8xeibgkv9','50xe73tr9z'
   ],
+
   dance: [
-    'j3wi77124k','mzcj4p3gdr','0ly4vbju1k','47rnvuwo09',
-    'vol0ixxtl6','d57nea2mbj','02oircll7q','5kz6ga0ab4',
-    'bqv53tnvv7','25kmfw82tw'
+    'j3wi77124k','mzcj4p3gdr','0ly4vbju1k',
+    '47rnvuwo09','vol0ixxtl6','d57nea2mbj',
+    '02oircll7q','5kz6ga0ab4','bqv53tnvv7',
+    '25kmfw82tw'
   ],
+
   commercial: [
     'zrbh6tuzg4','sygumeggso','hwvknhk57i',
     'jgr4o94e96','hzdk3kt8p6','0dcmd2jgtj'
@@ -261,7 +265,6 @@ function switchTab(cat){
   document.getElementById('panel-'+cat).classList.add('active');
 }
 
-
 cats.forEach(cat=>{
   document.getElementById('btn-'+cat).addEventListener('click',()=>{
     switchTab(cat);
@@ -269,7 +272,7 @@ cats.forEach(cat=>{
 });
 
 
-/* ---------- BUILD VIDEO GRIDS ---------- */
+/* ---------- BUILD VIDEO GRID WITH WISTIA API ---------- */
 function buildGrids(){
 
   Object.keys(videoData).forEach(cat=>{
@@ -278,21 +281,30 @@ function buildGrids(){
 
     videoData[cat].forEach(id=>{
 
-      const box=document.createElement('div');
-      box.className='video-box';
+      fetch(`https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/${id}`)
+      .then(res=>res.json())
+      .then(data=>{
 
-      box.innerHTML=`
-        <img src="https://embed-ssl.wistia.com/deliveries/${id}.jpg" alt="">
-        <div class="video-overlay">
-          <div class="play-icon">▶</div>
-        </div>
-      `;
+        const box=document.createElement('div');
+        box.className='video-box';
 
-      box.addEventListener('click',()=>{
-        openWistia(id);
+        box.innerHTML=`
+          <img src="${data.thumbnail_url}" alt="">
+          <div class="video-overlay">
+            <div class="play-icon">▶</div>
+          </div>
+        `;
+
+        box.addEventListener('click',()=>{
+          openWistia(id);
+        });
+
+        grid.appendChild(box);
+
+      })
+      .catch(err=>{
+        console.log("Thumbnail failed:",id);
       });
-
-      grid.appendChild(box);
 
     });
 
@@ -324,6 +336,7 @@ function openWistia(id){
 
 /* ---------- CLOSE MODAL ---------- */
 function closeModal(){
+
   document.getElementById('modal').classList.remove('open');
   document.getElementById('modal-content').innerHTML='';
 }
@@ -332,7 +345,7 @@ document.getElementById('modal-close-btn').addEventListener('click',closeModal);
 document.getElementById('modal-backdrop').addEventListener('click',closeModal);
 
 
-/* ---------- ESC CLOSE ---------- */
+/* ---------- ESC KEY ---------- */
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
     closeModal();
