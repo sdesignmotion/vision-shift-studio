@@ -57,16 +57,86 @@ section{padding:5rem 2.5rem;}
 
 .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:2rem;}
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:2rem;}
-.video-box{position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;border-radius:8px;background:var(--bg3);border:0.5px solid var(--border);transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;z-index:1;}
-.video-box:hover{transform:scale(1.05);z-index:10;border-color:var(--gold);box-shadow:0 12px 40px rgba(0,0,0,0.6);}
-.video-box .wistia_embed{width:100%;height:100%;position:absolute;inset:0;}
-.video-box img{width:100%;height:100%;object-fit:cover;display:block;}
-.video-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:.3s;pointer-events:none;}
-.video-box:hover .video-overlay{opacity:1;}
-.play-icon{width:60px;height:60px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gold);background:rgba(0,0,0,0.5);}
-.thumb-title{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;text-align:center;padding:0 8px;}
-.thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);}
-.coming-soon{color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:3rem 0;text-align:center;}
+.video-box{
+display:flex;
+flex-direction:column;
+gap:10px;
+background:transparent;
+border:none;
+overflow:visible;
+cursor:pointer;
+transition:all .35s ease;
+}
+
+.video-thumb{
+position:relative;
+aspect-ratio:16/9;
+overflow:hidden;
+border-radius:8px;
+background:var(--bg3);
+border:0.5px solid var(--border);
+transition:all .35s cubic-bezier(.22,1,.36,1);
+}
+
+.video-thumb img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+.video-box:hover .video-thumb{
+transform:scale(1.06);
+border-color:var(--gold);
+box-shadow:0 14px 45px rgba(0,0,0,0.6);
+}
+
+.video-title,
+.video-desc{
+transition:
+opacity .35s ease,
+transform .35s cubic-bezier(.22,1,.36,1);
+}
+
+.video-box:hover .video-title{
+opacity:0;
+transform:translateY(-12px);
+}
+
+.video-box:hover .video-desc{
+opacity:0;
+transform:translateY(12px);
+}
+
+.video-title{
+font-size:12px;
+font-weight:600;
+letter-spacing:1px;
+text-transform:uppercase;
+color:#fff;
+}
+
+.video-desc{
+font-size:11px;
+line-height:1.5;
+color:rgba(255,255,255,0.65);
+}
+
+.video-overlay{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,0.35);
+display:flex;
+align-items:center;
+justify-content:center;
+opacity:0;
+transition:.35s ease;
+pointer-events:none;
+}
+
+.video-box:hover .video-overlay{
+opacity:1;
+}
 
 .upload-controls{display:none;margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid var(--border);}
 .upload-controls.unlocked{display:block;}
@@ -289,11 +359,17 @@ function buildGrids(){
         box.className='video-box';
 
         box.innerHTML=`
-          <img src="${data.thumbnail_url}" alt="">
-          <div class="video-overlay">
-            <div class="play-icon">▶</div>
-          </div>
-        `;
+<div class="video-title">Sample Project</div>
+
+<div class="video-thumb">
+<img src="${data.thumbnail_url}" alt="">
+<div class="video-overlay">
+<div class="play-icon">▶</div>
+</div>
+</div>
+
+<div class="video-desc">Creative cinematic showcase</div>
+`;
 
         box.addEventListener('click',()=>{
           openWistia(id);
