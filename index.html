@@ -258,8 +258,12 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
 <!-- INTRO SCREEN -->
 <div id="intro-screen" style="position:fixed;inset:0;background:#0b0d14;z-index:99999;transition:opacity .8s ease;">
-  <video id="intro-video" autoplay muted playsinline
-    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+  <video id="intro-video"
+         autoplay
+         muted
+         playsinline
+         preload="auto"
+         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
     <source src="VISION_SHIFT_animation.mp4" type="video/mp4">
   </video>
 </div>
@@ -349,11 +353,10 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   <h2>Ready to shift<br>your <span>vision?</span></h2>
   <p>Open to freelance projects, collaborations, and creative partnerships.</p>
 
-  <form class="contact-form"
-        action="https://formsubmit.co/vasilslavkov2@gmail.com"
+  <form class="contact-form" id="contact-form"
+        action="https://formsubmit.co/ajax/vasilslavkov2@gmail.com"
         method="POST">
     <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_next" value="https://sdesignmotion.github.io/vision-shift-studio/">
     <input type="hidden" name="_subject" value="New Vision Shift Studio Inquiry">
 
     <input class="full" type="text" name="name" placeholder="Name" required>
@@ -401,6 +404,19 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </div>
 </div>
 
+<!-- SUCCESS MODAL -->
+<div class="modal" id="success-modal">
+  <div class="modal-backdrop" id="success-backdrop"></div>
+  <div class="modal-inner" style="z-index:2;">
+    <div style="background:#10131e;border:0.5px solid rgba(201,150,58,0.35);padding:3rem 3.5rem;text-align:center;max-width:480px;width:90vw;position:relative;">
+      <div style="font-size:32px;margin-bottom:1.2rem;">✦</div>
+      <h3 style="font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:.8rem;">Message Sent</h3>
+      <p style="font-size:13px;color:rgba(240,240,240,0.5);line-height:1.8;margin-bottom:2rem;">Thanks for reaching out — I'll get back to you shortly.</p>
+      <button id="success-close-btn" style="padding:13px 40px;background:var(--gold);color:#000;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease;">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const videoData = {
   events: [
@@ -438,44 +454,83 @@ const videoData = {
 
 /* ── INTRO VIDEO ── */
 (function() {
-  const intro = document.getElementById('intro-screen');
-  const vid = document.getElementById('intro-video');
+  var intro = document.getElementById('intro-screen');
+  var vid = document.getElementById('intro-video');
 
   function triggerHeroText() {
-    const tagline = document.querySelector('.hero-tagline');
-    const headline = document.querySelector('.hero-headline');
-    const cta = document.querySelector('.hero-cta');
-    if (tagline) tagline.style.animationPlayState = 'running';
-    setTimeout(() => { if (headline) headline.style.animationPlayState = 'running'; }, 120);
-    setTimeout(() => { if (cta) cta.style.animationPlayState = 'running'; }, 260);
+    var tagline = document.querySelector('.hero-tagline');
+    var headline = document.querySelector('.hero-headline');
+    var cta = document.querySelector('.hero-cta');
+
+    function playFadeUp(el, delay) {
+      if (!el) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'none';
+      el.style.animation = 'none';
+      // Force reflow so browser registers the reset
+      void el.offsetWidth;
+      setTimeout(function() {
+        el.style.animation = '';
+        el.style.opacity = '';
+        el.style.transform = '';
+        el.style.animationPlayState = 'running';
+      }, delay);
+    }
+
+    playFadeUp(tagline, 0);
+    playFadeUp(headline, 120);
+    playFadeUp(cta, 260);
   }
 
+  // Emergency fallback — if ANYTHING goes wrong, hero text always appears
+  function forceShowHero() {
+    triggerHeroText();
+  }
+
+  var dismissed = false;
   function dismiss() {
-    if (vid) { vid.style.transition = 'opacity 0.7s ease-in'; vid.style.opacity = '0'; }
-    setTimeout(triggerHeroText, 500);
-    setTimeout(() => {
+    if (dismissed) return;
+    dismissed = true;
+    if (vid) { vid.style.transition = 'opacity 0.7s ease'; vid.style.opacity = '0'; }
+    setTimeout(triggerHeroText, 400);
+    setTimeout(function() {
+      if (!intro) return;
       intro.style.transition = 'opacity 0.8s ease';
       intro.style.opacity = '0';
-      setTimeout(() => { intro.style.display = 'none'; }, 800);
-    }, 800);
+      setTimeout(function() { intro.style.display = 'none'; }, 800);
+    }, 700);
   }
 
-  if (vid) {
-    vid.addEventListener('ended', dismiss);
-    vid.addEventListener('error', dismiss);
-
-    /* FIX #5: Use actual video duration when metadata is available,
-       fall back to 8s timeout only if metadata never loads */
-    let durationTimeout = setTimeout(dismiss, 8000);
-
-    vid.addEventListener('loadedmetadata', () => {
-      clearTimeout(durationTimeout);
-      // Schedule dismiss slightly after the video's natural end
-      durationTimeout = setTimeout(dismiss, vid.duration * 1000);
-    });
-  } else {
+  // ABSOLUTE nuclear fallback at 10s — site ALWAYS shows no matter what
+  var nuclearTimer = setTimeout(function() {
     dismiss();
+    forceShowHero();
+  }, 10000);
+
+  if (!vid) {
+    clearTimeout(nuclearTimer);
+    dismiss();
+    return;
   }
+
+  // If video never becomes playable within 1.5s (bad codec, missing file, black screen)
+  var failTimer = setTimeout(function() {
+    clearTimeout(nuclearTimer);
+    dismiss();
+    forceShowHero();
+  }, 1500);
+
+  vid.addEventListener('canplay', function() {
+    clearTimeout(failTimer);
+    // Video is good — let it play its duration then dismiss
+    var endTimer = setTimeout(function() { clearTimeout(nuclearTimer); dismiss(); }, ((vid.duration || 7) * 1000) + 300);
+    vid.addEventListener('ended', function() { clearTimeout(endTimer); clearTimeout(nuclearTimer); dismiss(); });
+  }, { once: true });
+
+  vid.addEventListener('error', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); dismiss(); forceShowHero(); });
+  vid.addEventListener('stalled', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); setTimeout(dismiss, 800); forceShowHero(); });
+  vid.addEventListener('abort', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); dismiss(); forceShowHero(); });
 })();
 
 /* ── TAB SWITCHING ── */
@@ -569,9 +624,60 @@ document.getElementById('local-backdrop').addEventListener('click', () => {
   document.getElementById('localVid').pause();
   document.getElementById('localVid').src = '';
 });
+
+/* ── SUCCESS MODAL ── */
+function openSuccessModal() {
+  document.getElementById('success-modal').classList.add('open');
+}
+function closeSuccessModal() {
+  document.getElementById('success-modal').classList.remove('open');
+}
+document.getElementById('success-close-btn').addEventListener('click', closeSuccessModal);
+document.getElementById('success-backdrop').addEventListener('click', closeSuccessModal);
+
+/* ── CONTACT FORM AJAX ── */
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.contact-form-btn');
+  const originalText = btn.textContent;
+
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      // Reset form fields
+      form.reset();
+      // Restore select placeholder styles
+      form.querySelectorAll('select').forEach(s => s.classList.add('placeholder-active'));
+      // Show success modal
+      openSuccessModal();
+    } else {
+      btn.textContent = 'Error — try again';
+      setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
+      return;
+    }
+  } catch(err) {
+    btn.textContent = 'Error — try again';
+    setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
+    return;
+  }
+
+  btn.textContent = originalText;
+  btn.disabled = false;
+});
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeModal();
+    closeSuccessModal();
     document.getElementById('localModal').classList.remove('open');
     document.getElementById('localVid').pause();
     document.getElementById('localVid').src = '';
@@ -646,20 +752,30 @@ document.addEventListener('DOMContentLoaded', buildGrids);
   if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 760) {
     function initObserver() {
       const boxes = document.querySelectorAll('.video-box');
-      if (!boxes.length) { setTimeout(initObserver, 300); return; }
+
+      if (!boxes.length) {
+        setTimeout(initObserver, 300);
+        return;
+      }
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.intersectionRatio >= 0.6) {
-            document.querySelectorAll('.video-box.is-centered').forEach(b => b.classList.remove('is-centered'));
+            document.querySelectorAll('.video-box.is-centered')
+              .forEach(b => b.classList.remove('is-centered'));
             entry.target.classList.add('is-centered');
           } else {
             entry.target.classList.remove('is-centered');
           }
         });
-      }, { threshold: [0, 0.6], rootMargin: '-15% 0px -15% 0px' });
-      boxes.forEach(b => observer.observe(b));
+      }, {
+        threshold: [0.6]
+      });
+
+      boxes.forEach(box => observer.observe(box));
     }
-    setTimeout(initObserver, 400);
+
+    initObserver();
   }
 })();
 </script>
