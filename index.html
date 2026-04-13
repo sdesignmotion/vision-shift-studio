@@ -102,6 +102,98 @@ section{padding:5rem 2.5rem;}
 .stat-n{font-size:28px;font-weight:700;color:var(--gold);}
 .stat-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
 
+.trusted-section{
+padding:4rem 2.5rem;
+background:var(--bg);
+border-top:0.5px solid var(--border);
+border-bottom:0.5px solid var(--border);
+text-align:center;
+}
+
+.trusted-label{
+font-size:10px;
+letter-spacing:4px;
+text-transform:uppercase;
+color:var(--muted);
+margin-bottom:2.5rem;
+display:block;
+}
+
+.trusted-logos{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:4rem;
+flex-wrap:wrap;
+}
+
+.trusted-logos img{
+height:52px;
+width:auto;
+opacity:0.55;
+transition:opacity .3s ease;
+}
+
+.trusted-logos img:hover{
+opacity:.9;
+}
+
+.contact-form{
+max-width:560px;
+margin:2.5rem auto 0;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+text-align:left;
+}
+
+.contact-form .full{
+grid-column:1/-1;
+}
+
+.contact-form input,
+.contact-form select{
+width:100%;
+padding:13px 16px;
+background:rgba(255,255,255,0.04);
+border:0.5px solid var(--border);
+color:#f0f0f0;
+font-family:'Montserrat',sans-serif;
+font-size:12px;
+outline:none;
+}
+
+.contact-form-btn{
+grid-column:1/-1;
+padding:15px;
+background:var(--gold);
+color:#000;
+font-size:11px;
+letter-spacing:3px;
+text-transform:uppercase;
+font-weight:700;
+border:none;
+cursor:pointer;
+}
+
+.contact-form textarea{
+width:100%;
+padding:13px 16px;
+background:rgba(255,255,255,0.04);
+border:0.5px solid var(--border);
+color:#f0f0f0;
+font-family:'Montserrat',sans-serif;
+font-size:12px;
+outline:none;
+resize:vertical;
+}
+
+@media(max-width:760px){
+  .contact-form{
+    grid-template-columns:1fr;
+  }
+}
+
 .contact-section{text-align:center;padding:6rem 2.5rem;border-top:0.5px solid var(--border);background:var(--bg2);}
 .contact-section h2{font-size:clamp(30px,5vw,56px);font-weight:700;margin-bottom:1rem;line-height:1.1;}
 .contact-section h2 span{color:var(--gold);}
@@ -200,6 +292,14 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </div>
 </section>
 
+<section class="trusted-section">
+  <span class="trusted-label">Trusted by</span>
+  <div class="trusted-logos">
+    <img src="black_white_1.png" alt="Pizza Atelier">
+    <img src="black_white_2.png" alt="Academy 360">
+  </div>
+</section>
+
 <section id="about">
   <div class="section-label">About</div>
   <div class="about-wrap">
@@ -225,7 +325,43 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <div class="contact-section" id="contact">
   <h2>Ready to shift<br>your <span>vision?</span></h2>
   <p>Open to freelance projects, collaborations, and creative partnerships.</p>
-  <a class="contact-email-link" href="/cdn-cgi/l/email-protection#d9afb8aab0b5aab5b8afb2b6afeb99beb4b8b0b5f7bab6b4">vasilslavkov2&#64;gmail.com</a>
+
+  <form class="contact-form"
+        action="https://formsubmit.co/vasilslavkov2@gmail.com"
+        method="POST">
+   
+    <input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_next" value="https://sdesignmotion.github.io/vision-shift-studio/">
+<input type="hidden" name="_subject" value="New Vision Shift Studio Inquiry">
+
+      <input class="full" type="text" name="name" placeholder="Name" required>
+      <input type="text" name="brand" placeholder="Brand">
+      <select name="budget">
+    <option>Budget Range</option>
+    <option>€100–300</option>
+    <option>€300–700</option>
+    <option>€700–1500</option>
+    <option>€1500+</option>
+</select>
+
+      <select name="project_type">
+          <option>Dance Video</option>
+          <option>Music Video</option>
+          <option>Commercial</option>
+          <option>Event Coverage</option>
+         <option>Other</option>
+      </select>
+
+      <input type="text" name="deadline" placeholder="Deadline">
+      <input class="full" type="email" name="email" placeholder="Email" required>
+
+    <textarea class="full" name="message" placeholder="Tell me about your project..." rows="5"></textarea>
+
+      <button class="contact-form-btn" type="submit">
+          Send Message
+      </button>
+
+  </form>
 </div>
 
 <footer>
@@ -394,7 +530,7 @@ function openWistia(id, title, desc) {
     '<div style="display:flex;flex-direction:column;align-items:center;gap:16px;">' +
     '<iframe src="https://fast.wistia.net/embed/iframe/' + id + '?autoplay=1" ' +
     'allow="autoplay; fullscreen" ' +
-    'style="width:90vw;max-width:1000px;height:56vw;max-height:560px;border:none;"></iframe>' +
+    'style="width:90vw;max-width:1000px;aspect-ratio:16/9;height:auto;border:none;"></iframe>' +
     '<div style="width:90vw;max-width:1000px;text-align:left;">' +
     '<div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:6px;">' + (title || '') + '</div>' +
     '<div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;letter-spacing:0.5px;">' + (desc || '') + '</div>' +
