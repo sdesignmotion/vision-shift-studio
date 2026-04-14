@@ -115,16 +115,16 @@ section{padding:5rem 2.5rem;}
 .trusted-track {
   display: flex;
   width: max-content;
-  animation: ticker 20s linear infinite;
+  animation: ticker 25s linear infinite;
   will-change: transform;
 }
 
 @keyframes ticker {
   0% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0,0,0);
   }
   100% {
-    transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-33.333%,0,0);
   }
 }
 .trusted-track img{
@@ -718,7 +718,7 @@ document.addEventListener('DOMContentLoaded', buildGrids);
 const track = document.getElementById("track");
 if (track) {
   const original = track.innerHTML;
-  track.innerHTML = original + original;
+  track.innerHTML = original + original + original;
 }
 
 /* MOBILE CENTER-TRIGGER */
