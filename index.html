@@ -132,58 +132,45 @@ margin-bottom:2.5rem;
 display:block;
 }
 
-.trusted-track-wrap {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  max-width: 800px; 
-  margin: 0 auto;
+.trusted-track-wrap{
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
 }
 
 .trusted-track-wrap::before,
-.trusted-track-wrap::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 120px;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
+.trusted-track-wrap::after{
+  content:"";
+  position:absolute;
+  top:0;
+  width:120px;
+  height:100%;
+  z-index:2;
+  pointer-events:none;
 }
 
-.trusted-track-wrap::before {
-  left: 0;
-  background: linear-gradient(
-    to right,
-    var(--bg) 0%,
-    rgba(11,13,20,.95) 30%,
-    transparent 100%
-  );
+.trusted-track-wrap::before{
+  left:0;
+  background:linear-gradient(to right,var(--bg),transparent);
 }
 
-.trusted-track-wrap::after {
-  right: 0;
-  background: linear-gradient(
-    to left,
-    var(--bg) 0%,
-    rgba(11,13,20,.95) 30%,
-    transparent 100%
-  );
+.trusted-track-wrap::after{
+  right:0;
+  background:linear-gradient(to left,var(--bg),transparent);
 }
-  
-.trusted-track {
-  display: flex;
-  align-items: center;
-  gap: 5rem;
-  width: fit-content;
-  animation: marquee 26s linear infinite;
+
+.trusted-track{
+  display:flex;
+  align-items:center;
+  gap:5rem;
+  width:max-content;
   will-change: transform;
 }
 
-.trusted-track img {
-  height: 72px;
-  width: auto;
-  flex: 0 0 auto;
+.trusted-track img:hover{
+  opacity:.9;
 }
 
 .trusted-track img{
@@ -192,15 +179,6 @@ width:auto;
 opacity:0.55;
 transition:opacity .3s ease;
 flex-shrink:0;
-}
-
-.trusted-track img:hover{
-opacity:.9;
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
 }
 
 .contact-form{
@@ -392,16 +370,10 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   <span class="trusted-label">Trusted by</span>
 
   <div class="trusted-track-wrap">
-    <div class="trusted-track">
-
+    <div class="trusted-track" id="trustedTrack">
       <img src="black_white_1.png">
       <img src="black_white_2.png">
       <img src="black_white_3.png">
-
-      <img src="black_white_1.png">
-      <img src="black_white_2.png">
-      <img src="black_white_3.png">
-
     </div>
   </div>
 </section>
@@ -817,5 +789,35 @@ document.addEventListener('DOMContentLoaded', buildGrids);
   }
 })();
 </script>
+
+<script>
+(function(){
+
+const track = document.getElementById("trustedTrack");
+
+/* duplicate logos automatically */
+track.innerHTML += track.innerHTML;
+
+let scrollAmount = 0;
+let speed = 0.5;
+
+function animateMarquee(){
+
+    scrollAmount += speed;
+
+    if(scrollAmount >= track.scrollWidth / 2){
+        scrollAmount = 0;
+    }
+
+    track.style.transform = `translateX(-${scrollAmount}px)`;
+
+    requestAnimationFrame(animateMarquee);
+}
+
+animateMarquee();
+
+})();
+</script>
+  
 </body>
 </html>
