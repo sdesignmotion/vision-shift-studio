@@ -148,7 +148,7 @@ width:120px;
 z-index:2;
 pointer-events:none;
 }
-.trusted-track-wrap::before{
+.trusted-track-wrap::after{
 left:0;
 background:linear-gradient(to right, var(--bg) 0%, transparent 100%);
 }
@@ -160,9 +160,9 @@ background:linear-gradient(to left, var(--bg) 0%, transparent 100%);
 .trusted-track{
 display:flex;
 align-items:center;
-gap:5rem;
 width:max-content;
-animation:marquee 14s linear infinite;
+gap:5rem;
+animation:marquee 20s linear infinite;
 }
 
 .trusted-track img{
@@ -178,8 +178,12 @@ opacity:.9;
 }
 
 @keyframes marquee{
-0%{transform:translateX(0);}
-100%{transform:translateX(-50%);}
+from{
+transform:translateX(0);
+}
+to{
+transform:translateX(-50%);
+}
 }
 
 .contact-form{
@@ -369,14 +373,22 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
 <section class="trusted-section">
   <span class="trusted-label">Trusted by</span>
+
   <div class="trusted-track-wrap">
     <div class="trusted-track">
-      <img src="black_white_1.png" alt="Pizza Atelier">
-      <img src="black_white_2.png" alt="Academy 360">
-      <img src="black_white_3.png" alt="Synesthesia 888">
-      <img src="black_white_1.png" alt="Pizza Atelier">
-      <img src="black_white_2.png" alt="Academy 360">
-      <img src="black_white_3.png" alt="Synesthesia 888">
+
+      <img src="black_white_1.png">
+      <img src="black_white_2.png">
+      <img src="black_white_3.png">
+
+      <img src="black_white_1.png">
+      <img src="black_white_2.png">
+      <img src="black_white_3.png">
+
+      <img src="black_white_1.png">
+      <img src="black_white_2.png">
+      <img src="black_white_3.png">
+
     </div>
   </div>
 </section>
