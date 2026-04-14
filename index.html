@@ -114,17 +114,21 @@ section{padding:5rem 2.5rem;}
 }
 .trusted-track {
   display: flex;
-  gap: 5rem;
   width: max-content;
-  animation: ticker 18s linear infinite;
+  animation: ticker 20s linear infinite;
   will-change: transform;
 }
 
 @keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 .trusted-track img{
+  margin-right: 5rem;
   height:72px;
   width:auto;
   opacity:.55;
