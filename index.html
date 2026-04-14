@@ -23,15 +23,34 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
 .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(11,13,20,0.2) 0%,rgba(11,13,20,0.45) 55%,rgba(11,13,20,0.95) 100%);}
 .hero-content{position:relative;z-index:2;padding:2rem;}
-.hero-tagline{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.4rem;animation:fadeUp .8s ease both;animation-play-state:paused;white-space:nowrap;}
+.hero-tagline{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.4rem;animation:fadeUp .8s ease both;animation-play-state:paused;white-space:nowrap;animation-delay:3s;}
 @media(max-width:600px){
   .hero-tagline{font-size:9px;letter-spacing:2px;white-space:normal;display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.4;font-weight:500;}
   .hero-tagline .tagline-dot{display:none;}
 }
-.hero-headline{font-size:clamp(44px,8vw,96px);font-weight:700;line-height:1;letter-spacing:-3px;color:#fff;margin-bottom:2.5rem;animation:fadeUp .8s ease both;animation-play-state:paused;}
+.hero-headline{font-size:clamp(44px,8vw,96px);font-weight:700;line-height:1;letter-spacing:-3px;color:#fff;margin-bottom:2.5rem;animation:fadeUp .8s ease both;animation-play-state:paused;animation-delay:3.12s;}
 .hero-headline em{font-style:normal;color:var(--gold);}
-.hero-cta{position:relative;display:inline-block;padding:18px 56px;background:var(--gold);color:#000;font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease;animation:fadeUp .8s ease both;animation-play-state:paused;}
-.hero-cta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:rgba(255,255,255,0.2);transform:skewX(-20deg);transition:left .4s ease;}
+.hero-cta{
+position:relative;
+display:inline-block;
+padding:18px 56px;
+background:var(--gold);
+color:#000;
+font-size:13px;
+letter-spacing:3px;
+text-transform:uppercase;
+font-weight:700;
+border:none;
+cursor:pointer;
+font-family:'Montserrat',sans-serif;
+transition:transform .25s ease,box-shadow .25s ease;
+animation:fadeUp .8s ease both;
+animation-play-state:paused;
+animation-delay:3.26s;
+
+overflow:hidden;   /* FIX */
+}
+.hero-cta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:rgba(255,255,255,0.2);transform:skewX(-20deg);transition:left .4s ease;pointer-events:none;}
 .hero-cta:hover{transform:scale(1.10) translateY(-4px);box-shadow:0 16px 48px rgba(201,150,58,0.5);}
 .hero-cta:hover::before{left:120%;}
 .hero-cta:active{transform:scale(0.98);}
@@ -114,23 +133,54 @@ margin-bottom:2.5rem;
 display:block;
 }
 
-.trusted-logos{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:4rem;
-flex-wrap:wrap;
+.trusted-track-wrap{
+position:relative;
+overflow:hidden;
+width:100%;
 }
 
-.trusted-logos img{
+.trusted-track-wrap::before,
+.trusted-track-wrap::after{
+content:'';
+position:absolute;
+top:0;
+bottom:0;
+width:120px;
+z-index:2;
+pointer-events:none;
+}
+.trusted-track-wrap::before{
+left:0;
+background:linear-gradient(to right, var(--bg) 0%, transparent 100%);
+}
+.trusted-track-wrap::after{
+right:0;
+background:linear-gradient(to left, var(--bg) 0%, transparent 100%);
+}
+
+.trusted-track{
+display:flex;
+align-items:center;
+gap:5rem;
+width:max-content;
+animation:marquee 14s linear infinite;
+}
+
+.trusted-track img{
 height:72px;
 width:auto;
 opacity:0.55;
 transition:opacity .3s ease;
+flex-shrink:0;
 }
 
-.trusted-logos img:hover{
+.trusted-track img:hover{
 opacity:.9;
+}
+
+@keyframes marquee{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
 }
 
 .contact-form{
@@ -320,9 +370,15 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
 <section class="trusted-section">
   <span class="trusted-label">Trusted by</span>
-  <div class="trusted-logos">
-    <img src="black_white_1.png" alt="Pizza Atelier">
-    <img src="black_white_2.png" alt="Academy 360">
+  <div class="trusted-track-wrap">
+    <div class="trusted-track">
+      <img src="black_white_1.png" alt="Pizza Atelier">
+      <img src="black_white_2.png" alt="Academy 360">
+      <img src="black_white_3.png" alt="Synesthesia 888">
+      <img src="black_white_1.png" alt="Pizza Atelier">
+      <img src="black_white_2.png" alt="Academy 360">
+      <img src="black_white_3.png" alt="Synesthesia 888">
+    </div>
   </div>
 </section>
 
@@ -339,7 +395,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
       <p>I give life to the party and life to the vision. My work isn't just edited — it's felt. From the first cut to the final frame, every project carries a pulse that moves people.</p>
       <p>Based in Sofia &nbsp;·&nbsp; Available worldwide for projects, collabs, and creative partnerships.</p>
       <!-- FIX #6: plain text email, no obfuscation needed since formsubmit handles delivery -->
-      <a class="about-email" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
+      <a class="about-email" href="/cdn-cgi/l/email-protection#b8ced9cbd1d4cbd4d9ced3d7ce8af8dfd5d9d1d496dbd7d5"><span class="__cf_email__" data-cfemail="225443514b4e514e4354494d541062454f434b4e0c414d4f">[email&#160;protected]</span></a>
       <div class="stats-row">
         <div class="stat"><div class="stat-n">100+</div><div class="stat-l">Projects</div></div>
         <div class="stat"><div class="stat-n">4+</div><div class="stat-l">Years exp.</div></div>
@@ -426,7 +482,7 @@ const videoData = {
     {id:'u35yoio9s9', title:'Mirela Ilieva Promo', desc:'Dance event promo featuring Mirela Ilieva.'},
     {id:'30fz4el1tj', title:'Polina Pelipenko Promo', desc:'Dance event promo featuring Polina Pelipenko.'},
     {id:'olkrivi2qt', title:'Studio Season Opening', desc:'New dance season launch video.'},
-    {id:'z2dbxs20br', title:'Pizza Place Ad – Sofia', desc:'Commercial for central Sofia pizza spot.'},
+    {id:'z2dbxs20br', title:'Pizza Place Ad - Sofia', desc:'Commercial for central Sofia pizza spot.'},
     {id:'e8xeibgkv9', title:"Valentine's Private Event", desc:'Intimate 14th February event coverage.'},
     {id:'50xe73tr9z', title:'Dance School Opening', desc:'Season start for dance school.'}
   ],
@@ -436,7 +492,7 @@ const videoData = {
     {id:'0ly4vbju1k', title:'Club DJ Promo', desc:'High-energy club dance edit.'},
     {id:'vol0ixxtl6', title:'Academy 360 Hip Hop Promo', desc:'Promo for hip-hop classes.'},
     {id:'d57nea2mbj', title:'Academy 360 Workshop Promo', desc:'Dance workshop promotion.'},
-    {id:'47rnvuwo09', title:'KATSEYE – Gabriela Cover', desc:'K-pop choreography cover performance.'},
+    {id:'47rnvuwo09', title:'KATSEYE - Gabriela Cover', desc:'K-pop choreography cover performance.'},
     {id:'02oircll7q', title:'End of Season Film', desc:'Season recap dance video.'},
     {id:'5kz6ga0ab4', title:'Workshop Session', desc:'Workshop dance footage.'},
     {id:'bqv53tnvv7', title:'Club DJ Promo II', desc:'Second club dance edit.'},
@@ -452,23 +508,18 @@ const videoData = {
   ]
 };
 
-/* ── INTRO VIDEO ── */
+/* INTRO VIDEO */
 (function() {
   var intro = document.getElementById('intro-screen');
   var vid = document.getElementById('intro-video');
 
   function triggerHeroText() {
-    var tagline = document.querySelector('.hero-tagline');
-    var headline = document.querySelector('.hero-headline');
-    var cta = document.querySelector('.hero-cta');
-
     function playFadeUp(el, delay) {
       if (!el) return;
       el.style.opacity = '0';
       el.style.transform = 'translateY(24px)';
       el.style.transition = 'none';
       el.style.animation = 'none';
-      // Force reflow so browser registers the reset
       void el.offsetWidth;
       setTimeout(function() {
         el.style.animation = '';
@@ -477,15 +528,9 @@ const videoData = {
         el.style.animationPlayState = 'running';
       }, delay);
     }
-
-    playFadeUp(tagline, 0);
-    playFadeUp(headline, 120);
-    playFadeUp(cta, 260);
-  }
-
-  // Emergency fallback — if ANYTHING goes wrong, hero text always appears
-  function forceShowHero() {
-    triggerHeroText();
+    playFadeUp(document.querySelector('.hero-tagline'), 0);
+    playFadeUp(document.querySelector('.hero-headline'), 120);
+    playFadeUp(document.querySelector('.hero-cta'), 260);
   }
 
   var dismissed = false;
@@ -502,179 +547,153 @@ const videoData = {
     }, 700);
   }
 
-  // ABSOLUTE nuclear fallback at 10s — site ALWAYS shows no matter what
-  var nuclearTimer = setTimeout(function() {
-    dismiss();
-    forceShowHero();
-  }, 10000);
-
-  if (!vid) {
-    clearTimeout(nuclearTimer);
-    dismiss();
-    return;
+  function safeDuration() {
+    return (!isNaN(vid.duration) && vid.duration > 0) ? vid.duration : 7;
   }
 
-  // If video never becomes playable within 1.5s (bad codec, missing file, black screen)
+  var nuclearTimer = setTimeout(function() { dismiss(); }, 10000);
+
+  if (!vid) { clearTimeout(nuclearTimer); dismiss(); return; }
+
   var failTimer = setTimeout(function() {
     clearTimeout(nuclearTimer);
     dismiss();
-    forceShowHero();
   }, 1500);
 
   vid.addEventListener('canplay', function() {
     clearTimeout(failTimer);
-    // Video is good — let it play its duration then dismiss
-    var endTimer = setTimeout(function() { clearTimeout(nuclearTimer); dismiss(); }, ((vid.duration || 7) * 1000) + 300);
-    vid.addEventListener('ended', function() { clearTimeout(endTimer); clearTimeout(nuclearTimer); dismiss(); });
+    var endTimer = setTimeout(function() {
+      clearTimeout(nuclearTimer);
+      dismiss();
+    }, safeDuration() * 1000 + 300);
+    vid.addEventListener('ended', function() {
+      clearTimeout(endTimer);
+      clearTimeout(nuclearTimer);
+      dismiss();
+    });
   }, { once: true });
 
-  vid.addEventListener('error', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); dismiss(); forceShowHero(); });
-  vid.addEventListener('stalled', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); setTimeout(dismiss, 800); forceShowHero(); });
-  vid.addEventListener('abort', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); dismiss(); forceShowHero(); });
+  vid.addEventListener('error', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); dismiss(); });
+  vid.addEventListener('stalled', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); setTimeout(dismiss, 800); });
+  vid.addEventListener('abort', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); dismiss(); });
 })();
 
-/* ── TAB SWITCHING ── */
-
-/* FIX #2: Guard against missing elements */
+/* TAB SWITCHING */
 function switchTab(cat) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById('btn-' + cat);
+  document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+  var btn = document.getElementById('btn-' + cat);
   if (btn) btn.classList.add('active');
-
-  document.querySelectorAll('.cat-panel').forEach(p => p.classList.remove('active'));
-  const panel = document.getElementById('panel-' + cat);
+  document.querySelectorAll('.cat-panel').forEach(function(p) { p.classList.remove('active'); });
+  var panel = document.getElementById('panel-' + cat);
   if (panel) panel.classList.add('active');
 }
-
-const cats = ['events', 'dance', 'commercial'];
-cats.forEach(cat => {
-  const btn = document.getElementById('btn-' + cat);
-  if (btn) btn.addEventListener('click', () => switchTab(cat));
+['events','dance','commercial'].forEach(function(cat) {
+  var btn = document.getElementById('btn-' + cat);
+  if (btn) btn.addEventListener('click', function() { switchTab(cat); });
 });
 
-/* ── WISTIA THUMBNAIL LOADER ── */
-
-/* FIX #3: Clean up dangling callbacks after 5s */
+/* WISTIA THUMBNAIL LOADER */
 function loadThumb(id, imgEl) {
-  const cbName = 'wt_' + id;
+  var cbName = 'wt_' + id;
   window[cbName] = function(data) {
     if (data && data.thumbnail_url) {
       imgEl.src = data.thumbnail_url.split('?')[0] + '?image_crop_resized=640x360';
     }
     delete window[cbName];
-    const s = document.getElementById('cb_' + id);
+    var s = document.getElementById('cb_' + id);
     if (s) s.remove();
   };
-
-  // Safety cleanup in case callback is never invoked
-  setTimeout(() => {
+  setTimeout(function() {
     delete window[cbName];
-    const s = document.getElementById('cb_' + id);
+    var s = document.getElementById('cb_' + id);
     if (s) s.remove();
   }, 5000);
-
-  const script = document.createElement('script');
+  var script = document.createElement('script');
   script.id = 'cb_' + id;
   script.src = 'https://fast.wistia.com/oembed?url=https://vasilslavkov2.wistia.com/medias/' + id + '&callback=' + cbName;
   document.head.appendChild(script);
 }
 
-(function(){
+(function() {
   var s = document.createElement('script');
   s.src = 'https://fast.wistia.com/assets/external/E-v1.js';
   s.async = true;
   document.head.appendChild(s);
 })();
 
-/* ── MODAL ── */
-
-/* FIX #4: Properly stop Wistia iframe audio on close */
+/* MODAL */
 function closeModal() {
-  const modalContent = document.getElementById('modal-content');
-  // Setting innerHTML twice forces iframe reload which stops audio
-  modalContent.innerHTML = '';
-  modalContent.innerHTML = '';
+  var mc = document.getElementById('modal-content');
+  if (mc) mc.innerHTML = '';
   document.getElementById('modal').classList.remove('open');
 }
 
 function openWistia(id, title, desc) {
   document.getElementById('modal-content').innerHTML =
     '<div style="display:flex;flex-direction:column;align-items:center;gap:16px;">' +
-    '<iframe src="https://fast.wistia.net/embed/iframe/' + id + '?autoplay=1" ' +
+    '<iframe src="https://fast.wistia.net/embed/iframe/' + id + '?autoplay=1&muted=1" ' +
     'allow="autoplay; fullscreen" ' +
     'style="width:90vw;max-width:1000px;aspect-ratio:16/9;height:auto;border:none;"></iframe>' +
     '<div style="width:90vw;max-width:1000px;text-align:left;">' +
     '<div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:6px;">' + (title || '') + '</div>' +
     '<div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;letter-spacing:0.5px;">' + (desc || '') + '</div>' +
-    '</div>' +
-    '</div>';
+    '</div></div>';
   document.getElementById('modal').classList.add('open');
 }
 
 document.getElementById('modal-close-btn').addEventListener('click', closeModal);
 document.getElementById('modal-backdrop').addEventListener('click', closeModal);
-
-document.getElementById('local-close-btn').addEventListener('click', () => {
+document.getElementById('local-close-btn').addEventListener('click', function() {
   document.getElementById('localModal').classList.remove('open');
   document.getElementById('localVid').pause();
   document.getElementById('localVid').src = '';
 });
-document.getElementById('local-backdrop').addEventListener('click', () => {
+document.getElementById('local-backdrop').addEventListener('click', function() {
   document.getElementById('localModal').classList.remove('open');
   document.getElementById('localVid').pause();
   document.getElementById('localVid').src = '';
 });
 
-/* ── SUCCESS MODAL ── */
-function openSuccessModal() {
-  document.getElementById('success-modal').classList.add('open');
-}
-function closeSuccessModal() {
-  document.getElementById('success-modal').classList.remove('open');
-}
+/* SUCCESS MODAL */
+function openSuccessModal() { document.getElementById('success-modal').classList.add('open'); }
+function closeSuccessModal() { document.getElementById('success-modal').classList.remove('open'); }
 document.getElementById('success-close-btn').addEventListener('click', closeSuccessModal);
 document.getElementById('success-backdrop').addEventListener('click', closeSuccessModal);
 
-/* ── CONTACT FORM AJAX ── */
+/* CONTACT FORM AJAX */
 document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const form = e.target;
-  const btn = form.querySelector('.contact-form-btn');
-  const originalText = btn.textContent;
-
-  btn.textContent = 'Sending…';
+  var form = e.target;
+  var btn = form.querySelector('.contact-form-btn');
+  var originalText = btn.textContent;
+  btn.textContent = 'Sending...';
   btn.disabled = true;
-
   try {
-    const res = await fetch(form.action, {
+    var res = await fetch(form.action, {
       method: 'POST',
       body: new FormData(form),
       headers: { 'Accept': 'application/json' }
     });
-
     if (res.ok) {
-      // Reset form fields
       form.reset();
-      // Restore select placeholder styles
-      form.querySelectorAll('select').forEach(s => s.classList.add('placeholder-active'));
-      // Show success modal
+      form.querySelectorAll('select').forEach(function(s) { s.classList.add('placeholder-active'); });
       openSuccessModal();
     } else {
-      btn.textContent = 'Error — try again';
-      setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
+      btn.textContent = 'Error - try again';
+      setTimeout(function() { btn.textContent = originalText; btn.disabled = false; }, 3000);
       return;
     }
   } catch(err) {
-    btn.textContent = 'Error — try again';
-    setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
+    btn.textContent = 'Error - try again';
+    setTimeout(function() { btn.textContent = originalText; btn.disabled = false; }, 3000);
     return;
   }
-
   btn.textContent = originalText;
   btn.disabled = false;
 });
 
-document.addEventListener('keydown', e => {
+/* KEYBOARD */
+document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeModal();
     closeSuccessModal();
@@ -682,48 +701,53 @@ document.addEventListener('keydown', e => {
     document.getElementById('localVid').pause();
     document.getElementById('localVid').src = '';
   }
-  if (e.shiftKey && e.altKey && (e.key === 'V' || e.key === '\u221a')) {
-    const t = document.getElementById('toast');
-    t.textContent = '\u2726 Edit mode — add videos via Wistia';
+  if (e.shiftKey && e.altKey && (e.key === 'V' || e.key === 'v')) {
+    var t = document.getElementById('toast');
+    t.textContent = 'Edit mode - add videos via Wistia';
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
+    setTimeout(function() { t.classList.remove('show'); }, 3000);
   }
 });
 
-/* ── GRID BUILDER ── */
-
-/* FIX #8: Lazy-load thumbnails via IntersectionObserver */
+/* GRID BUILDER */
 function buildGrids() {
-  const thumbObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
+  var totalVideos = 0;
+  Object.keys(videoData).forEach(function(cat) { totalVideos += videoData[cat].length; });
+  var loaded = 0;
+
+  var thumbObserver = new IntersectionObserver(function(entries, obs) {
+    entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        const box = entry.target;
-        const id = box.dataset.videoId;
-        const img = box.querySelector('img');
+        var box = entry.target;
+        var id = box.dataset.videoId;
+        var img = box.querySelector('img');
         if (id && img && !img.src) {
+          img.loading = 'lazy';
           loadThumb(id, img);
+          loaded++;
+          if (loaded >= totalVideos) obs.disconnect();
         }
         obs.unobserve(box);
       }
     });
   }, { rootMargin: '200px' });
 
-  Object.keys(videoData).forEach(cat => {
-    const grid = document.getElementById('grid-' + cat);
-    if (!grid) return; // FIX #1: guard against missing grid elements
-
-    videoData[cat].forEach(v => {
-      const box = document.createElement('div');
+  Object.keys(videoData).forEach(function(cat) {
+    var grid = document.getElementById('grid-' + cat);
+    if (!grid) return;
+    videoData[cat].forEach(function(v) {
+      var box = document.createElement('div');
       box.className = 'video-box';
-      box.dataset.videoId = v.id; // store for lazy loader
+      box.dataset.videoId = v.id;
 
-      const thumb = document.createElement('div');
+      var thumb = document.createElement('div');
       thumb.className = 'video-thumb';
 
-      const img = document.createElement('img');
+      var img = document.createElement('img');
       img.alt = v.title;
+      img.loading = 'lazy';
 
-      const overlay = document.createElement('div');
+      var overlay = document.createElement('div');
       overlay.className = 'video-overlay';
       overlay.innerHTML =
         '<div class="video-text">' +
@@ -734,47 +758,37 @@ function buildGrids() {
       thumb.appendChild(img);
       thumb.appendChild(overlay);
       box.appendChild(thumb);
-
-      box.onclick = () => openWistia(v.id, v.title, v.desc);
+      box.onclick = function() { openWistia(v.id, v.title, v.desc); };
       grid.appendChild(box);
-
-      // Observe instead of loading immediately
       thumbObserver.observe(box);
     });
   });
 }
 
-/* FIX #1: Wait for DOM to be ready before building grids */
 document.addEventListener('DOMContentLoaded', buildGrids);
 
-/* ── MOBILE CENTER-TRIGGER ── */
+/* MOBILE CENTER-TRIGGER */
 (function() {
   if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 760) {
     function initObserver() {
-      const boxes = document.querySelectorAll('.video-box');
-
+      var boxes = document.querySelectorAll('.video-box');
       if (!boxes.length) {
         setTimeout(initObserver, 300);
         return;
       }
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
           if (entry.intersectionRatio >= 0.6) {
             document.querySelectorAll('.video-box.is-centered')
-              .forEach(b => b.classList.remove('is-centered'));
+              .forEach(function(b) { b.classList.remove('is-centered'); });
             entry.target.classList.add('is-centered');
           } else {
             entry.target.classList.remove('is-centered');
           }
         });
-      }, {
-        threshold: [0.6]
-      });
-
-      boxes.forEach(box => observer.observe(box));
+      }, { threshold: [0.6] });
+      boxes.forEach(function(box) { observer.observe(box); });
     }
-
     initObserver();
   }
 })();
