@@ -138,31 +138,32 @@ overflow:hidden;
 width:100%;
 }
 
-.trusted-track-wrap::before,
-.trusted-track-wrap::after{
-content:'';
-position:absolute;
-top:0;
-bottom:0;
-width:120px;
-z-index:2;
-pointer-events:none;
-}
-.trusted-track-wrap::after{
+.trusted-track-wrap::before{
 left:0;
-background:linear-gradient(to right, var(--bg) 0%, transparent 100%);
-}
-.trusted-track-wrap::after{
-right:0;
-background:linear-gradient(to left, var(--bg) 0%, transparent 100%);
+background:linear-gradient(
+to right,
+var(--bg) 0%,
+rgba(11,13,20,.95) 20%,
+rgba(11,13,20,.65) 45%,
+transparent 100%);
 }
 
+.trusted-track-wrap::after{
+right:0;
+background:linear-gradient(
+to left,
+var(--bg) 0%,
+rgba(11,13,20,.95) 20%,
+rgba(11,13,20,.65) 45%,
+transparent 100%);
+}
+  
 .trusted-track{
 display:flex;
 align-items:center;
 width:max-content;
 gap:5rem;
-animation:marquee 20s linear infinite;
+animation:marquee 26s linear infinite;
 }
 
 .trusted-track img{
@@ -376,6 +377,10 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
   <div class="trusted-track-wrap">
     <div class="trusted-track">
+
+      <img src="black_white_1.png">
+      <img src="black_white_2.png">
+      <img src="black_white_3.png">
 
       <img src="black_white_1.png">
       <img src="black_white_2.png">
