@@ -135,6 +135,9 @@ display:block;
 .trusted-track-wrap {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  max-width: 800px; 
+  margin: 0 auto;
 }
 
 .trusted-track-wrap::before,
@@ -170,10 +173,17 @@ display:block;
   
 .trusted-track {
   display: flex;
-  width: max-content;
+  align-items: center;
   gap: 5rem;
+  width: fit-content;
   animation: marquee 26s linear infinite;
   will-change: transform;
+}
+
+.trusted-track img {
+  height: 72px;
+  width: auto;
+  flex: 0 0 auto;
 }
 
 .trusted-track img{
