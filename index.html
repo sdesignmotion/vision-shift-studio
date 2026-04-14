@@ -166,7 +166,8 @@ display:block;
   align-items:center;
   gap:5rem;
   width:max-content;
-  will-change: transform;
+  will-change:transform;
+  transform:translateZ(0);
 }
 
 .trusted-track img:hover{
@@ -795,26 +796,47 @@ document.addEventListener('DOMContentLoaded', buildGrids);
 
 const track = document.getElementById("trustedTrack");
 
-/* duplicate logos automatically */
-track.innerHTML += track.innerHTML;
+if(!track) return;
 
-let scrollAmount = 0;
-let speed = 0.5;
+function initTrustedMarquee(){
 
-function animateMarquee(){
+    track.innerHTML += track.innerHTML;
 
-    scrollAmount += speed;
+    let scrollAmount = 0;
+    const speed = 0.5;
 
-    if(scrollAmount >= track.scrollWidth / 2){
-        scrollAmount = 0;
+    function animate(){
+        scrollAmount += speed;
+
+        if(scrollAmount >= track.scrollWidth / 2){
+            scrollAmount = 0;
+        }
+
+        track.style.transform = `translate3d(-${scrollAmount}px,0,0)`;
+
+        requestAnimationFrame(animate);
     }
 
-    track.style.transform = `translateX(-${scrollAmount}px)`;
-
-    requestAnimationFrame(animateMarquee);
+    animate();
 }
 
-animateMarquee();
+const imgs = track.querySelectorAll("img");
+let loaded = 0;
+
+imgs.forEach(img=>{
+    if(img.complete){
+        loaded++;
+    } else {
+        img.addEventListener("load",()=>{
+            loaded++;
+            if(loaded===imgs.length) initTrustedMarquee();
+        });
+    }
+});
+
+if(loaded===imgs.length){
+    initTrustedMarquee();
+}
 
 })();
 </script>
