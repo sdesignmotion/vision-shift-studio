@@ -714,7 +714,10 @@ function buildGrids() {
 document.addEventListener('DOMContentLoaded', buildGrids);
   /* TRUSTED BY ticker duplicate */
 const track = document.getElementById("track");
-track.innerHTML += track.innerHTML;
+if (track) {
+  const original = track.innerHTML;
+  track.innerHTML = original.repeat(5);
+}
 
 /* MOBILE CENTER-TRIGGER */
 (function() {
