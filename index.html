@@ -810,18 +810,34 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!track) return;
 
   var original = track.innerHTML;
-  /* Duplicate until we have at least 4 full sets so the loop is always seamless
-     regardless of container width vs logo count */
   track.innerHTML = original + original + original + original;
 
-  /* After layout, measure one set width (total / 4) and animate exactly that many px */
-  requestAnimationFrame(function() {
-    requestAnimationFrame(function() {
-      var totalW = track.scrollWidth;
-      var oneSet = totalW / 4;
-      track.style.setProperty('--ticker-shift', '-' + oneSet + 'px');
-    });
+  /* Pause animation until we know the real width */
+  track.style.animationPlayState = 'paused';
+
+  function applyShift() {
+    var oneSet = track.scrollWidth / 4;
+    if (oneSet < 10) return; /* images not loaded yet, retry */
+    track.style.setProperty('--ticker-shift', '-' + Math.round(oneSet) + 'px');
+    track.style.animationPlayState = '';
+  }
+
+  /* Wait for all images in the track to load */
+  var imgs = track.querySelectorAll('img');
+  var total = imgs.length;
+  var loaded = 0;
+  if (total === 0) { applyShift(); return; }
+  imgs.forEach(function(img) {
+    if (img.complete) {
+      loaded++;
+      if (loaded === total) applyShift();
+    } else {
+      img.addEventListener('load',  function() { loaded++; if (loaded === total) applyShift(); });
+      img.addEventListener('error', function() { loaded++; if (loaded === total) applyShift(); });
+    }
   });
+  /* Fallback: apply after 2s regardless */
+  setTimeout(applyShift, 2000);
 });
 
 /* MOBILE CENTER-TRIGGER */
