@@ -138,7 +138,7 @@ section{padding:5rem 2.5rem;}
 }
 @keyframes ticker-scroll{
   0%   { transform:translate3d(0,0,0); }
-  100% { transform:translate3d(-50%,0,0); }
+  100% { transform:translate3d(var(--ticker-shift,-33.333%),0,0); }
 }
 .trusted-track img{
   height:72px;
@@ -808,9 +808,20 @@ document.addEventListener('DOMContentLoaded', buildGrids);
 document.addEventListener('DOMContentLoaded', function() {
   var track = document.getElementById('track');
   if (!track) return;
-  /* 2 copies: animation moves -50% = exactly one set width, seamless loop */
+
   var original = track.innerHTML;
-  track.innerHTML = original + original;
+  /* Duplicate until we have at least 4 full sets so the loop is always seamless
+     regardless of container width vs logo count */
+  track.innerHTML = original + original + original + original;
+
+  /* After layout, measure one set width (total / 4) and animate exactly that many px */
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      var totalW = track.scrollWidth;
+      var oneSet = totalW / 4;
+      track.style.setProperty('--ticker-shift', '-' + oneSet + 'px');
+    });
+  });
 });
 
 /* MOBILE CENTER-TRIGGER */
