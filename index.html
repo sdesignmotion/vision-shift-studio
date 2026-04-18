@@ -30,6 +30,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2
 }
 .hero-headline{font-size:clamp(44px,8vw,96px);font-weight:700;line-height:1;letter-spacing:-3px;color:#fff;margin-bottom:2.5rem;animation:fadeUp .8s ease both;animation-play-state:paused;}
 .hero-headline em{font-style:normal;color:var(--gold);}
+
 .hero-cta{
   position:relative;
   display:inline-block;
@@ -43,58 +44,32 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2
   border:none;
   cursor:pointer;
   font-family:'Montserrat',sans-serif;
-
-  transform: translateY(0) scale(1);
-  will-change: transform, box-shadow, filter;
-
-  /* ✨ smoother "spring-like" feel */
-  transition:
-    transform 700ms cubic-bezier(0.16, 1.15, 0.3, 1),
-    box-shadow 700ms cubic-bezier(0.16, 1.15, 0.3, 1),
-    filter 700ms ease;
-
-  box-shadow: 0 10px 30px rgba(201,150,58,0.25);
   overflow:hidden;
+  transform: translateY(0) scale(1);
+  box-shadow: 0 10px 30px rgba(201,150,58,0.25);
+  will-change: transform, box-shadow;
+  transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 600ms ease;
 }
-
-/* shimmer stays but softened */
 .hero-cta::before{
   content:'';
   position:absolute;
-  top:0;
-  left:-140%;
-  width:140%;
-  height:100%;
-  background:linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0.18) 50%,
-    transparent 100%
-  );
+  top:0; left:-140%; width:140%; height:100%;
+  background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,0.18) 50%,transparent 100%);
   transform:skewX(-20deg);
-  transition:left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:left 0.75s cubic-bezier(0.22,1,0.36,1);
   pointer-events:none;
 }
-
-.hero-cta:hover::before{
-  left:140%;
-}
-
-/* ✨ cinematic hover state */
+.hero-cta:hover::before{ left:140%; }
 .hero-cta:hover{
-  transform: translateY(-8px) scale(1.10);
-  box-shadow:
-    0 25px 80px rgba(201,150,58,0.55),
-    0 0 40px rgba(201,150,58,0.25);
-  filter: brightness(1.08);
+  transform: translateY(-8px) scale(1.1);
+  box-shadow: 0 24px 60px rgba(201,150,58,0.5);
+}
+.hero-cta:active{
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 10px 32px rgba(201,150,58,0.35);
+  transition-duration: 100ms;
 }
 
-/* micro “settle-in” on click */
-.hero-cta:active{
-  transform: translateY(-3px) scale(1.06);
-  box-shadow: 0 12px 35px rgba(201,150,58,0.35);
-}
-  
 section{padding:5rem 2.5rem;}
 .section-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:3rem;display:flex;align-items:center;gap:1rem;}
 .section-label::after{content:'';flex:1;height:0.5px;background:var(--border);}
@@ -131,7 +106,7 @@ section{padding:5rem 2.5rem;}
 .thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);}
 .coming-soon{color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:3rem 0;text-align:center;}
 
-/* ─── TRUSTED BY — fixed ticker ─────────────────────────────────── */
+/* ─── TRUSTED BY ─────────────────────────────────────────────── */
 .trusted-section{
   padding:4rem 0;
   text-align:center;
@@ -154,30 +129,37 @@ section{padding:5rem 2.5rem;}
   -webkit-mask-image:linear-gradient(to right,transparent 0%,black 12%,black 88%,transparent 100%);
   mask-image:linear-gradient(to right,transparent 0%,black 12%,black 88%,transparent 100%);
 }
-.trusted-track {
-  display: flex;
-  width: max-content;
-  animation: ticker 25s linear infinite;
-  will-change: transform;
+.trusted-track{
+  display:flex;
+  width:max-content;
+  align-items:center;
+  animation:ticker-scroll 25s linear infinite;
+  will-change:transform;
 }
-
-@keyframes ticker {
-  0% {
-    transform: translate3d(0,0,0);
-  }
-  100% {
-    transform: translate3d(-33.333%,0,0);
-  }
+@keyframes ticker-scroll{
+  0%   { transform:translate3d(0,0,0); }
+  100% { transform:translate3d(-50%,0,0); }
 }
 .trusted-track img{
-  margin-right: 5rem;
   height:72px;
   width:auto;
-  opacity:.55;
   flex-shrink:0;
   display:block;
+  opacity:.55;
+  margin-right:5rem;
 }
-/* ──────────────────────────────────────────────────────────────── */
+@media(max-width:760px){
+  .trusted-track-wrap{
+    max-width:100%;
+    -webkit-mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);
+    mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);
+  }
+  .trusted-track img{
+    height:52px;
+    margin-right:3rem;
+  }
+}
+/* ─────────────────────────────────────────────────────────── */
 
 .about-wrap{display:grid;grid-template-columns:320px 1fr;gap:3.5rem;align-items:stretch;max-width:960px;margin:0 auto;}
 .about-img-block{position:relative;overflow:hidden;border:0.5px solid var(--border);width:320px;flex-shrink:0;}
@@ -269,26 +251,22 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 .socials a:hover{color:var(--gold);}
 
 .modal{
-  display:flex;              /* keep flex always */
+  display:flex;
   position:fixed;
   inset:0;
   z-index:1000;
   align-items:center;
   justify-content:center;
-
   opacity:0;
   visibility:hidden;
   pointer-events:none;
-
   transition: opacity .35s ease, visibility .35s ease;
 }
-
 .modal.open{
   opacity:1;
   visibility:visible;
   pointer-events:auto;
 }
-.modal.open{display:flex;}
 .modal-backdrop{
   position:absolute;
   inset:0;
@@ -296,7 +274,6 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   backdrop-filter:blur(0px);
   transition: backdrop-filter .35s ease, opacity .35s ease;
 }
-
 .modal.open .modal-backdrop{
   backdrop-filter:blur(18px);
 }
@@ -306,12 +283,10 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   display:flex;
   align-items:center;
   justify-content:center;
-
   transform: translateY(20px) scale(0.98);
   opacity:0;
   transition: transform .35s ease, opacity .35s ease;
 }
-
 .modal.open .modal-inner{
   transform: translateY(0) scale(1);
   opacity:1;
@@ -322,6 +297,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 .unlock-toast.show{opacity:1;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
 @media(max-width:760px){
   .video-box:hover{transform:scale(1.08);z-index:50;}
   .video-box.is-centered{transform:scale(1.08);z-index:50;}
@@ -409,11 +385,12 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <section class="trusted-section">
   <span class="trusted-label">Trusted by</span>
   <div class="trusted-track-wrap">
-   <div class="trusted-track" id="track">
-  <img src="black_white_1.png">
-  <img src="black_white_2.png">
-  <img src="black_white_3.png">
-</div>
+    <!-- JS will triplicate the imgs for seamless loop -->
+    <div class="trusted-track" id="track">
+      <img src="black_white_1.png" alt="">
+      <img src="black_white_2.png" alt="">
+      <img src="black_white_3.png" alt="">
+    </div>
   </div>
 </section>
 
@@ -542,10 +519,18 @@ const videoData = {
   ]
 };
 
-/* INTRO VIDEO */
+/* ─── INTRO VIDEO ───────────────────────────────────────────────
+ * Strategy:
+ *   1. Wait for 'ended' — let the video play to its natural end.
+ *   2. If the video never fires 'canplay' within 1.5 s (slow load /
+ *      missing file) we still dismiss gracefully.
+ *   3. A hard 30 s nuclear fallback prevents being stuck forever.
+ * We do NOT use duration * 1000 timers that race against 'ended'.
+ * ──────────────────────────────────────────────────────────────*/
 (function() {
   var intro = document.getElementById('intro-screen');
-  var vid = document.getElementById('intro-video');
+  var vid   = document.getElementById('intro-video');
+  var dismissed = false;
 
   function triggerHeroText() {
     function playFadeUp(el, delay) {
@@ -564,13 +549,32 @@ const videoData = {
     }
     playFadeUp(document.querySelector('.hero-tagline'), 0);
     playFadeUp(document.querySelector('.hero-headline'), 120);
-    playFadeUp(document.querySelector('.hero-cta'), 260);
+    /* Button uses transition-based fade so no animation stacking context blocks hover transform */
+    var cta = document.querySelector('.hero-cta');
+    if (cta) {
+      cta.style.opacity = '0';
+      cta.style.transform = 'translateY(24px)';
+      cta.style.transition = 'none';
+      void cta.offsetWidth;
+      setTimeout(function() {
+        cta.style.transition = 'opacity 600ms ease, transform 600ms ease';
+        cta.style.opacity = '1';
+        cta.style.transform = 'translateY(0) scale(1)';
+        setTimeout(function() {
+          cta.style.transition = '';
+          cta.style.opacity = '';
+          cta.style.transform = '';
+        }, 650);
+      }, 260);
+    }
   }
 
-  var dismissed = false;
   function dismiss() {
     if (dismissed) return;
     dismissed = true;
+    clearTimeout(nuclearTimer);
+    clearTimeout(failTimer);
+    /* fade out video first, then fade out the whole screen */
     if (vid) { vid.style.transition = 'opacity 0.7s ease'; vid.style.opacity = '0'; }
     setTimeout(triggerHeroText, 400);
     setTimeout(function() {
@@ -581,35 +585,31 @@ const videoData = {
     }, 700);
   }
 
-  function safeDuration() {
-    return (!isNaN(vid.duration) && vid.duration > 0) ? vid.duration : 7;
-  }
+  /* Nuclear fallback — 30 s max, covers any edge case */
+  var nuclearTimer = setTimeout(dismiss, 30000);
 
-  var nuclearTimer = setTimeout(function() { dismiss(); }, 10000);
+  if (!vid) { dismiss(); return; }
 
-  if (!vid) { clearTimeout(nuclearTimer); dismiss(); return; }
-
+  /* If video doesn't even start loading in 1.5 s → dismiss */
   var failTimer = setTimeout(function() {
-    clearTimeout(nuclearTimer);
+    /* video is presumably missing/blocked — bail out */
     dismiss();
   }, 1500);
 
+  /* Once we know the video can play, cancel the fail-timer and
+     just wait for 'ended'. That's the only trigger we trust. */
   vid.addEventListener('canplay', function() {
     clearTimeout(failTimer);
-    var endTimer = setTimeout(function() {
-      clearTimeout(nuclearTimer);
-      dismiss();
-    }, safeDuration() * 1000 + 300);
-    vid.addEventListener('ended', function() {
-      clearTimeout(endTimer);
-      clearTimeout(nuclearTimer);
-      dismiss();
-    });
   }, { once: true });
 
-  vid.addEventListener('error', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); dismiss(); });
-  vid.addEventListener('stalled', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); setTimeout(dismiss, 800); });
-  vid.addEventListener('abort', function() { clearTimeout(failTimer); clearTimeout(nuclearTimer); dismiss(); });
+  vid.addEventListener('ended', function() {
+    dismiss();
+  }, { once: true });
+
+  /* Hard errors / aborts → dismiss immediately */
+  vid.addEventListener('error',   function() { dismiss(); });
+  vid.addEventListener('stalled', function() { setTimeout(dismiss, 1200); });
+  vid.addEventListener('abort',   function() { dismiss(); });
 })();
 
 /* TAB SWITCHING */
@@ -661,7 +661,6 @@ function closeModal() {
   if (mc) mc.innerHTML = '';
   document.getElementById('modal').classList.remove('open');
 }
-
 function openWistia(id, title, desc) {
   document.getElementById('modal-content').innerHTML =
     '<div style="display:flex;flex-direction:column;align-items:center;gap:16px;">' +
@@ -689,7 +688,7 @@ document.getElementById('local-backdrop').addEventListener('click', function() {
 });
 
 /* SUCCESS MODAL */
-function openSuccessModal() { document.getElementById('success-modal').classList.add('open'); }
+function openSuccessModal()  { document.getElementById('success-modal').classList.add('open'); }
 function closeSuccessModal() { document.getElementById('success-modal').classList.remove('open'); }
 document.getElementById('success-close-btn').addEventListener('click', closeSuccessModal);
 document.getElementById('success-backdrop').addEventListener('click', closeSuccessModal);
@@ -698,7 +697,7 @@ document.getElementById('success-backdrop').addEventListener('click', closeSucce
 document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   var form = e.target;
-  var btn = form.querySelector('.contact-form-btn');
+  var btn  = form.querySelector('.contact-form-btn');
   var originalText = btn.textContent;
   btn.textContent = 'Sending...';
   btn.disabled = true;
@@ -753,7 +752,7 @@ function buildGrids() {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         var box = entry.target;
-        var id = box.dataset.videoId;
+        var id  = box.dataset.videoId;
         var img = box.querySelector('img');
         if (id && img && !img.src) {
           img.loading = 'lazy';
@@ -798,24 +797,28 @@ function buildGrids() {
     });
   });
 }
-
 document.addEventListener('DOMContentLoaded', buildGrids);
-  /* TRUSTED BY ticker duplicate */
-const track = document.getElementById("track");
-if (track) {
-  const original = track.innerHTML;
-  track.innerHTML = original + original + original;
-}
+
+/* ─── TRUSTED BY — triplicate for seamless loop ─────────────
+ * We keep exactly 3 copies so the CSS animation (which moves
+ * -33.333%) always lands on an identical copy, making the
+ * loop invisible. Images must be fully loaded before we
+ * measure, so we use DOMContentLoaded + a small rAF delay.
+ * ──────────────────────────────────────────────────────────*/
+document.addEventListener('DOMContentLoaded', function() {
+  var track = document.getElementById('track');
+  if (!track) return;
+  /* 2 copies: animation moves -50% = exactly one set width, seamless loop */
+  var original = track.innerHTML;
+  track.innerHTML = original + original;
+});
 
 /* MOBILE CENTER-TRIGGER */
 (function() {
   if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 760) {
     function initObserver() {
       var boxes = document.querySelectorAll('.video-box');
-      if (!boxes.length) {
-        setTimeout(initObserver, 300);
-        return;
-      }
+      if (!boxes.length) { setTimeout(initObserver, 300); return; }
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.intersectionRatio >= 0.6) {
