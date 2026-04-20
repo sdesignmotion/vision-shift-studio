@@ -7,11 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{--gold:#C9963A;--bg:#0b0d14;--bg2:#10131e;--bg3:#161923;--muted:rgba(240,240,240,0.4);--border:rgba(255,255,255,0.08);}
+:root{--gold:#C9963A;--bg:#0b0d14;--bg2:#10131e;--bg3:#161923;--muted:rgba(240,240,240,0.4);--border:rgba(255,255,255,0.10);}
 html{scroll-behavior:smooth;}
 body{font-family:'Montserrat',sans-serif;background:var(--bg);color:#f0f0f0;min-height:100vh;}
 
-nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;border-bottom:0.5px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,13,20,0.88);backdrop-filter:blur(14px);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.04);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:0.5px solid rgba(255,255,255,0.10);box-shadow:0 2px 32px rgba(0,0,0,0.18);}
 .nav-logo img{height:52px;width:auto;display:block;}
 .nav-logo-fallback{font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;display:none;}
 .nav-contact{color:rgba(255,255,255,0.55);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;text-decoration:none;position:relative;padding-bottom:2px;transition:color .25s;}
@@ -35,67 +35,70 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2
   position:relative;
   display:inline-block;
   padding:18px 56px;
-  background:var(--gold);
+  background:rgba(201,150,58,0.85);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
   color:#000;
   font-size:13px;
   letter-spacing:3px;
   text-transform:uppercase;
   font-weight:700;
-  border:none;
+  border:1px solid rgba(201,150,58,0.5);
+  border-radius:50px;
   cursor:pointer;
   font-family:'Montserrat',sans-serif;
   overflow:hidden;
-  transform: translateY(0) scale(1);
-  box-shadow: 0 10px 30px rgba(201,150,58,0.25);
-  will-change: transform, box-shadow;
-  transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 600ms ease;
+  transform:translateY(0) scale(1);
+  box-shadow:0 10px 30px rgba(201,150,58,0.25),inset 0 1px 0 rgba(255,255,255,0.2);
+  will-change:transform,box-shadow;
+  transition:transform 600ms cubic-bezier(0.34,1.56,0.64,1),box-shadow 600ms ease;
 }
 .hero-cta::before{
   content:'';
   position:absolute;
-  top:0; left:-140%; width:140%; height:100%;
+  top:0;left:-140%;width:140%;height:100%;
   background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,0.18) 50%,transparent 100%);
   transform:skewX(-20deg);
   transition:left 0.75s cubic-bezier(0.22,1,0.36,1);
   pointer-events:none;
 }
-.hero-cta:hover::before{ left:140%; }
+.hero-cta:hover::before{left:140%;}
 .hero-cta:hover{
-  transform: translateY(-8px) scale(1.1);
-  box-shadow: 0 24px 60px rgba(201,150,58,0.5);
+  transform:translateY(-8px) scale(1.1);
+  box-shadow:0 24px 60px rgba(201,150,58,0.5);
 }
 .hero-cta:active{
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 10px 32px rgba(201,150,58,0.35);
-  transition-duration: 100ms;
+  transform:translateY(-2px) scale(1.04);
+  box-shadow:0 10px 32px rgba(201,150,58,0.35);
+  transition-duration:100ms;
 }
 
 section{padding:5rem 2.5rem;}
 .section-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:3rem;display:flex;align-items:center;gap:1rem;}
 .section-label::after{content:'';flex:1;height:0.5px;background:var(--border);}
 
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;border:0.5px solid var(--border);}
-.svc{padding:2rem 1.5rem;border:0.5px solid var(--border);transition:background .2s;}
-.svc:hover{background:rgba(201,150,58,0.05);}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+.svc{padding:2rem 1.5rem;border:0.5px solid rgba(255,255,255,0.10);border-radius:20px;background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .2s,transform .2s;}
+.svc:hover{background:rgba(201,150,58,0.06);transform:translateY(-3px);}
 .svc-icon{font-size:20px;margin-bottom:1rem;color:var(--gold);}
 .svc h3{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:.6rem;}
 .svc p{font-size:12px;color:var(--muted);line-height:1.7;}
 
 .portfolio-section{background:var(--bg2);padding:5rem 2.5rem;}
 .categories{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:center;}
-.cat-btn{padding:9px 28px;background:transparent;border:0.5px solid var(--border);color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
+.cat-btn{padding:9px 28px;background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:0.5px solid rgba(255,255,255,0.12);border-radius:50px;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
 .cat-btn:hover{border-color:var(--gold);color:var(--gold);}
-.cat-btn.active{background:var(--gold);border-color:var(--gold);color:#000;}
+.cat-btn.active{background:rgba(201,150,58,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-color:var(--gold);color:#000;box-shadow:0 4px 20px rgba(201,150,58,0.3);}
 .cat-panel{display:none;}
 .cat-panel.active{display:block;}
 
 .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:2rem;position:relative;}
-.video-box{position:relative;cursor:pointer;overflow:visible;border-radius:10px;transition:transform .35s ease,z-index 0s;z-index:1;}
+.video-box{position:relative;cursor:pointer;overflow:visible;border-radius:18px;transition:transform .35s ease,z-index 0s;z-index:1;}
 .video-box:hover{transform:scale(1.18);z-index:50;}
-.video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:10px;border:0.5px solid rgba(255,255,255,0.08);transition:box-shadow .35s ease;}
-.video-box:hover .video-thumb{box-shadow:-8px 0 36px rgba(201,150,58,0.6), 8px 0 36px rgba(201,150,58,0.6);}
+.video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:18px;border:0.5px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.03);transition:box-shadow .35s ease;}
+.video-box:hover .video-thumb{box-shadow:-8px 0 36px rgba(201,150,58,0.6),8px 0 36px rgba(201,150,58,0.6);}
 .video-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-.video-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 65%);display:flex;align-items:flex-end;padding:14px 16px;pointer-events:none;opacity:0;transition:opacity .35s ease;}
+.video-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 65%);display:flex;align-items:flex-end;padding:14px 16px;pointer-events:none;opacity:0;transition:opacity .35s ease;border-radius:18px;}
 .video-box:hover .video-overlay{opacity:1;}
 .video-text{color:#fff;text-align:left;width:100%;}
 .video-title{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:4px;}
@@ -137,8 +140,8 @@ section{padding:5rem 2.5rem;}
   will-change:transform;
 }
 @keyframes ticker-scroll{
-  0%   { transform:translate3d(0,0,0); }
-  100% { transform:translate3d(var(--ticker-shift,-33.333%),0,0); }
+  0%{transform:translate3d(0,0,0);}
+  100%{transform:translate3d(var(--ticker-shift,-33.333%),0,0);}
 }
 .trusted-track img{
   height:72px;
@@ -162,7 +165,7 @@ section{padding:5rem 2.5rem;}
 /* ─────────────────────────────────────────────────────────── */
 
 .about-wrap{display:grid;grid-template-columns:320px 1fr;gap:3.5rem;align-items:stretch;max-width:960px;margin:0 auto;}
-.about-img-block{position:relative;overflow:hidden;border:0.5px solid var(--border);width:320px;flex-shrink:0;}
+.about-img-block{position:relative;overflow:hidden;border:0.5px solid rgba(255,255,255,0.10);border-radius:24px;width:320px;flex-shrink:0;}
 .about-img-block img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;min-height:400px;}
 .about-img-overlay{position:absolute;bottom:0;left:0;right:0;height:20%;background:linear-gradient(transparent,rgba(11,13,20,0.85));}
 .about-content h2{font-size:clamp(22px,2.8vw,36px);font-weight:700;line-height:1.2;margin-bottom:1.2rem;}
@@ -186,39 +189,52 @@ section{padding:5rem 2.5rem;}
 .contact-form input,
 .contact-form select{
   width:100%;
-  background:rgba(255,255,255,0.04);
-  border:0.5px solid var(--border);
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border:0.5px solid rgba(255,255,255,0.12);
   color:#f0f0f0;
   font-family:'Montserrat',sans-serif;
   font-size:12px;
   outline:none;
+  transition:border-color .2s;
 }
-.contact-form input{padding:13px 16px;}
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus{
+  border-color:rgba(201,150,58,0.5);
+}
+.contact-form input{padding:13px 20px;border-radius:50px;}
 .contact-form select{
-  padding:13px 40px 13px 16px;
+  padding:13px 40px 13px 20px;
   appearance:none;
   -webkit-appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(240,240,240,0.4)'/%3E%3C/svg%3E");
   background-repeat:no-repeat;
-  background-position:right 14px center;
-  background-color:rgba(255,255,255,0.04);
+  background-position:right 18px center;
+  background-color:rgba(255,255,255,0.05);
+  border-radius:50px;
 }
 .contact-form select.placeholder-active{color:rgba(240,240,240,0.4);}
 .contact-form select option{background:#10131e;color:#f0f0f0;}
 .contact-form-btn{
   grid-column:1/-1;
   padding:15px;
-  background:var(--gold);
+  border-radius:50px;
+  background:rgba(201,150,58,0.88);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
   color:#000;
   font-size:11px;
   letter-spacing:3px;
   text-transform:uppercase;
   font-weight:700;
-  border:none;
+  border:1px solid rgba(201,150,58,0.4);
   cursor:pointer;
   font-family:'Montserrat',sans-serif;
   position:relative;
   overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.15);
   transition:transform .25s ease,box-shadow .25s ease;
 }
 .contact-form-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:rgba(255,255,255,0.2);transform:skewX(-20deg);transition:left .4s ease;}
@@ -227,14 +243,18 @@ section{padding:5rem 2.5rem;}
 .contact-form-btn:active{transform:scale(0.98);}
 .contact-form textarea{
   width:100%;
-  padding:13px 16px;
-  background:rgba(255,255,255,0.04);
-  border:0.5px solid var(--border);
+  padding:16px 20px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border:0.5px solid rgba(255,255,255,0.12);
+  border-radius:18px;
   color:#f0f0f0;
   font-family:'Montserrat',sans-serif;
   font-size:12px;
   outline:none;
   resize:vertical;
+  transition:border-color .2s;
 }
 @media(max-width:760px){
   .contact-form{grid-template-columns:1fr;}
@@ -260,7 +280,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   opacity:0;
   visibility:hidden;
   pointer-events:none;
-  transition: opacity .35s ease, visibility .35s ease;
+  transition:opacity .35s ease,visibility .35s ease;
 }
 .modal.open{
   opacity:1;
@@ -272,7 +292,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   inset:0;
   background:rgba(11,13,20,0.55);
   backdrop-filter:blur(0px);
-  transition: backdrop-filter .35s ease, opacity .35s ease;
+  transition:backdrop-filter .35s ease,opacity .35s ease;
 }
 .modal.open .modal-backdrop{
   backdrop-filter:blur(18px);
@@ -283,17 +303,18 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   display:flex;
   align-items:center;
   justify-content:center;
-  transform: translateY(20px) scale(0.98);
+  transform:translateY(20px) scale(0.98);
   opacity:0;
-  transition: transform .35s ease, opacity .35s ease;
+  transition:transform .35s ease,opacity .35s ease;
 }
 .modal.open .modal-inner{
-  transform: translateY(0) scale(1);
+  transform:translateY(0) scale(1);
   opacity:1;
 }
-.modal-close{position:fixed;top:1.5rem;right:1.5rem;background:rgba(11,13,20,0.7);border:0.5px solid rgba(255,255,255,0.3);color:#fff;font-size:18px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;z-index:3;backdrop-filter:blur(4px);}
+.modal-close{position:fixed;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.18);border-radius:50%;color:#fff;font-size:18px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;z-index:3;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .2s;}
+.modal-close:hover{background:rgba(255,255,255,0.15);}
 
-.unlock-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(11,13,20,0.96);border:0.5px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;z-index:9999;opacity:0;transition:opacity .4s;pointer-events:none;font-family:'Montserrat',sans-serif;white-space:nowrap;}
+.unlock-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(11,13,20,0.96);border:0.5px solid var(--gold);border-radius:50px;color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;z-index:9999;opacity:0;transition:opacity .4s;pointer-events:none;font-family:'Montserrat',sans-serif;white-space:nowrap;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
 .unlock-toast.show{opacity:1;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
@@ -301,7 +322,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 @media(max-width:760px){
   .video-box:hover{transform:scale(1.08);z-index:50;}
   .video-box.is-centered{transform:scale(1.08);z-index:50;}
-  .video-box.is-centered .video-thumb{box-shadow:-8px 0 36px rgba(201,150,58,0.6), 8px 0 36px rgba(201,150,58,0.6);}
+  .video-box.is-centered .video-thumb{box-shadow:-8px 0 36px rgba(201,150,58,0.6),8px 0 36px rgba(201,150,58,0.6);}
   .video-box.is-centered .video-overlay{opacity:1;}
   .about-wrap{grid-template-columns:1fr;max-width:100%;}
   .about-img-block{width:100%;max-width:360px;margin:0 auto;}
@@ -385,7 +406,6 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <section class="trusted-section">
   <span class="trusted-label">Trusted by</span>
   <div class="trusted-track-wrap">
-    <!-- JS will triplicate the imgs for seamless loop -->
     <div class="trusted-track" id="track">
       <img src="black_white_1.png" alt="">
       <img src="black_white_2.png" alt="">
@@ -475,11 +495,11 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <div class="modal" id="success-modal">
   <div class="modal-backdrop" id="success-backdrop"></div>
   <div class="modal-inner" style="z-index:2;">
-    <div style="background:#10131e;border:0.5px solid rgba(201,150,58,0.35);padding:3rem 3.5rem;text-align:center;max-width:480px;width:90vw;position:relative;">
+    <div style="background:rgba(16,19,30,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:0.5px solid rgba(201,150,58,0.35);border-radius:24px;padding:3rem 3.5rem;text-align:center;max-width:480px;width:90vw;position:relative;">
       <div style="font-size:32px;margin-bottom:1.2rem;">✦</div>
       <h3 style="font-size:16px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:.8rem;">Message Sent</h3>
       <p style="font-size:13px;color:rgba(240,240,240,0.5);line-height:1.8;margin-bottom:2rem;">Thanks for reaching out — I'll get back to you shortly.</p>
-      <button id="success-close-btn" style="padding:13px 40px;background:var(--gold);color:#000;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease;">Close</button>
+      <button id="success-close-btn" style="padding:13px 40px;background:rgba(201,150,58,0.88);backdrop-filter:blur(8px);color:#000;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:1px solid rgba(201,150,58,0.4);border-radius:50px;cursor:pointer;font-family:'Montserrat',sans-serif;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease;">Close</button>
     </div>
   </div>
 </div>
@@ -519,14 +539,6 @@ const videoData = {
   ]
 };
 
-/* ─── INTRO VIDEO ───────────────────────────────────────────────
- * Strategy:
- *   1. Wait for 'ended' — let the video play to its natural end.
- *   2. If the video never fires 'canplay' within 1.5 s (slow load /
- *      missing file) we still dismiss gracefully.
- *   3. A hard 30 s nuclear fallback prevents being stuck forever.
- * We do NOT use duration * 1000 timers that race against 'ended'.
- * ──────────────────────────────────────────────────────────────*/
 (function() {
   var intro = document.getElementById('intro-screen');
   var vid   = document.getElementById('intro-video');
@@ -549,7 +561,6 @@ const videoData = {
     }
     playFadeUp(document.querySelector('.hero-tagline'), 0);
     playFadeUp(document.querySelector('.hero-headline'), 120);
-    /* Button uses transition-based fade so no animation stacking context blocks hover transform */
     var cta = document.querySelector('.hero-cta');
     if (cta) {
       cta.style.opacity = '0';
@@ -574,7 +585,6 @@ const videoData = {
     dismissed = true;
     clearTimeout(nuclearTimer);
     clearTimeout(failTimer);
-    /* fade out video first, then fade out the whole screen */
     if (vid) { vid.style.transition = 'opacity 0.7s ease'; vid.style.opacity = '0'; }
     setTimeout(triggerHeroText, 400);
     setTimeout(function() {
@@ -585,19 +595,14 @@ const videoData = {
     }, 700);
   }
 
-  /* Nuclear fallback — 30 s max, covers any edge case */
   var nuclearTimer = setTimeout(dismiss, 30000);
 
   if (!vid) { dismiss(); return; }
 
-  /* If video doesn't even start loading in 1.5 s → dismiss */
   var failTimer = setTimeout(function() {
-    /* video is presumably missing/blocked — bail out */
     dismiss();
   }, 1500);
 
-  /* Once we know the video can play, cancel the fail-timer and
-     just wait for 'ended'. That's the only trigger we trust. */
   vid.addEventListener('canplay', function() {
     clearTimeout(failTimer);
   }, { once: true });
@@ -606,13 +611,11 @@ const videoData = {
     dismiss();
   }, { once: true });
 
-  /* Hard errors / aborts → dismiss immediately */
   vid.addEventListener('error',   function() { dismiss(); });
   vid.addEventListener('stalled', function() { setTimeout(dismiss, 1200); });
   vid.addEventListener('abort',   function() { dismiss(); });
 })();
 
-/* TAB SWITCHING */
 function switchTab(cat) {
   document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
   var btn = document.getElementById('btn-' + cat);
@@ -626,7 +629,6 @@ function switchTab(cat) {
   if (btn) btn.addEventListener('click', function() { switchTab(cat); });
 });
 
-/* WISTIA THUMBNAIL LOADER */
 function loadThumb(id, imgEl) {
   var cbName = 'wt_' + id;
   window[cbName] = function(data) {
@@ -655,7 +657,6 @@ function loadThumb(id, imgEl) {
   document.head.appendChild(s);
 })();
 
-/* MODAL */
 function closeModal() {
   var mc = document.getElementById('modal-content');
   if (mc) mc.innerHTML = '';
@@ -666,7 +667,7 @@ function openWistia(id, title, desc) {
     '<div style="display:flex;flex-direction:column;align-items:center;gap:16px;">' +
     '<iframe src="https://fast.wistia.net/embed/iframe/' + id + '?autoplay=1&muted=1" ' +
     'allow="autoplay; fullscreen" ' +
-    'style="width:90vw;max-width:1000px;aspect-ratio:16/9;height:auto;border:none;"></iframe>' +
+    'style="width:90vw;max-width:1000px;aspect-ratio:16/9;height:auto;border:none;border-radius:16px;"></iframe>' +
     '<div style="width:90vw;max-width:1000px;text-align:left;">' +
     '<div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:6px;">' + (title || '') + '</div>' +
     '<div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;letter-spacing:0.5px;">' + (desc || '') + '</div>' +
@@ -687,13 +688,11 @@ document.getElementById('local-backdrop').addEventListener('click', function() {
   document.getElementById('localVid').src = '';
 });
 
-/* SUCCESS MODAL */
 function openSuccessModal()  { document.getElementById('success-modal').classList.add('open'); }
 function closeSuccessModal() { document.getElementById('success-modal').classList.remove('open'); }
 document.getElementById('success-close-btn').addEventListener('click', closeSuccessModal);
 document.getElementById('success-backdrop').addEventListener('click', closeSuccessModal);
 
-/* CONTACT FORM AJAX */
 document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   var form = e.target;
@@ -725,7 +724,6 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   btn.disabled = false;
 });
 
-/* KEYBOARD */
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeModal();
@@ -742,7 +740,6 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-/* GRID BUILDER */
 function buildGrids() {
   var totalVideos = 0;
   Object.keys(videoData).forEach(function(cat) { totalVideos += videoData[cat].length; });
@@ -799,12 +796,6 @@ function buildGrids() {
 }
 document.addEventListener('DOMContentLoaded', buildGrids);
 
-/* ─── TRUSTED BY — triplicate for seamless loop ─────────────
- * We keep exactly 3 copies so the CSS animation (which moves
- * -33.333%) always lands on an identical copy, making the
- * loop invisible. Images must be fully loaded before we
- * measure, so we use DOMContentLoaded + a small rAF delay.
- * ──────────────────────────────────────────────────────────*/
 document.addEventListener('DOMContentLoaded', function() {
   var track = document.getElementById('track');
   if (!track) return;
@@ -812,17 +803,15 @@ document.addEventListener('DOMContentLoaded', function() {
   var original = track.innerHTML;
   track.innerHTML = original + original + original + original;
 
-  /* Pause animation until we know the real width */
   track.style.animationPlayState = 'paused';
 
   function applyShift() {
     var oneSet = track.scrollWidth / 4;
-    if (oneSet < 10) return; /* images not loaded yet, retry */
+    if (oneSet < 10) return;
     track.style.setProperty('--ticker-shift', '-' + Math.round(oneSet) + 'px');
     track.style.animationPlayState = '';
   }
 
-  /* Wait for all images in the track to load */
   var imgs = track.querySelectorAll('img');
   var total = imgs.length;
   var loaded = 0;
@@ -836,11 +825,9 @@ document.addEventListener('DOMContentLoaded', function() {
       img.addEventListener('error', function() { loaded++; if (loaded === total) applyShift(); });
     }
   });
-  /* Fallback: apply after 2s regardless */
   setTimeout(applyShift, 2000);
 });
 
-/* MOBILE CENTER-TRIGGER */
 (function() {
   if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 760) {
     function initObserver() {
