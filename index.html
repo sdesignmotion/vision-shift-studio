@@ -20,9 +20,18 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2
 .nav-contact:hover::after{width:100%;}
 
 .hero{position:relative;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transform-origin:center center;will-change:transform,opacity,filter,clip-path;}
 .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(11,13,20,0.2) 0%,rgba(11,13,20,0.45) 55%,rgba(11,13,20,0.95) 100%);}
 .hero-content{position:relative;z-index:2;padding:2rem;}
+
+/* ─── SCROLL GLITCH TRANSITION ───────────────────────────────── */
+.glitch-scanlines{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;mix-blend-mode:overlay;background:repeating-linear-gradient(to bottom,rgba(255,255,255,0.08) 0px,rgba(255,255,255,0.08) 1px,transparent 2px,transparent 4px);}
+.hero.glitching .glitch-scanlines{opacity:1;animation:scanShift .2s steps(2) infinite;}
+@keyframes scanShift{0%{transform:translateY(0);}100%{transform:translateY(4px);}}
+.hero.glitching .hero-video{filter:contrast(1.2) saturate(1.3);}
+@media(prefers-reduced-motion:reduce){
+  .hero-video,.glitch-scanlines{transition:none !important;animation:none !important;}
+}
 .hero-tagline{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.4rem;animation:fadeUp .8s ease both;animation-play-state:paused;white-space:nowrap;}
 @media(max-width:600px){
   .hero-tagline{font-size:9px;letter-spacing:2px;white-space:normal;display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.4;font-weight:500;}
@@ -79,30 +88,36 @@ section{padding:5rem 2.5rem;}
 .svc p{font-size:12px;color:var(--muted);line-height:1.7;}
 
 .portfolio-section{background:var(--bg2);padding:5rem 2.5rem;}
-.categories{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:center;}
-.cat-btn{padding:9px 28px;background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:0.5px solid rgba(255,255,255,0.12);border-radius:50px;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
-.cat-btn:hover{border-color:var(--gold);color:var(--gold);}
-.cat-btn.active{background:rgba(201,150,58,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-color:var(--gold);color:#000;box-shadow:0 4px 20px rgba(201,150,58,0.3);}
-.cat-panel{display:none;}
-.cat-panel.active{display:block;}
 
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:2rem;position:relative;}
-/* reduced from 18px → 8px */
-.video-box{position:relative;cursor:pointer;overflow:visible;border-radius:8px;transition:transform .35s ease,z-index 0s;z-index:1;}
-.video-box:hover{transform:scale(1.18);z-index:50;}
-.video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:8px;border:0.5px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.03);transition:box-shadow .35s ease;}
-.video-box:hover .video-thumb{box-shadow:-8px 0 36px rgba(201,150,58,0.6),8px 0 36px rgba(201,150,58,0.6);}
-.video-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-.video-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 65%);display:flex;align-items:flex-end;padding:14px 16px;pointer-events:none;opacity:0;transition:opacity .35s ease;border-radius:8px;}
-.video-box:hover .video-overlay{opacity:1;}
-.video-text{color:#fff;text-align:left;width:100%;}
-.video-title{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:4px;}
-.video-desc{display:block;font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;letter-spacing:0.3px;font-weight:400;}
+.portfolio-layout{display:flex;gap:2.5rem;align-items:flex-start;}
+.portfolio-sidebar{display:flex;flex-direction:column;gap:.2rem;min-width:200px;flex-shrink:0;position:sticky;top:110px;}
+.side-cat{text-align:left;background:none;border:none;border-bottom:0.5px solid var(--border);padding:16px 4px;font-family:'Montserrat',sans-serif;font-size:15px;letter-spacing:.3px;color:var(--muted);cursor:pointer;transition:color .25s ease,padding-left .25s ease;}
+.side-cat:hover{color:#fff;}
+.side-cat.active{color:var(--gold);padding-left:14px;font-weight:600;}
 
-.play-icon{width:60px;height:60px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gold);background:rgba(0,0,0,0.5);}
-.thumb-title{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;text-align:center;padding:0 8px;}
-.thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);}
-.coming-soon{color:var(--muted);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:3rem 0;text-align:center;}
+.portfolio-viewer{flex:1;position:relative;height:72vh;min-height:440px;border-radius:14px;overflow:hidden;border:0.5px solid var(--border);background:var(--bg3);}
+.viewer-track{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;}
+.viewer-track::-webkit-scrollbar{display:none;}
+.viewer-card{scroll-snap-align:start;height:100%;position:relative;display:flex;align-items:flex-end;cursor:pointer;background:var(--bg3);}
+.viewer-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;}
+.viewer-card img[src]{opacity:1;}
+.viewer-card .vc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px;background:rgba(0,0,0,0.4);z-index:2;transition:transform .25s ease;}
+.viewer-card:hover .vc-play{transform:translate(-50%,-50%) scale(1.1);}
+.viewer-card .vc-overlay{position:relative;z-index:2;width:100%;padding:2.4rem;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.15) 65%,transparent 100%);}
+.viewer-card .vc-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:.5rem;letter-spacing:-.5px;}
+.viewer-card .vc-desc{font-size:12.5px;color:rgba(255,255,255,.65);max-width:480px;line-height:1.7;}
+
+.viewer-progress{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:9px;z-index:3;}
+.viewer-progress .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:background .25s,transform .25s;}
+.viewer-progress .dot.active{background:var(--gold);transform:scale(1.5);}
+
+@media(max-width:900px){
+  .portfolio-layout{flex-direction:column;}
+  .portfolio-sidebar{flex-direction:row;position:static;overflow-x:auto;width:100%;gap:1.4rem;}
+  .side-cat{white-space:nowrap;border-bottom:none;padding:8px 2px;}
+  .side-cat.active{padding-left:2px;border-bottom:2px solid var(--gold);}
+  .portfolio-viewer{height:62vh;width:100%;}
+}
 
 /* ─── TRUSTED BY ─────────────────────────────────────────────── */
 .trusted-section{padding:4rem 0;text-align:center;overflow:hidden;}
@@ -196,10 +211,6 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
 
 @media(max-width:760px){
-  .video-box:hover{transform:scale(1.08);z-index:50;}
-  .video-box.is-centered{transform:scale(1.08);z-index:50;}
-  .video-box.is-centered .video-thumb{box-shadow:-8px 0 36px rgba(201,150,58,0.6),8px 0 36px rgba(201,150,58,0.6);}
-  .video-box.is-centered .video-overlay{opacity:1;}
   .about-wrap{grid-template-columns:1fr;max-width:100%;}
   .about-img-block{width:100%;max-width:360px;margin:0 auto;}
   nav{padding:1rem 1.2rem;}
@@ -235,10 +246,11 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <video class="hero-video" autoplay muted loop playsinline>
+<div class="hero" id="hero">
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline>
     <source src="LOOP.mp4" type="video/mp4">
   </video>
+  <div class="glitch-scanlines"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-tagline"><span>Video Editing</span><span class="tagline-dot"> &nbsp;·&nbsp; </span><span>Motion Design</span><span class="tagline-dot"> &nbsp;·&nbsp; </span><span>Visual Storytelling</span></p>
@@ -261,19 +273,16 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <!-- PORTFOLIO -->
 <section class="portfolio-section" id="work">
   <div class="section-label reveal-left">Selected work</div>
-  <div class="categories reveal-right">
-    <button class="cat-btn active" id="btn-events">Events</button>
-    <button class="cat-btn" id="btn-dance">Dance</button>
-    <button class="cat-btn" id="btn-commercial">Commercial</button>
-  </div>
-  <div class="cat-panel active reveal-up" id="panel-events">
-    <div class="video-grid" id="grid-events"></div>
-  </div>
-  <div class="cat-panel reveal-up" id="panel-dance">
-    <div class="video-grid" id="grid-dance"></div>
-  </div>
-  <div class="cat-panel reveal-up" id="panel-commercial">
-    <div class="video-grid" id="grid-commercial"></div>
+  <div class="portfolio-layout">
+    <div class="portfolio-sidebar reveal-left" id="portfolioSidebar">
+      <button class="side-cat active" data-cat="events">Events</button>
+      <button class="side-cat" data-cat="dance">Dance</button>
+      <button class="side-cat" data-cat="commercial">Commercial</button>
+    </div>
+    <div class="portfolio-viewer reveal-up">
+      <div class="viewer-track" id="viewerTrack"></div>
+      <div class="viewer-progress" id="viewerProgress"></div>
+    </div>
   </div>
 </section>
 
@@ -508,17 +517,12 @@ const videoData = {
   }
 })();
 
-function switchTab(cat) {
-  document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
-  var btn = document.getElementById('btn-' + cat);
-  if (btn) btn.classList.add('active');
-  document.querySelectorAll('.cat-panel').forEach(function(p) { p.classList.remove('active'); });
-  var panel = document.getElementById('panel-' + cat);
-  if (panel) panel.classList.add('active');
-}
-['events','dance','commercial'].forEach(function(cat) {
-  var btn = document.getElementById('btn-' + cat);
-  if (btn) btn.addEventListener('click', function() { switchTab(cat); });
+document.querySelectorAll('.side-cat').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.side-cat').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    buildViewer(btn.dataset.cat);
+  });
 });
 
 function loadThumb(id, imgEl) {
@@ -632,61 +636,69 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-function buildGrids() {
-  var totalVideos = 0;
-  Object.keys(videoData).forEach(function(cat) { totalVideos += videoData[cat].length; });
-  var loaded = 0;
+var viewerObserver = null;
 
-  var thumbObserver = new IntersectionObserver(function(entries, obs) {
+function observeViewerCards(track, cards, dots) {
+  if (viewerObserver) viewerObserver.disconnect();
+  viewerObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        var box = entry.target;
-        var id  = box.dataset.videoId;
-        var img = box.querySelector('img');
-        if (id && img && !img.src) {
-          img.loading = 'lazy';
-          loadThumb(id, img);
-          loaded++;
-          if (loaded >= totalVideos) obs.disconnect();
-        }
-        obs.unobserve(box);
+      if (entry.intersectionRatio >= 0.6) {
+        var idx = Array.prototype.indexOf.call(cards, entry.target);
+        dots.forEach(function(d) { d.classList.remove('active'); });
+        if (dots[idx]) dots[idx].classList.add('active');
       }
     });
-  }, { rootMargin: '200px' });
-
-  Object.keys(videoData).forEach(function(cat) {
-    var grid = document.getElementById('grid-' + cat);
-    if (!grid) return;
-    videoData[cat].forEach(function(v) {
-      var box = document.createElement('div');
-      box.className = 'video-box';
-      box.dataset.videoId = v.id;
-
-      var thumb = document.createElement('div');
-      thumb.className = 'video-thumb';
-
-      var img = document.createElement('img');
-      img.alt = v.title;
-      img.loading = 'lazy';
-
-      var overlay = document.createElement('div');
-      overlay.className = 'video-overlay';
-      overlay.innerHTML =
-        '<div class="video-text">' +
-        '<div class="video-title">' + v.title + '</div>' +
-        '<div class="video-desc">' + (v.desc || '') + '</div>' +
-        '</div>';
-
-      thumb.appendChild(img);
-      thumb.appendChild(overlay);
-      box.appendChild(thumb);
-      box.onclick = function() { openWistia(v.id, v.title, v.desc); };
-      grid.appendChild(box);
-      thumbObserver.observe(box);
-    });
-  });
+  }, { root: track, threshold: [0.6] });
+  cards.forEach(function(c) { viewerObserver.observe(c); });
 }
-document.addEventListener('DOMContentLoaded', buildGrids);
+
+function buildViewer(cat) {
+  var track = document.getElementById('viewerTrack');
+  var progress = document.getElementById('viewerProgress');
+  if (!track || !progress) return;
+  track.innerHTML = '';
+  progress.innerHTML = '';
+
+  var list = videoData[cat] || [];
+  list.forEach(function(v, i) {
+    var card = document.createElement('div');
+    card.className = 'viewer-card';
+    card.dataset.videoId = v.id;
+
+    var img = document.createElement('img');
+    img.alt = v.title;
+    img.loading = 'lazy';
+
+    var play = document.createElement('div');
+    play.className = 'vc-play';
+    play.textContent = '▶';
+
+    var overlay = document.createElement('div');
+    overlay.className = 'vc-overlay';
+    overlay.innerHTML =
+      '<div class="vc-title">' + v.title + '</div>' +
+      '<div class="vc-desc">' + (v.desc || '') + '</div>';
+
+    card.appendChild(img);
+    card.appendChild(play);
+    card.appendChild(overlay);
+    card.onclick = function() { openWistia(v.id, v.title, v.desc); };
+    track.appendChild(card);
+    loadThumb(v.id, img);
+
+    var dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', function() {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    progress.appendChild(dot);
+  });
+
+  track.scrollTop = 0;
+  observeViewerCards(track, track.querySelectorAll('.viewer-card'), progress.querySelectorAll('.dot'));
+}
+
+document.addEventListener('DOMContentLoaded', function() { buildViewer('events'); });
 
 document.addEventListener('DOMContentLoaded', function() {
   var track = document.getElementById('track');
@@ -716,25 +728,85 @@ document.addEventListener('DOMContentLoaded', function() {
   setTimeout(applyShift, 2000);
 });
 
+/* ─── HERO SCROLL: ZOOM + FADE + FAST-FORWARD SCRUB + GLITCH-OUT ─── */
 (function() {
-  if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 760) {
-    function initObserver() {
-      var boxes = document.querySelectorAll('.video-box');
-      if (!boxes.length) { setTimeout(initObserver, 300); return; }
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.intersectionRatio >= 0.6) {
-            document.querySelectorAll('.video-box.is-centered').forEach(function(b) { b.classList.remove('is-centered'); });
-            entry.target.classList.add('is-centered');
-          } else {
-            entry.target.classList.remove('is-centered');
-          }
-        });
-      }, { threshold: [0.6] });
-      boxes.forEach(function(box) { observer.observe(box); });
-    }
-    initObserver();
+  var hero = document.getElementById('hero');
+  var video = document.getElementById('heroVideo');
+  if (!hero || !video) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  var heroHeight = hero.offsetHeight;
+  var baseTime = 0;
+  var maxSkip = 6;          // seconds the video "fast-forwards" across the full scroll range
+  var glitchActive = false;
+  var glitchTimer = null;
+  var ticking = false;
+
+  function measure() { heroHeight = hero.offsetHeight; }
+  window.addEventListener('resize', measure);
+
+  video.addEventListener('loadedmetadata', function() {
+    baseTime = video.currentTime || 0;
+  });
+
+  function startGlitch() {
+    if (glitchActive) return;
+    glitchActive = true;
+    hero.classList.add('glitching');
+    glitchTimer = setInterval(function() {
+      var r = (Math.random() * 8 - 4).toFixed(1);
+      var b = (Math.random() * 8 - 4).toFixed(1);
+      video.style.filter = 'contrast(1.2) saturate(1.3) drop-shadow(' + r + 'px 0 0 rgba(255,25,70,0.5)) drop-shadow(' + b + 'px 0 0 rgba(20,220,255,0.5))';
+      var slice = 8 + Math.random() * 84;
+      var band = 2 + Math.random() * 6;
+      video.style.clipPath = Math.random() > 0.5
+        ? 'polygon(0 0,100% 0,100% ' + slice + '%,0 ' + slice + '%,0 ' + (slice + band) + '%,100% ' + (slice + band) + '%,100% 100%,0 100%)'
+        : 'none';
+    }, 90);
   }
+
+  function stopGlitch() {
+    if (!glitchActive) return;
+    glitchActive = false;
+    hero.classList.remove('glitching');
+    clearInterval(glitchTimer);
+    video.style.filter = '';
+    video.style.clipPath = '';
+  }
+
+  function update() {
+    ticking = false;
+    var progress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1);
+
+    // zoom in + fade out as you scroll through the hero
+    video.style.transform = 'scale(' + (1 + progress * 0.4) + ')';
+    video.style.opacity = String(Math.max(1 - progress * 1.15, 0));
+
+    // fast-forward: scrub the video forward the more you scroll
+    if (video.duration) {
+      var span = Math.max(video.duration - baseTime - 0.3, 0.5);
+      var target = baseTime + progress * Math.min(maxSkip, span);
+      try { video.currentTime = target; } catch (e) {}
+    }
+
+    // glitch takes over for the last stretch of the hero, right as it hands off to the page
+    if (progress > 0.72 && progress < 1) {
+      startGlitch();
+    } else {
+      stopGlitch();
+    }
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }, { passive: true });
+
+  measure();
 })();
 </script>
 </body>
