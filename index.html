@@ -89,33 +89,43 @@ section{padding:5rem 2.5rem;}
 
 .portfolio-section{background:var(--bg2);padding:5rem 2.5rem;overflow-anchor:none;}
 
-.categories{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:3rem;justify-content:center;}
-.cat-btn{padding:9px 28px;background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:0.5px solid rgba(255,255,255,0.12);border-radius:50px;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;}
-.cat-btn:hover{border-color:var(--gold);color:var(--gold);}
-.cat-btn.active{background:rgba(201,150,58,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-color:var(--gold);color:#000;box-shadow:0 4px 20px rgba(201,150,58,0.3);}
+/* three big clickable type boxes */
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;}
+.type-box{position:relative;height:420px;border-radius:14px;overflow:hidden;border:0.5px solid var(--border);background:var(--bg3);cursor:pointer;transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease,border-color .35s ease;}
+.type-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease,transform .5s cubic-bezier(.4,0,.2,1);}
+.type-box img[src]{opacity:1;}
+.type-box:hover img,.type-box.active img{transform:scale(1.14);opacity:.88;}
+.type-box-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.25) 55%,rgba(0,0,0,0.35) 100%);transition:background .4s ease;}
+.type-box:hover .type-box-overlay,.type-box.active .type-box-overlay{background:rgba(0,0,0,0.35);}
+.type-box-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#fff;opacity:.25;transform:scale(1);transition:opacity .35s ease,transform .35s ease;}
+.type-box:hover .type-box-label{opacity:1;transform:scale(1.1);}
+.type-box.active .type-box-label{opacity:1;transform:scale(1.28);color:var(--gold);}
+.type-box.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 20px 50px rgba(201,150,58,0.25);transform:scale(1.04);z-index:2;}
 
-/* scroll-linked "names on the side, video pinned" layout */
-.scrolly-wrap{display:flex;gap:3rem;align-items:flex-start;}
-.scrolly-names{flex:0 0 320px;display:flex;flex-direction:column;overflow-anchor:none;}
-.scrolly-name{display:flex;flex-direction:column;padding:1.6rem .1rem;border-bottom:0.5px solid var(--border);cursor:pointer;opacity:.35;transform:scale(0.92);transform-origin:left center;transition:opacity .45s ease,transform .45s ease;}
-.scrolly-name.active{opacity:1;transform:scale(1.08);}
-.scrolly-name .sn-title{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.4px;}
-.scrolly-name .sn-desc{font-size:12px;color:var(--muted);line-height:1.7;max-width:280px;opacity:0;max-height:0;margin-top:0;overflow:hidden;transition:opacity .3s ease,max-height .35s ease,margin-top .35s ease;}
-.scrolly-name.active .sn-desc{opacity:1;max-height:120px;margin-top:.6rem;}
+@media(max-width:820px){
+  .type-grid{grid-template-columns:1fr;max-width:420px;}
+  .type-box{height:260px;}
+}
 
-.scrolly-media-col{flex:1;position:sticky;top:110px;height:72vh;min-height:440px;}
-.scrolly-media{position:relative;width:100%;height:100%;border-radius:14px;overflow:hidden;border:0.5px solid var(--border);background:var(--bg3);cursor:pointer;}
-.scrolly-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease,transform .5s ease;}
-.scrolly-media img.active{opacity:1;}
-.scrolly-media:hover img.active{transform:scale(1.06);opacity:.9;}
-.scrolly-media .vc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px;background:rgba(0,0,0,0.4);z-index:2;transition:transform .25s ease;}
-.scrolly-media:hover .vc-play{transform:translate(-50%,-50%) scale(1.1);}
+/* video slider that drops down beneath the clicked type box */
+.type-slider-wrap{max-height:0;opacity:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .4s ease,margin-top .5s ease;margin-top:0;width:100vw;margin-left:calc(50% - 50vw);padding:60px 0;}
+.type-slider-wrap.open{max-height:440px;opacity:1;margin-top:3rem;}
+.type-slider-stage{position:relative;height:260px;clip-path:inset(-9999px 0 -9999px 0);}
+.slider-track{display:flex;gap:1.75rem;width:max-content;align-items:center;padding:0 2.5rem;will-change:transform;}
 
-@media(max-width:900px){
-  .scrolly-wrap{flex-direction:column-reverse;gap:1.5rem;}
-  .scrolly-media-col{position:sticky;top:70px;height:44vh;min-height:280px;width:100%;z-index:2;}
-  .scrolly-names{width:100%;flex:none;}
-  .scrolly-name{padding:1.1rem 0;}
+.slider-card{position:relative;flex:0 0 auto;width:320px;height:200px;border-radius:12px;overflow:hidden;border:0.5px solid var(--border);background:var(--bg3);cursor:pointer;transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease;}
+.slider-card:hover{transform:scale(1.08);box-shadow:0 0 0 1px var(--gold),0 10px 32px rgba(201,150,58,0.4);z-index:5;}
+.slider-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s ease;}
+.slider-card img[src]{opacity:1;}
+.slider-card .sc-overlay{position:absolute;bottom:0;left:0;right:0;padding:1rem 1.2rem;background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);}
+.slider-card .sc-title{font-size:14px;font-weight:700;color:#fff;letter-spacing:.2px;}
+.slider-card .sc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;background:rgba(0,0,0,0.4);opacity:0;transition:opacity .3s ease;}
+.slider-card:hover .sc-play{opacity:1;}
+
+@media(max-width:820px){
+  .slider-card{width:230px;height:150px;}
+  .type-slider-stage{height:190px;}
+  .type-slider-wrap.open{max-height:380px;}
 }
 
 /* ─── TRUSTED BY ─────────────────────────────────────────────── */
@@ -154,6 +164,13 @@ section{padding:5rem 2.5rem;}
 /* reduced from 24px → 10px */
 .about-img-block{position:relative;overflow:hidden;border:0.5px solid rgba(255,255,255,0.10);border-radius:10px;width:320px;flex-shrink:0;}
 .about-img-block img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;min-height:400px;}
+.about-img-base{position:relative;z-index:0;}
+.about-img-zoom{position:absolute;inset:0;z-index:1;transform:scale(1.35);opacity:0;pointer-events:none;transition:opacity .25s ease;
+  -webkit-mask-image:radial-gradient(circle 95px at var(--mx,50%) var(--my,50%),rgba(0,0,0,1) 0%,rgba(0,0,0,1) 40%,rgba(0,0,0,0) 100%);
+  mask-image:radial-gradient(circle 95px at var(--mx,50%) var(--my,50%),rgba(0,0,0,1) 0%,rgba(0,0,0,1) 40%,rgba(0,0,0,0) 100%);
+}
+.about-img-block:hover .about-img-zoom{opacity:1;}
+@media(hover:none){.about-img-zoom{display:none;}}
 .about-img-overlay{position:absolute;bottom:0;left:0;right:0;height:20%;background:linear-gradient(transparent,rgba(11,13,20,0.85));}
 .about-content h2{font-size:clamp(22px,2.8vw,36px);font-weight:700;line-height:1.2;margin-bottom:1.2rem;}
 .about-content h2 span{color:var(--gold);}
@@ -241,7 +258,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
     <img src="VISION_SHIFT.png" alt="Vision Shift Studio" onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='block'">
     <span class="nav-logo-fallback">Vision Shift</span>
   </div>
-  <a class="nav-contact" href="#contact">Let's Work Together</a>
+  <a class="nav-contact" href="#contact">Book Your Shoot</a>
 </nav>
 
 <!-- HERO -->
@@ -272,17 +289,27 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <!-- PORTFOLIO -->
 <section class="portfolio-section" id="work">
   <div class="section-label reveal-left">Selected work</div>
-  <div class="categories reveal-right">
-    <button class="cat-btn active" data-cat="events">Events</button>
-    <button class="cat-btn" data-cat="dance">Dance</button>
-    <button class="cat-btn" data-cat="commercial">Commercial</button>
+  <div class="type-grid reveal-up" id="typeGrid">
+    <div class="type-box" data-cat="events">
+      <img alt="Events" loading="lazy">
+      <div class="type-box-overlay"></div>
+      <div class="type-box-label">Events</div>
+    </div>
+    <div class="type-box" data-cat="dance">
+      <img alt="Dance" loading="lazy">
+      <div class="type-box-overlay"></div>
+      <div class="type-box-label">Dance</div>
+    </div>
+    <div class="type-box" data-cat="commercial">
+      <img alt="Commercial" loading="lazy">
+      <div class="type-box-overlay"></div>
+      <div class="type-box-label">Commercial</div>
+    </div>
   </div>
-  <div class="scrolly-wrap">
-    <div class="scrolly-names" id="scrollyNames"></div>
-    <div class="scrolly-media-col">
-      <div class="scrolly-media" id="scrollyMedia">
-        <div class="vc-play">▶</div>
-      </div>
+
+  <div class="type-slider-wrap" id="typeSliderWrap">
+    <div class="type-slider-stage" id="typeSliderStage">
+      <div class="slider-track" id="sliderCards"></div>
     </div>
   </div>
 </section>
@@ -303,8 +330,9 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <section id="about">
   <div class="section-label reveal-left">About</div>
   <div class="about-wrap">
-    <div class="about-img-block reveal-left">
-      <img src="Photo0734_new.jpeg" alt="Vasil Slavkov" onerror="this.src='Photo0734.jpeg'">
+    <div class="about-img-block reveal-left" id="aboutImgWrap">
+      <img class="about-img-base" src="Photo0734_new.jpeg" alt="Vasil Slavkov" onerror="this.src='Photo0734.jpeg'">
+      <img class="about-img-zoom" src="Photo0734_new.jpeg" alt="" aria-hidden="true" onerror="this.src='Photo0734.jpeg'">
       <div class="about-img-overlay"></div>
     </div>
     <div class="about-content reveal-right">
@@ -525,16 +553,6 @@ const videoData = {
   }
 })();
 
-document.querySelectorAll('.cat-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    buildScrolly(btn.dataset.cat);
-    var work = document.getElementById('work');
-    if (work) work.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
-
 function loadThumb(id, imgEl) {
   var cbName = 'wt_' + id;
   window[cbName] = function(data) {
@@ -646,85 +664,145 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-var scrollyCurrentList = [];
-var scrollyCurrent = null;
-var scrollyTicking = false;
+// cover image for each of the 3 type boxes — first video in that category
+document.querySelectorAll('.type-box').forEach(function(box) {
+  var cat = box.dataset.cat;
+  var list = videoData[cat] || [];
+  var img = box.querySelector('img');
+  if (list.length && img) loadThumb(list[0].id, img);
+});
 
-function scrollySetActive(idx, list) {
-  var names = document.querySelectorAll('#scrollyNames .scrolly-name');
-  var imgs = document.querySelectorAll('#scrollyMedia img');
-  names.forEach(function(n) { n.classList.remove('active'); });
-  imgs.forEach(function(im) { im.classList.remove('active'); });
-  if (names[idx]) names[idx].classList.add('active');
-  if (imgs[idx]) imgs[idx].classList.add('active');
-  scrollyCurrent = list[idx];
-}
+var sliderList = [];
+var activeCat = null;
+var sliderOneSetWidth = 0;
+var sliderTrackOffset = 0;
+var sliderPaused = false;
+var sliderSpeed = 0.45;
 
-function scrollyUpdateActive() {
-  scrollyTicking = false;
-  var names = document.querySelectorAll('#scrollyNames .scrolly-name');
-  if (!names.length) return;
-  var viewportCenter = window.innerHeight / 2;
-  var bestIdx = 0;
-  var bestDist = Infinity;
-  names.forEach(function(n, i) {
-    var rect = n.getBoundingClientRect();
-    var center = rect.top + rect.height / 2;
-    var dist = Math.abs(center - viewportCenter);
-    if (dist < bestDist) { bestDist = dist; bestIdx = i; }
-  });
-  scrollySetActive(bestIdx, scrollyCurrentList);
-}
-
-function buildScrolly(cat) {
-  var namesWrap = document.getElementById('scrollyNames');
-  var media = document.getElementById('scrollyMedia');
-  if (!namesWrap || !media) return;
-  var playBtn = media.querySelector('.vc-play');
-
-  namesWrap.innerHTML = '';
-  media.querySelectorAll('img').forEach(function(im) { im.remove(); });
+function buildSlider(cat) {
+  var track = document.getElementById('sliderCards');
+  if (!track) return;
+  track.innerHTML = '';
+  sliderTrackOffset = 0;
+  sliderOneSetWidth = 0;
 
   var list = videoData[cat] || [];
-  scrollyCurrentList = list;
+  sliderList = list;
+  if (!list.length) return;
 
-  list.forEach(function(v, i) {
-    var name = document.createElement('div');
-    name.className = 'scrolly-name' + (i === 0 ? ' active' : '');
-    name.dataset.index = i;
-    name.innerHTML =
-      '<div class="sn-title">' + v.title + '</div>' +
-      '<div class="sn-desc">' + (v.desc || '') + '</div>';
-    name.addEventListener('click', function() {
-      name.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-    namesWrap.appendChild(name);
-
-    var img = document.createElement('img');
-    img.alt = v.title;
-    img.loading = 'lazy';
-    if (i === 0) img.classList.add('active');
-    media.insertBefore(img, playBtn);
-    loadThumb(v.id, img);
+  list.forEach(function(v) {
+    var card = document.createElement('div');
+    card.className = 'slider-card';
+    card.dataset.id = v.id;
+    card.dataset.title = v.title;
+    card.dataset.desc = v.desc || '';
+    card.innerHTML =
+      '<img alt="' + v.title + '" loading="lazy">' +
+      '<div class="sc-play">▶</div>' +
+      '<div class="sc-overlay"><div class="sc-title">' + v.title + '</div></div>';
+    track.appendChild(card);
   });
 
-  scrollySetActive(0, list);
-  media.onclick = function() {
-    if (scrollyCurrent) openWistia(scrollyCurrent.id, scrollyCurrent.title, scrollyCurrent.desc);
-  };
+  // duplicate the set for a seamless loop — card size is fixed by CSS, so we
+  // can measure and duplicate before any thumbnail has actually loaded
+  var original = track.innerHTML;
+  track.innerHTML = original + original + original;
+  sliderOneSetWidth = track.scrollWidth / 3;
+
+  // load a thumbnail into every copy of every card
+  track.querySelectorAll('.slider-card').forEach(function(card) {
+    var img = card.querySelector('img');
+    if (img && card.dataset.id) loadThumb(card.dataset.id, img);
+  });
 }
 
-// whichever name sits closest to the vertical center of the viewport becomes
-// active, and its matching video crossfades in on the pinned media panel
-window.addEventListener('scroll', function() {
-  if (!scrollyTicking) {
-    scrollyTicking = true;
-    requestAnimationFrame(scrollyUpdateActive);
-  }
-}, { passive: true });
-window.addEventListener('resize', function() { scrollyUpdateActive(); });
+document.querySelectorAll('.type-box').forEach(function(box) {
+  box.addEventListener('click', function() {
+    var cat = box.dataset.cat;
+    var wrap = document.getElementById('typeSliderWrap');
+    var alreadyOpen = box.classList.contains('active');
 
-document.addEventListener('DOMContentLoaded', function() { buildScrolly('events'); });
+    document.querySelectorAll('.type-box').forEach(function(b) { b.classList.remove('active'); });
+
+    if (alreadyOpen) {
+      activeCat = null;
+      if (wrap) {
+        wrap.style.overflow = 'hidden'; // clip while collapsing shut
+        wrap.classList.remove('open');
+      }
+      return;
+    }
+
+    box.classList.add('active');
+    activeCat = cat;
+    buildSlider(cat);
+    if (wrap) {
+      wrap.style.overflow = 'hidden'; // clip while expanding open
+      wrap.classList.add('open');
+    }
+  });
+});
+
+// once fully open, stop clipping entirely so the hover glow/scale on a card
+// never gets cut off by the wrap's own box — this was the recurring issue
+(function() {
+  var wrap = document.getElementById('typeSliderWrap');
+  if (!wrap) return;
+  wrap.addEventListener('transitionend', function(e) {
+    if (e.propertyName !== 'max-height') return;
+    if (wrap.classList.contains('open')) {
+      wrap.style.overflow = 'visible';
+    }
+  });
+})();
+
+// event delegation — the loop duplicates cards, so a single listener on the
+// track (rather than one per card) keeps every copy clickable
+document.getElementById('sliderCards') && document.getElementById('sliderCards').addEventListener('click', function(e) {
+  var card = e.target.closest('.slider-card');
+  if (!card) return;
+  openWistia(card.dataset.id, card.dataset.title, card.dataset.desc);
+});
+
+/* ─── SLIDER: CONTINUOUS SCROLL, PAUSES ON HOVER ──────────────── */
+(function() {
+  var track = document.getElementById('sliderCards');
+  var wrap = document.getElementById('typeSliderWrap');
+  if (!track || !wrap) return;
+
+  track.addEventListener('mouseenter', function() { sliderPaused = true; });
+  track.addEventListener('mouseleave', function() { sliderPaused = false; });
+
+  function tick() {
+    if (wrap.classList.contains('open') && sliderList.length && !sliderPaused) {
+      sliderTrackOffset -= sliderSpeed;
+      if (sliderOneSetWidth > 0 && Math.abs(sliderTrackOffset) >= sliderOneSetWidth) {
+        sliderTrackOffset += sliderOneSetWidth;
+      }
+      track.style.transform = 'translateX(' + sliderTrackOffset + 'px)';
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+
+/* ─── ABOUT IMAGE: FEATHERED MAGNIFIER FOLLOWING THE CURSOR ──── */
+(function() {
+  var wrap = document.getElementById('aboutImgWrap');
+  if (!wrap) return;
+  var zoom = wrap.querySelector('.about-img-zoom');
+  if (!zoom) return;
+
+  wrap.addEventListener('mousemove', function(e) {
+    var rect = wrap.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    wrap.style.setProperty('--mx', x + 'px');
+    wrap.style.setProperty('--my', y + 'px');
+    zoom.style.transformOrigin = (x / rect.width * 100) + '% ' + (y / rect.height * 100) + '%';
+  });
+})();
 
 document.addEventListener('DOMContentLoaded', function() {
   var track = document.getElementById('track');
