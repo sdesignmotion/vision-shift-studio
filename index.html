@@ -237,7 +237,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 @media(max-width:760px){
   .about-wrap{grid-template-columns:1fr;max-width:100%;}
   .about-img-block{width:100%;max-width:360px;margin:0 auto;}
-  nav{padding:1rem 1.2rem;}
+  nav{padding:1rem 1.2rem;background:rgba(11,13,20,0.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
   section{padding:3rem 1.2rem;}
   .portfolio-section{padding:3rem 1.2rem;}
   .hero-headline{letter-spacing:-1px;}
@@ -906,7 +906,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })();
 
-/* ─── HERO CONTENT: MOUSE PARALLAX (big text moves more than small) ─── */
+/* ─── HERO CONTENT: MOUSE PARALLAX ON DESKTOP, TILT ON PHONE/TABLET ─── */
 (function() {
   var hero = document.getElementById('hero');
   var layers = document.querySelectorAll('.parallax-layer');
@@ -914,19 +914,11 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!hero || !layers.length) return;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !window.matchMedia('(hover: hover)').matches) return;
+  if (reduceMotion) return;
 
+  var hasHover = window.matchMedia('(hover: hover)').matches;
   var targetX = 0, targetY = 0;
   var curX = 0, curY = 0;
-
-  hero.addEventListener('mousemove', function(e) {
-    var rect = hero.getBoundingClientRect();
-    targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-  });
-  hero.addEventListener('mouseleave', function() {
-    targetX = 0; targetY = 0;
-  });
 
   // how far the strongest layer (depth 1) travels, in px
   var STRENGTH_X = 26;
@@ -945,20 +937,70 @@ document.addEventListener('DOMContentLoaded', function() {
 
     requestAnimationFrame(loop);
   }
-  requestAnimationFrame(loop);
 
-  // magnetic pull on the CTA button, independent of the parallax drift above
-  if (cta) {
-    cta.addEventListener('mousemove', function(e) {
-      var r = cta.getBoundingClientRect();
-      var relX = e.clientX - (r.left + r.width / 2);
-      var relY = e.clientY - (r.top + r.height / 2);
-      // keep the existing lift+scale hover flourish, just add the magnetic pull on top
-      cta.style.transform = 'translate(' + (relX * 0.3).toFixed(2) + 'px,' + (relY * 0.3 - 8).toFixed(2) + 'px) scale(1.1)';
+  if (hasHover) {
+    // ─ desktop: cursor-driven ─
+    hero.addEventListener('mousemove', function(e) {
+      var rect = hero.getBoundingClientRect();
+      targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
     });
-    cta.addEventListener('mouseleave', function() {
-      cta.style.transform = '';
+    hero.addEventListener('mouseleave', function() {
+      targetX = 0; targetY = 0;
     });
+    requestAnimationFrame(loop);
+
+    // magnetic pull on the CTA button, independent of the parallax drift above
+    if (cta) {
+      cta.addEventListener('mousemove', function(e) {
+        var r = cta.getBoundingClientRect();
+        var relX = e.clientX - (r.left + r.width / 2);
+        var relY = e.clientY - (r.top + r.height / 2);
+        // keep the existing lift+scale hover flourish, just add the magnetic pull on top
+        cta.style.transform = 'translate(' + (relX * 0.3).toFixed(2) + 'px,' + (relY * 0.3 - 8).toFixed(2) + 'px) scale(1.1)';
+      });
+      cta.addEventListener('mouseleave', function() {
+        cta.style.transform = '';
+      });
+    }
+  } else if (window.DeviceOrientationEvent) {
+    // ─ phone/tablet: tilt-driven ─
+    var running = false;
+    var baseBeta = null, baseGamma = null; // calibrate to however they're already holding the phone
+
+    function handleOrientation(e) {
+      if (e.gamma === null || e.beta === null) return;
+      if (baseBeta === null) { baseBeta = e.beta; baseGamma = e.gamma; }
+      // gamma = left/right tilt, beta = forward/back tilt — both in degrees
+      var g = e.gamma - baseGamma;
+      var b = e.beta - baseBeta;
+      targetX = Math.max(-1, Math.min(1, g / 18));
+      targetY = Math.max(-1, Math.min(1, b / 18));
+    }
+
+    function start() {
+      if (running) return;
+      running = true;
+      window.addEventListener('deviceorientation', handleOrientation);
+      requestAnimationFrame(loop);
+    }
+
+    var DOE = window.DeviceOrientationEvent;
+    if (typeof DOE.requestPermission === 'function') {
+      // iOS 13+ only grants motion access from inside a user gesture, so we
+      // ask on the visitor's first tap anywhere on the page rather than
+      // interrupting them with an extra button
+      var grant = function() {
+        DOE.requestPermission().then(function(state) {
+          if (state === 'granted') start();
+        }).catch(function() {});
+        document.removeEventListener('touchend', grant);
+      };
+      document.addEventListener('touchend', grant, { once: true, passive: true });
+    } else {
+      // Android and other browsers don't gate motion access behind a prompt
+      start();
+    }
   }
 })();
 
@@ -975,6 +1017,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var glitchActive = false;
   var glitchTimer = null;
   var ticking = false;
+  var settled = false; // true once we've scrolled past the hero and styles are at rest
+  var isMobile = window.matchMedia('(max-width:760px)').matches;
 
   function measure() { heroHeight = hero.offsetHeight; }
   window.addEventListener('resize', measure);
@@ -983,6 +1027,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (glitchActive) return;
     glitchActive = true;
     hero.classList.add('glitching');
+    // on mobile, skip the per-frame drop-shadow/clip-path work — the CSS-only
+    // scanline + contrast/saturate glitch (already applied via .glitching) is
+    // plenty and far cheaper on mobile GPUs
+    if (isMobile) return;
     glitchTimer = setInterval(function() {
       var r = (Math.random() * 8 - 4).toFixed(1);
       var b = (Math.random() * 8 - 4).toFixed(1);
@@ -1007,6 +1055,21 @@ document.addEventListener('DOMContentLoaded', function() {
   function update() {
     ticking = false;
     var progress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1);
+
+    // once we're fully past the hero, stop touching the video's styles on every
+    // scroll tick for the rest of the page — this was the main source of the
+    // scroll lag, since it kept recalculating transform/opacity long after the
+    // hero was off-screen
+    if (progress >= 1) {
+      if (!settled) {
+        video.style.transform = 'scale(1.4)';
+        video.style.opacity = '0';
+        stopGlitch();
+        settled = true;
+      }
+      return;
+    }
+    settled = false;
 
     // zoom in + fade out as you scroll through the hero — plain, no scrubbing
     video.style.transform = 'scale(' + (1 + progress * 0.4) + ')';
