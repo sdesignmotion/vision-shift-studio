@@ -450,6 +450,8 @@ const videoData = {
   dance: [
     {id:'cqjaqvix2f', title:'Trouble', desc:'Original concept for a dance video.'},
     {id:'m3r3kz2y9z', title:'Winny', desc:'Original concept for a dance video.'},
+    {id:'reajbtib31', title:'Academy 360 10 Year Anniversary', desc:'Anniversary celebration film for Academy 360.'},
+    {id:'6erkcbjhs7', title:'Academy 360 Class Promo', desc:'Promo for Academy 360 dance classes.'},
     {id:'o8ol8k2dyj', title:'Drip', desc:'Original concept for a dance video.'},
     {id:'xqp3jflpn4', title:'Low', desc:'Original concept for a dance video.'},
     {id:'j3wi77124k', title:'Aquamarine', desc:'Concept dance film inspired by ocean tones.'},
@@ -459,9 +461,7 @@ const videoData = {
     {id:'d57nea2mbj', title:'Academy 360 Workshop Promo', desc:'Dance workshop promotion.'},
     {id:'47rnvuwo09', title:'KATSEYE - Gabriela Cover', desc:'K-pop choreography cover performance.'},
     {id:'02oircll7q', title:'End of Season Film', desc:'Season recap dance video.'},
-    {id:'5kz6ga0ab4', title:'Workshop Session', desc:'Workshop dance footage.'},
     {id:'bqv53tnvv7', title:'Club DJ Promo II', desc:'Second club dance edit.'},
-    {id:'25kmfw82tw', title:'Academy 360 Workshop II', desc:'Follow-up workshop promo.'},
     {id:'u35yoio9s9', title:'Mirela Ilieva Promo', desc:'Dance event promo featuring Mirela Ilieva.'}
   ],
   commercial: [
@@ -1090,10 +1090,12 @@ document.addEventListener('DOMContentLoaded', function() {
         video.style.transform = 'scale(1.4)';
         video.style.opacity = '0';
         stopGlitch();
+        video.pause(); // stop decoding — it's invisible and was still eating CPU/GPU in the background
         settled = true;
       }
       return;
     }
+    if (settled && video.paused) video.play().catch(function() {});
     settled = false;
 
     // zoom in + fade out as you scroll through the hero — plain, no scrubbing
