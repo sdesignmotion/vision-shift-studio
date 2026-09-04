@@ -1041,7 +1041,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var heroHeight = hero.offsetHeight;
   var glitchActive = false;
   var glitchTimer = null;
-  var ticking = false;
   var settled = false; // true once we've scrolled past the hero and styles are at rest
   var isMobile = window.matchMedia('(max-width:760px)').matches;
 
@@ -1077,14 +1076,19 @@ document.addEventListener('DOMContentLoaded', function() {
     video.style.clipPath = '';
   }
 
-  function update() {
-    ticking = false;
+  // Poll scroll position every animation frame instead of waiting on the
+  // 'scroll' event. In-app browsers (Messenger, Instagram, etc.) and iOS
+  // Safari throttle 'scroll' event dispatch heavily during a fast fling —
+  // the page itself scrolls smoothly (that's native/compositor-driven), but
+  // JS only got notified in sparse bursts, so the scale/opacity updates
+  // lagged and jumped instead of gliding. Reading scrollY directly inside
+  // rAF sidesteps that entirely.
+  function frame() {
     var progress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1);
 
-    // once we're fully past the hero, stop touching the video's styles on every
-    // scroll tick for the rest of the page — this was the main source of the
-    // scroll lag, since it kept recalculating transform/opacity long after the
-    // hero was off-screen
+    // once we're fully past the hero, stop touching the video's styles every
+    // frame and stop the rAF chain — a cheap scroll listener below restarts
+    // it if the visitor scrolls back up
     if (progress >= 1) {
       if (!settled) {
         video.style.transform = 'scale(1.4)';
@@ -1110,16 +1114,19 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       stopGlitch();
     }
+
+    requestAnimationFrame(frame);
   }
 
+  // cheap restart trigger for when the rAF chain has stopped (settled past the
+  // hero) and the visitor scrolls back up — doesn't need to fire every frame,
+  // just needs one event to re-arm the self-sustaining loop above
   window.addEventListener('scroll', function() {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(update);
-    }
+    if (settled) requestAnimationFrame(frame);
   }, { passive: true });
 
   measure();
+  requestAnimationFrame(frame);
 })();
 
 </script>
