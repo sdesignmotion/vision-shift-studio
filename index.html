@@ -1102,8 +1102,10 @@ document.addEventListener('DOMContentLoaded', function() {
     video.style.transform = 'scale(' + (1 + progress * 0.4) + ')';
     video.style.opacity = String(Math.max(1 - progress * 1.15, 0));
 
-    // glitch takes over for the last stretch of the hero, right as it hands off to the page
-    if (progress > 0.72 && progress < 1) {
+    // glitch takes over for the last stretch of the hero, right as it hands off to the page —
+    // skipped entirely on phone, since even the lightweight CSS-only version of it was
+    // still causing visible glitching/lag while scrolling on mobile
+    if (!isMobile && progress > 0.72 && progress < 1) {
       startGlitch();
     } else {
       stopGlitch();
