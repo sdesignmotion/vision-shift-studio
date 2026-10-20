@@ -134,7 +134,8 @@ section{padding:5rem 2.5rem;}
 .svc-sub{font-size:13px;color:var(--muted);line-height:1.9;max-width:480px;margin:0 auto;}
 .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:1100px;margin:0 auto;}
 /* .svc only carries the scroll-reveal; the hover motion lives on .svc-card so the two never fight over transform */
-.svc-card{position:relative;height:100%;padding:2.2rem 2rem 2rem;border:0.5px solid rgba(255,255,255,0.10);border-radius:10px;background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow:hidden;transition:transform .45s cubic-bezier(0.34,1.56,0.64,1),border-color .3s ease,box-shadow .4s ease;}
+.svc{display:flex;}
+.svc-card{position:relative;flex:1;display:flex;flex-direction:column;padding:2.2rem 2rem 2rem;border:0.5px solid rgba(255,255,255,0.10);border-radius:10px;background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow:hidden;transition:transform .45s cubic-bezier(0.34,1.56,0.64,1),border-color .3s ease,box-shadow .4s ease;}
 /* gold spotlight that follows the cursor */
 .svc-card::before{content:'';position:absolute;inset:0;background:radial-gradient(340px circle at var(--mx,50%) var(--my,0%),rgba(201,150,58,0.17),transparent 60%);opacity:0;transition:opacity .35s ease;pointer-events:none;}
 .svc-card:hover{transform:translateY(-6px);border-color:rgba(201,150,58,0.45);box-shadow:0 18px 50px rgba(201,150,58,0.12);}
@@ -146,9 +147,11 @@ section{padding:5rem 2.5rem;}
 @keyframes iconDraw{from{stroke-dashoffset:1;}to{stroke-dashoffset:0;}}
 .svc-card h3{font-size:15px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:.7rem;}
 .svc-card p{font-size:13px;color:var(--muted);line-height:1.8;max-width:420px;}
-.svc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem;}
-.svc-tags span{font-size:11px;letter-spacing:.5px;padding:5px 13px;border:0.5px solid rgba(255,255,255,0.18);border-radius:50px;color:rgba(240,240,240,0.6);transition:border-color .3s ease,color .3s ease;}
-.svc-card:hover .svc-tags span{border-color:rgba(201,150,58,0.5);color:rgba(240,240,240,0.85);}
+.svc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:1.5rem;}
+.svc-tag{font-family:inherit;font-size:11px;letter-spacing:.5px;padding:5px 13px;border:0.5px solid rgba(255,255,255,0.18);border-radius:50px;background:transparent;color:rgba(240,240,240,0.6);cursor:pointer;transition:border-color .3s ease,color .3s ease,background-color .3s ease;}
+.svc-card:hover .svc-tag{border-color:rgba(201,150,58,0.5);color:rgba(240,240,240,0.85);}
+.svc-tag:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,150,58,0.1);}
+.svc-tag:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
 .svc-cta-row{display:flex;justify-content:center;margin-top:3rem;}
 @media(max-width:700px){.services-grid{grid-template-columns:1fr;}}
 @media(prefers-reduced-motion:reduce){.svc-card,.svc-card:hover{transition:none;transform:none;}.svc-card:hover .svc-icon svg *{animation:none;}}
@@ -158,11 +161,11 @@ section{padding:5rem 2.5rem;}
 /* three big clickable type boxes */
 .type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;}
 .type-box{position:relative;height:420px;border-radius:14px;overflow:hidden;border:0.5px solid var(--border);background:var(--bg3);cursor:pointer;transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease,border-color .35s ease;}
-.type-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;filter:blur(2px);transition:opacity .5s ease,transform .5s cubic-bezier(.4,0,.2,1),filter .5s ease;}
-.type-box img[src]{opacity:.5;}
+.type-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease,transform .5s cubic-bezier(.4,0,.2,1);}
+.type-box img[src]{opacity:1;}
 .type-item:hover .type-box img,.type-box.active img{transform:scale(1.14);}
-.type-box-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.25) 55%,rgba(0,0,0,0.35) 100%);transition:background .4s ease;}
-.type-item:hover .type-box-overlay,.type-box.active .type-box-overlay{background:rgba(0,0,0,0.35);}
+.type-box-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0) 55%);transition:background .4s ease;}
+.type-item:hover .type-box-overlay,.type-box.active .type-box-overlay{background:rgba(0,0,0,0);}
 /* title + short caption sit below each box */
 .type-info{padding:1.4rem .4rem 0;text-align:center;cursor:pointer;}
 .type-title{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:.5rem;transition:color .3s ease,letter-spacing .35s ease;}
@@ -270,6 +273,7 @@ section{padding:5rem 2.5rem;}
 .stat-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
 
 /* ─── CONTACT: intro left, glass form card right ─────────────── */
+.contact-label{max-width:1040px;margin:0 auto 3.5rem;}
 .contact-wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:4rem;align-items:center;max-width:1040px;margin:0 auto;text-align:left;}
 .contact-intro p{max-width:380px;line-height:1.9;margin-bottom:1.5rem;}
 .contact-intro .about-email{margin-top:0;}
@@ -289,7 +293,8 @@ section{padding:5rem 2.5rem;}
 .contact-form input{padding:13px 20px;}
 .contact-form select{padding:13px 40px 13px 20px;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(240,240,240,0.4)'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;}
 .contact-form select.placeholder-active{color:rgba(240,240,240,0.4);}
-.contact-form select option{background:#10131e;color:#f0f0f0;}
+.contact-form select option,.contact-form select optgroup{background:#10131e;color:#f0f0f0;}
+.contact-form select.flash{border-color:rgba(201,150,58,0.85);background-color:rgba(201,150,58,0.05);box-shadow:-12px 0 26px -6px rgba(201,150,58,0.65),12px 0 26px -6px rgba(201,150,58,0.65),0 0 0 1px rgba(201,150,58,0.35);}
 .contact-form textarea{padding:16px 20px;resize:vertical;}
 /* submit = same outline-to-fill behaviour as the hero buttons */
 .contact-form-btn{grid-column:1/-1;margin-top:6px;padding:16px;border-radius:50px;background:transparent;color:#fff;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:1px solid rgba(201,150,58,0.85);cursor:pointer;font-family:'Montserrat',sans-serif;position:relative;overflow:hidden;transform:translateY(0) scale(1);will-change:transform,box-shadow;transition:transform 600ms cubic-bezier(0.34,1.56,0.64,1),box-shadow 600ms ease,background-color 350ms ease,color 250ms ease,border-color 350ms ease;}
@@ -423,24 +428,24 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   </div>
   <div class="services-grid">
     <div class="svc reveal-up delay-1"><div class="svc-card">
-      <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" pathLength="1"/><polygon points="10,9 16,12 10,15" pathLength="1"/></svg></div>
-      <h3>Video Editing</h3><p>Music videos, short films, reels, and branded content with cinematic pacing.</p>
-      <div class="svc-tags"><span>Music videos</span><span>Reels</span><span>Short films</span></div>
-    </div></div>
-    <div class="svc reveal-up delay-2"><div class="svc-card">
-      <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="12,3 21,8 12,13 3,8" pathLength="1"/><polyline points="3,12 12,17 21,12" pathLength="1"/><polyline points="3,16 12,21 21,16" pathLength="1"/></svg></div>
-      <h3>Motion Graphics</h3><p>Animated titles, transitions, and visual effects that elevate any story.</p>
-      <div class="svc-tags"><span>Titles</span><span>Transitions</span><span>Visual effects</span></div>
-    </div></div>
-    <div class="svc reveal-up delay-3"><div class="svc-card">
       <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2" pathLength="1"/><polyline points="16,11 21,8 21,16 16,13" pathLength="1"/></svg></div>
       <h3>Video Production</h3><p>On-location shooting and direction — events, promos, and branded content captured frame-perfect.</p>
-      <div class="svc-tags"><span>Events</span><span>Promos</span><span>Direction</span></div>
+      <div class="svc-tags"><button type="button" class="svc-tag" data-type="Events">Events</button><button type="button" class="svc-tag" data-type="Promos">Promos</button><button type="button" class="svc-tag" data-type="Direction">Direction</button></div>
+    </div></div>
+    <div class="svc reveal-up delay-2"><div class="svc-card">
+      <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" pathLength="1"/><polygon points="10,9 16,12 10,15" pathLength="1"/></svg></div>
+      <h3>Video Editing</h3><p>Music videos, short films, reels, and branded content with cinematic pacing.</p>
+      <div class="svc-tags"><button type="button" class="svc-tag" data-type="Music videos">Music videos</button><button type="button" class="svc-tag" data-type="Reels">Reels</button><button type="button" class="svc-tag" data-type="Short films">Short films</button></div>
+    </div></div>
+    <div class="svc reveal-up delay-3"><div class="svc-card">
+      <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="12,3 21,8 12,13 3,8" pathLength="1"/><polyline points="3,12 12,17 21,12" pathLength="1"/><polyline points="3,16 12,21 21,16" pathLength="1"/></svg></div>
+      <h3>Motion Graphics</h3><p>Animated titles, transitions, and visual effects that elevate any story.</p>
+      <div class="svc-tags"><button type="button" class="svc-tag" data-type="Titles">Titles</button><button type="button" class="svc-tag" data-type="Transitions">Transitions</button><button type="button" class="svc-tag" data-type="Visual effects">Visual effects</button></div>
     </div></div>
     <div class="svc reveal-up delay-4"><div class="svc-card">
       <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="5" pathLength="1"/><rect x="11" y="11" width="9" height="9" rx="1.5" pathLength="1"/></svg></div>
       <h3>Graphic Design</h3><p>Thumbnails, posters, and visual identity for creators and brands.</p>
-      <div class="svc-tags"><span>Thumbnails</span><span>Posters</span><span>Visual identity</span></div>
+      <div class="svc-tags"><button type="button" class="svc-tag" data-type="Thumbnails">Thumbnails</button><button type="button" class="svc-tag" data-type="Posters">Posters</button><button type="button" class="svc-tag" data-type="Visual identity">Visual identity</button></div>
     </div></div>
   </div>
   <div class="svc-cta-row reveal-up">
@@ -533,10 +538,11 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
 <!-- CONTACT -->
 <div class="contact-section" id="contact">
+  <div class="section-label contact-label reveal-left">Get in touch</div>
   <div class="contact-wrap">
     <div class="contact-intro">
       <h2 class="reveal-left">Ready to shift<br>your <span>vision?</span></h2>
-      <p class="reveal-right">Open to freelance projects, collaborations, and creative partnerships.</p>
+      <p class="reveal-right">Your first step is here. Tell me a little about your idea, your timeline and your budget, and I'll get back to you with ideas and a clear quote.</p>
       <a class="about-email reveal-right" href="mailto:vasilslavkov2@gmail.com">vasilslavkov2@gmail.com</a>
     </div>
 
@@ -559,10 +565,18 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
       </select>
       <select name="project_type" class="placeholder-active" onchange="this.classList.remove('placeholder-active')">
         <option value="" disabled selected>Project Type</option>
-        <option>Dance Video</option>
-        <option>Music Video</option>
-        <option>Commercial</option>
-        <option>Event Coverage</option>
+        <optgroup label="Video Production">
+          <option>Events</option><option>Promos</option><option>Direction</option><option>Dance Video</option><option>Commercial</option>
+        </optgroup>
+        <optgroup label="Video Editing">
+          <option>Music videos</option><option>Reels</option><option>Short films</option>
+        </optgroup>
+        <optgroup label="Motion Graphics">
+          <option>Titles</option><option>Transitions</option><option>Visual effects</option>
+        </optgroup>
+        <optgroup label="Graphic Design">
+          <option>Thumbnails</option><option>Posters</option><option>Visual identity</option>
+        </optgroup>
         <option>Other</option>
       </select>
       <textarea class="full" name="message" placeholder="Tell me about your project..." rows="5"></textarea>
@@ -610,11 +624,11 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <script>
 const videoData = {
   events: [
-    {id:'hxmo90o2ww', title:'Kyoto', desc:'Professional travel film shot on the road in Kyoto.'},
     {id:'lb6a0y85pu', title:'Zhatva (Harvest)', desc:'Event coverage for Zhatva.'},
     {id:'0oy2kjh45p', title:"Fox'n'Cats – Event", desc:'Live event coverage for Fox\'n\'Cats.'},
     {id:'d55rd8i57p', title:"Fox'n'Cats – Summer Tour", desc:'Behind-the-scenes rehearsal for summer tour promo.'},
-    {id:'z2dbxs20br', title:'Pizza Place Ad - Sofia', desc:'Commercial for central Sofia pizza spot.'}
+    {id:'z2dbxs20br', title:'Pizza Place Ad - Sofia', desc:'Commercial for central Sofia pizza spot.'},
+    {id:'hxmo90o2ww', title:'Kyoto', desc:'Professional travel film shot on the road in Kyoto.'}
   ],
   dance: [
     {id:'hkol0ndud7', title:'Dance School Promo', desc:'A promo film for a dance school, built around the energy of its classes and the people who fill the studio.', aspect:1.25},
@@ -635,7 +649,8 @@ const videoData = {
     {id:'twngypcm96', title:'Muze Dance Hub Promo', desc:'Promo for Muze dance hub for starting season.', aspect:1.25}
   ],
   visual: [
-    {id:'1ol496gk14', title:'Featured Project', desc:'Visual production work.'},
+    {id:'1ol496gk14', title:'Wedding Film', desc:'A cinematic wedding film.'},
+    {id:'9relskahwc', title:'Yoga Studio Promo', desc:'A promo for a new yoga studio.'},
     {id:'xa6zpnmq6i', title:'Synesthesia', desc:'Music video for "Synesthesia".'},
     {id:'zrbh6tuzg4', title:'Lidl Ad', desc:'Commercial brand video. Motion design work.'},
     {id:'jgr4o94e96', title:'MYX Platform Ad', desc:'Digital platform promo.'},
@@ -643,8 +658,7 @@ const videoData = {
     {id:'sygumeggso', title:'Maturata BG Ad', desc:'Service commercial video.'},
     {id:'hzdk3kt8p6', title:'Knitted Bags Ad', desc:'Handmade product promo.'},
     {id:'0dcmd2jgtj', title:'MYX Business Ad', desc:'Corporate promo video.'},
-    {id:'21pz3thqub', title:'Public Wedding Signing', desc:'Cinematic civil wedding signing moment.'},
-    {id:'9relskahwc', title:'Yoga Studio Promo', desc:'A promo for a new yoga studio.'}
+    {id:'21pz3thqub', title:'Public Wedding Signing', desc:'Cinematic civil wedding signing moment.'}
   ]
 };
 
@@ -976,10 +990,11 @@ document.getElementById('sliderCards') && document.getElementById('sliderCards')
 })();
 
 
-/* ─── ABOUT COLLAGE: MUTED LOOPING VIDEOS, LOADED WHEN SCROLLED NEAR ──── */
+/* ─── ABOUT COLLAGE: MUTED LOOPING VIDEOS — LOW QUALITY, ONLY PLAYING WHILE VISIBLE ──── */
 (function() {
+  var collage = document.querySelector('.about-collage');
   var tiles = document.querySelectorAll('.ac-tile');
-  if (!tiles.length) return;
+  if (!collage || !tiles.length) return;
 
   // poster image under each video so the tiles are never empty while loading
   tiles.forEach(function(t) {
@@ -988,30 +1003,42 @@ document.getElementById('sliderCards') && document.getElementById('sliderCards')
   });
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  function load(t) {
-    if (t.dataset.loaded) return;
-    t.dataset.loaded = '1';
+  function mount(t) {
+    if (t.querySelector('iframe')) return;
     var box = t.querySelector('.ac-vid');
     var f = document.createElement('iframe');
+    // tiles are ~130-290px wide, so a 224-360p stream is plenty and keeps playback smooth
     f.src = 'https://fast.wistia.net/embed/iframe/' + t.dataset.wid +
       '?autoPlay=true&muted=true&endVideoBehavior=loop&controlsVisibleOnLoad=false&playbar=false' +
-      '&playButton=false&smallPlayButton=false&volumeControl=false&fullscreenButton=false&settingsControl=false&playsinline=true';
+      '&playButton=false&smallPlayButton=false&volumeControl=false&fullscreenButton=false&settingsControl=false' +
+      '&playsinline=true&qualityMin=224&qualityMax=360';
     f.setAttribute('allow', 'autoplay; fullscreen');
     f.setAttribute('tabindex', '-1');
     f.setAttribute('aria-hidden', 'true');
     f.addEventListener('load', function() { setTimeout(function() { box.classList.add('ready'); }, 500); });
     box.appendChild(f);
   }
+  function unmount(t) {
+    var f = t.querySelector('iframe');
+    if (f) f.remove();
+    t.querySelector('.ac-vid').classList.remove('ready');
+  }
+
+  var inView = false;
+  function sync() {
+    var play = inView && !document.hidden;
+    tiles.forEach(play ? mount : unmount);
+  }
+  document.addEventListener('visibilitychange', sync);
 
   if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) { load(e.target); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '200px 0px' });
-    tiles.forEach(function(t) { io.observe(t); });
+    new IntersectionObserver(function(entries) {
+      inView = entries[0].isIntersecting;
+      sync();
+    }, { rootMargin: '150px 0px' }).observe(collage);
   } else {
-    tiles.forEach(load);
+    inView = true;
+    sync();
   }
 })();
 
@@ -1353,6 +1380,24 @@ document.addEventListener('DOMContentLoaded', function() {
     logo.classList.add('pulse');
   });
   logo.addEventListener('animationend', function() { logo.classList.remove('pulse'); });
+})();
+
+/* ─── SERVICE TAGS: JUMP TO THE FORM WITH THE PROJECT TYPE PRESELECTED ─── */
+(function() {
+  var form = document.getElementById('contact-form');
+  var sel = form && form.querySelector('select[name="project_type"]');
+  document.querySelectorAll('.svc-tag').forEach(function(tag) {
+    tag.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (sel) {
+        sel.value = tag.dataset.type;
+        sel.classList.remove('placeholder-active');
+        sel.classList.add('flash');
+        setTimeout(function() { sel.classList.remove('flash'); }, 1800);
+      }
+      if (form) form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
 })();
 </script>
 </body>
