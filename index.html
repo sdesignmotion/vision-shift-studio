@@ -160,24 +160,28 @@ section{padding:5rem 2.5rem;}
 .type-box{position:relative;height:420px;border-radius:14px;overflow:hidden;border:0.5px solid var(--border);background:var(--bg3);cursor:pointer;transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease,border-color .35s ease;}
 .type-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;filter:blur(2px);transition:opacity .5s ease,transform .5s cubic-bezier(.4,0,.2,1),filter .5s ease;}
 .type-box img[src]{opacity:.5;}
-.type-box:hover img,.type-box.active img{transform:scale(1.14);}
+.type-item:hover .type-box img,.type-box.active img{transform:scale(1.14);}
 .type-box-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.25) 55%,rgba(0,0,0,0.35) 100%);transition:background .4s ease;}
-.type-box:hover .type-box-overlay,.type-box.active .type-box-overlay{background:rgba(0,0,0,0.35);}
-.type-box-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#fff;opacity:.25;transition:opacity .35s ease,letter-spacing .35s ease;}
-.type-box:hover .type-box-label{opacity:1;letter-spacing:7px;}
-.type-box.active .type-box-label{opacity:1;letter-spacing:9px;color:var(--gold);}
+.type-item:hover .type-box-overlay,.type-box.active .type-box-overlay{background:rgba(0,0,0,0.35);}
+/* title + short caption sit below each box */
+.type-info{padding:1.4rem .4rem 0;text-align:center;cursor:pointer;}
+.type-title{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:.5rem;transition:color .3s ease,letter-spacing .35s ease;}
+.type-caption{font-size:13px;color:var(--muted);line-height:1.7;}
+.type-item:hover .type-title{color:var(--gold);letter-spacing:4px;}
+.type-item.is-active .type-title{color:var(--gold);letter-spacing:4px;}
 .type-box.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 20px 50px rgba(201,150,58,0.25);transform:scale(1.04);z-index:2;}
 
 @media(max-width:820px){
   .type-grid{grid-template-columns:1fr;max-width:420px;row-gap:0;}
   .type-box{height:260px;max-height:260px;transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease,border-color .35s ease,max-height .45s cubic-bezier(.4,0,.2,1),opacity .35s ease,margin .45s ease;}
-  .type-box:not(:last-of-type){margin-bottom:1.5rem;}
+  .type-item{max-height:440px;transition:max-height .45s cubic-bezier(.4,0,.2,1),opacity .35s ease,margin .45s ease;}
+  .type-item:not(:last-of-type){margin-bottom:1.5rem;}
   /* when a box is open, collapse the other two so the slider sits
      directly under the one that was clicked — and let the slider's own
      margin-top (not the box's) control the gap once it opens, so the
      spacing stays consistent whichever box was last active */
-  .type-grid.has-open .type-box:not(.active){max-height:0;opacity:0;margin:0;border-width:0;pointer-events:none;}
-  .type-grid.has-open .type-box.active{margin-bottom:0;}
+  .type-grid.has-open .type-item:not(.is-active){max-height:0;opacity:0;margin:0;overflow:hidden;pointer-events:none;}
+  .type-grid.has-open .type-item.is-active{margin-bottom:0;}
 }
 
 /* video slider that drops down beneath the clicked type box */
@@ -186,17 +190,22 @@ section{padding:5rem 2.5rem;}
 .type-slider-stage{position:relative;height:260px;clip-path:inset(-9999px 0 -9999px 0);}
 .slider-track{display:flex;gap:1.75rem;width:max-content;align-items:center;padding:0 2.5rem;will-change:transform;}
 
-.slider-card{position:relative;flex:0 0 auto;width:320px;height:200px;border-radius:12px;overflow:hidden;border:0.5px solid var(--border);background:var(--bg3);cursor:pointer;transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease;}
-.slider-card:hover{transform:scale(1.08);box-shadow:0 0 0 1px var(--gold),0 10px 32px rgba(201,150,58,0.4);z-index:5;}
+/* title sits above the thumbnail; only .sc-thumb is the framed, hoverable box */
+.slider-card{position:relative;flex:0 0 auto;width:320px;display:flex;flex-direction:column;gap:12px;cursor:pointer;}
+.slider-card:hover{z-index:5;}
+.sc-thumb{position:relative;height:200px;border-radius:12px;overflow:hidden;border:0.5px solid var(--border);background:var(--bg3);transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s ease;}
+.slider-card:hover .sc-thumb{transform:scale(1.08);box-shadow:0 0 0 1px var(--gold),0 10px 32px rgba(201,150,58,0.4);}
 .slider-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s ease;}
 .slider-card img[src]{opacity:1;}
-.slider-card .sc-overlay{position:absolute;bottom:0;left:0;right:0;padding:1rem 1.2rem;background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);}
-.slider-card .sc-title{font-size:14px;font-weight:700;color:#fff;letter-spacing:.2px;}
+
+.slider-card .sc-title{font-size:14px;font-weight:700;color:#fff;letter-spacing:.2px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .3s ease;}
+.slider-card:hover .sc-title{color:var(--gold);}
 .slider-card .sc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;background:rgba(0,0,0,0.4);opacity:0;transition:opacity .3s ease;}
 .slider-card:hover .sc-play{opacity:1;}
 
 @media(max-width:820px){
-  .slider-card{width:230px;height:150px;}
+  .slider-card{width:230px;gap:10px;}
+  .sc-thumb{height:150px;}
   .type-slider-stage{height:190px;}
   .type-slider-wrap.open{max-height:380px;}
 }
@@ -234,17 +243,22 @@ section{padding:5rem 2.5rem;}
 
 /* ─────────────────────────────────────────────────────────────── */
 
-.about-wrap{display:grid;grid-template-columns:320px 1fr;gap:3.5rem;align-items:stretch;max-width:960px;margin:0 auto;}
-/* reduced from 24px → 10px */
-.about-img-block{position:relative;overflow:hidden;border:0.5px solid rgba(255,255,255,0.10);border-radius:10px;width:320px;flex-shrink:0;}
-.about-img-block img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;min-height:400px;}
-.about-img-base{position:relative;z-index:0;}
-.about-img-zoom{position:absolute;inset:0;z-index:1;transform:scale(1.35);opacity:0;pointer-events:none;transition:opacity .25s ease;
-  -webkit-mask-image:radial-gradient(circle 95px at var(--mx,50%) var(--my,50%),rgba(0,0,0,1) 0%,rgba(0,0,0,1) 40%,rgba(0,0,0,0) 100%);
-  mask-image:radial-gradient(circle 95px at var(--mx,50%) var(--my,50%),rgba(0,0,0,1) 0%,rgba(0,0,0,1) 40%,rgba(0,0,0,0) 100%);
-}
-.about-img-block:hover .about-img-zoom{opacity:1;}
-@media(hover:none){.about-img-zoom{display:none;}}
+.about-wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem;align-items:center;max-width:1100px;margin:0 auto;}
+/* collage: photo is the big centre tile, looping videos frame it */
+.about-collage{display:grid;gap:8px;width:100%;aspect-ratio:1.05;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(12,1fr);}
+.about-img-block{grid-column:4/10;grid-row:4/12;position:relative;overflow:hidden;border:0.5px solid rgba(255,255,255,0.10);border-radius:10px;}
+.about-img-block img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.ac-tile{position:relative;overflow:hidden;border:0.5px solid rgba(255,255,255,0.10);border-radius:10px;background:var(--bg3);container-type:size;}
+.ac-l{grid-column:2/8;grid-row:1/4;}    /* wide, top, shifted left of the photo */
+.ac-v3{grid-column:10/13;grid-row:2/8;}  /* tall, top right */
+.ac-v1{grid-column:1/4;grid-row:5/11;}   /* tall, left, sitting lower */
+.ac-v2{grid-column:10/13;grid-row:9/13;} /* smaller, bottom right */
+.ac-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.6;}
+/* the player is sized to cover the tile (like object-fit:cover) so no letterboxing */
+.ac-vid{position:absolute;top:50%;left:50%;width:max(100cqw,calc(100cqh * var(--a)));height:max(100cqh,calc(100cqw / var(--a)));transform:translate(-50%,-50%);opacity:0;transition:opacity .6s ease;pointer-events:none;}
+.ac-vid.ready{opacity:1;}
+.ac-vid iframe{width:100%;height:100%;border:0;display:block;}
+@supports not (width:1cqw){.ac-vid{inset:0;width:100%;height:100%;transform:none;}}
 .about-img-overlay{position:absolute;bottom:0;left:0;right:0;height:20%;background:linear-gradient(transparent,rgba(11,13,20,0.85));}
 .about-content h2{font-size:clamp(22px,2.8vw,36px);font-weight:700;line-height:1.2;margin-bottom:1.2rem;}
 .about-content h2 span{color:var(--gold);}
@@ -334,7 +348,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
 @media(max-width:760px){
   .about-wrap{grid-template-columns:1fr;max-width:100%;}
-  .about-img-block{width:100%;max-width:360px;margin:0 auto;}
+  .about-collage{max-width:480px;margin:0 auto;}
   nav{padding:1rem 1.2rem;background:rgba(11,13,20,0.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
   section{padding:3rem 1.2rem;}
   .portfolio-section{padding:3rem 1.2rem;}
@@ -438,20 +452,35 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <section class="portfolio-section" id="work">
   <div class="section-label reveal-left">Selected work</div>
   <div class="type-grid reveal-up" id="typeGrid">
-    <div class="type-box" data-cat="events">
-      <img alt="Events" loading="lazy">
-      <div class="type-box-overlay"></div>
-      <div class="type-box-label">Events</div>
+    <div class="type-item">
+      <div class="type-box" data-cat="events">
+        <img alt="Events" loading="lazy">
+        <div class="type-box-overlay"></div>
+      </div>
+      <div class="type-info">
+        <h3 class="type-title">Events</h3>
+        <p class="type-caption">Live coverage, tours and travel films.</p>
+      </div>
     </div>
-    <div class="type-box" data-cat="dance">
-      <img alt="Dance" loading="lazy">
-      <div class="type-box-overlay"></div>
-      <div class="type-box-label">Dance</div>
+    <div class="type-item">
+      <div class="type-box" data-cat="dance">
+        <img alt="Dance" loading="lazy">
+        <div class="type-box-overlay"></div>
+      </div>
+      <div class="type-info">
+        <h3 class="type-title">Dance</h3>
+        <p class="type-caption">Promos, concepts and choreography films.</p>
+      </div>
     </div>
-    <div class="type-box" data-cat="commercial">
-      <img alt="Commercial" loading="lazy">
-      <div class="type-box-overlay"></div>
-      <div class="type-box-label">Commercial</div>
+    <div class="type-item">
+      <div class="type-box" data-cat="visual">
+        <img alt="Visual Production" loading="lazy">
+        <div class="type-box-overlay"></div>
+      </div>
+      <div class="type-info">
+        <h3 class="type-title">Visual Production</h3>
+        <p class="type-caption">Ads, music videos and promo films.</p>
+      </div>
     </div>
   </div>
 
@@ -478,10 +507,15 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
 <section id="about">
   <div class="section-label reveal-left">About</div>
   <div class="about-wrap">
-    <div class="about-img-block reveal-left" id="aboutImgWrap">
-      <img class="about-img-base" src="Photo0734_new.jpeg" alt="Vasil Slavkov" onerror="this.src='Photo0734.jpeg'">
-      <img class="about-img-zoom" src="Photo0734_new.jpeg" alt="" aria-hidden="true" onerror="this.src='Photo0734.jpeg'">
-      <div class="about-img-overlay"></div>
+    <div class="about-collage reveal-left">
+      <div class="about-img-block">
+        <img class="about-img-base" src="Photo0734_new.jpeg" alt="Vasil Slavkov" onerror="this.src='Photo0734.jpeg'">
+        <div class="about-img-overlay"></div>
+      </div>
+      <div class="ac-tile ac-v1" style="--a:0.5625" data-wid="6gdpakazdv"><img alt="" aria-hidden="true"><div class="ac-vid"></div></div>
+      <div class="ac-tile ac-v2" style="--a:0.5625" data-wid="tni2p895p4"><img alt="" aria-hidden="true"><div class="ac-vid"></div></div>
+      <div class="ac-tile ac-v3" style="--a:0.5625" data-wid="8b75we94yu"><img alt="" aria-hidden="true"><div class="ac-vid"></div></div>
+      <div class="ac-tile ac-l" style="--a:1.7778" data-wid="vtzj3e8i32"><img alt="" aria-hidden="true"><div class="ac-vid"></div></div>
     </div>
     <div class="about-content reveal-right">
       <h2>I don't just capture moments —<br>I give them <span>life.</span></h2>
@@ -580,12 +614,7 @@ const videoData = {
     {id:'lb6a0y85pu', title:'Zhatva (Harvest)', desc:'Event coverage for Zhatva.'},
     {id:'0oy2kjh45p', title:"Fox'n'Cats – Event", desc:'Live event coverage for Fox\'n\'Cats.'},
     {id:'d55rd8i57p', title:"Fox'n'Cats – Summer Tour", desc:'Behind-the-scenes rehearsal for summer tour promo.'},
-    {id:'21pz3thqub', title:'Public Wedding Signing', desc:'Cinematic civil wedding signing moment.'},
-    {id:'pet8kzo2z8', title:'Christmas Dance Promo', desc:'Promo for seasonal dance event.'},
-    {id:'olkrivi2qt', title:'Studio Season Opening', desc:'New dance season launch video.'},
-    {id:'z2dbxs20br', title:'Pizza Place Ad - Sofia', desc:'Commercial for central Sofia pizza spot.'},
-    {id:'e8xeibgkv9', title:"Valentine's Private Event", desc:'Intimate 14th February event coverage.'},
-    {id:'50xe73tr9z', title:'Dance School Opening', desc:'Season start for dance school.'}
+    {id:'z2dbxs20br', title:'Pizza Place Ad - Sofia', desc:'Commercial for central Sofia pizza spot.'}
   ],
   dance: [
     {id:'hkol0ndud7', title:'Dance School Promo', desc:'A promo film for a dance school, built around the energy of its classes and the people who fill the studio.', aspect:1.25},
@@ -598,21 +627,24 @@ const videoData = {
     {id:'j3wi77124k', title:'Aquamarine', desc:'Concept dance film inspired by ocean tones.'},
     {id:'mzcj4p3gdr', title:'Skyfall', desc:'Dance piece based on seasonal emotion.'},
     {id:'0ly4vbju1k', title:'Club DJ Promo', desc:'High-energy club dance edit.'},
-    {id:'vol0ixxtl6', title:'Academy 360 Hip Hop Promo', desc:'Promo for hip-hop classes.'},
     {id:'d57nea2mbj', title:'Academy 360 Workshop Promo', desc:'Dance workshop promotion.'},
     {id:'47rnvuwo09', title:'KATSEYE - Gabriela Cover', desc:'K-pop choreography cover performance.'},
-    {id:'02oircll7q', title:'End of Season Film', desc:'Season recap dance video.'},
-    {id:'bqv53tnvv7', title:'Club DJ Promo II', desc:'Second club dance edit.'},
-    {id:'u35yoio9s9', title:'Mirela Ilieva Promo', desc:'Dance event promo featuring Mirela Ilieva.'}
+    {id:'u35yoio9s9', title:'Mirela Ilieva Promo', desc:'Dance event promo featuring Mirela Ilieva.'},
+    {id:'pet8kzo2z8', title:'Christmas Dance Promo', desc:'Promo for seasonal dance event.'},
+    {id:'olkrivi2qt', title:'Studio Season Opening', desc:'New dance season launch video.'},
+    {id:'twngypcm96', title:'Muze Dance Hub Promo', desc:'Promo for Muze dance hub for starting season.', aspect:1.25}
   ],
-  commercial: [
+  visual: [
+    {id:'1ol496gk14', title:'Featured Project', desc:'Visual production work.'},
     {id:'xa6zpnmq6i', title:'Synesthesia', desc:'Music video for "Synesthesia".'},
     {id:'zrbh6tuzg4', title:'Lidl Ad', desc:'Commercial brand video. Motion design work.'},
     {id:'jgr4o94e96', title:'MYX Platform Ad', desc:'Digital platform promo.'},
     {id:'hwvknhk57i', title:'Airbnb Animation', desc:'Animated ad segment. Motion design work.'},
     {id:'sygumeggso', title:'Maturata BG Ad', desc:'Service commercial video.'},
     {id:'hzdk3kt8p6', title:'Knitted Bags Ad', desc:'Handmade product promo.'},
-    {id:'0dcmd2jgtj', title:'MYX Business Ad', desc:'Corporate promo video.'}
+    {id:'0dcmd2jgtj', title:'MYX Business Ad', desc:'Corporate promo video.'},
+    {id:'21pz3thqub', title:'Public Wedding Signing', desc:'Cinematic civil wedding signing moment.'},
+    {id:'9relskahwc', title:'Yoga Studio Promo', desc:'A promo for a new yoga studio.'}
   ]
 };
 
@@ -810,9 +842,11 @@ function buildSlider(cat) {
     card.dataset.title = v.title;
     card.dataset.desc = v.desc || '';
     card.innerHTML =
-      '<img alt="' + v.title + '" loading="lazy">' +
-      '<div class="sc-play">▶</div>' +
-      '<div class="sc-overlay"><div class="sc-title">' + v.title + '</div></div>';
+      '<div class="sc-title">' + v.title + '</div>' +
+      '<div class="sc-thumb">' +
+        '<img alt="' + v.title + '" loading="lazy">' +
+        '<div class="sc-play">▶</div>' +
+      '</div>';
     track.appendChild(card);
   });
 
@@ -847,6 +881,7 @@ document.querySelectorAll('.type-box').forEach(function(box) {
     var isMobile = window.matchMedia('(max-width:820px)').matches;
 
     document.querySelectorAll('.type-box').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.type-item').forEach(function(i) { i.classList.remove('is-active'); });
     if (grid) grid.classList.remove('has-open');
 
     if (alreadyOpen) {
@@ -859,6 +894,8 @@ document.querySelectorAll('.type-box').forEach(function(box) {
     }
 
     box.classList.add('active');
+    var item = box.closest('.type-item');
+    if (item) item.classList.add('is-active');
     activeCat = cat;
     buildSlider(cat);
 
@@ -868,8 +905,8 @@ document.querySelectorAll('.type-box').forEach(function(box) {
       // only actually move the node if it isn't already there, so we
       // don't disturb scroll position on every click
       grid.classList.add('has-open');
-      if (wrap.previousElementSibling !== box) {
-        box.insertAdjacentElement('afterend', wrap);
+      if (item && wrap.previousElementSibling !== item) {
+        item.insertAdjacentElement('afterend', wrap);
       }
     } else if (wrap && grid) {
       // desktop: keep the slider in its original spot, below the full
@@ -884,6 +921,14 @@ document.querySelectorAll('.type-box').forEach(function(box) {
       wrap.style.overflow = 'hidden'; // clip while expanding open
       wrap.classList.add('open');
     }
+  });
+});
+
+// clicking the title/caption under a box works like clicking the box itself
+document.querySelectorAll('.type-info').forEach(function(info) {
+  info.addEventListener('click', function() {
+    var box = info.parentElement.querySelector('.type-box');
+    if (box) box.click();
   });
 });
 
@@ -931,21 +976,43 @@ document.getElementById('sliderCards') && document.getElementById('sliderCards')
 })();
 
 
-/* ─── ABOUT IMAGE: FEATHERED MAGNIFIER FOLLOWING THE CURSOR ──── */
+/* ─── ABOUT COLLAGE: MUTED LOOPING VIDEOS, LOADED WHEN SCROLLED NEAR ──── */
 (function() {
-  var wrap = document.getElementById('aboutImgWrap');
-  if (!wrap) return;
-  var zoom = wrap.querySelector('.about-img-zoom');
-  if (!zoom) return;
+  var tiles = document.querySelectorAll('.ac-tile');
+  if (!tiles.length) return;
 
-  wrap.addEventListener('mousemove', function(e) {
-    var rect = wrap.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    wrap.style.setProperty('--mx', x + 'px');
-    wrap.style.setProperty('--my', y + 'px');
-    zoom.style.transformOrigin = (x / rect.width * 100) + '% ' + (y / rect.height * 100) + '%';
+  // poster image under each video so the tiles are never empty while loading
+  tiles.forEach(function(t) {
+    var img = t.querySelector('img');
+    if (img) loadThumb(t.dataset.wid, img);
   });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function load(t) {
+    if (t.dataset.loaded) return;
+    t.dataset.loaded = '1';
+    var box = t.querySelector('.ac-vid');
+    var f = document.createElement('iframe');
+    f.src = 'https://fast.wistia.net/embed/iframe/' + t.dataset.wid +
+      '?autoPlay=true&muted=true&endVideoBehavior=loop&controlsVisibleOnLoad=false&playbar=false' +
+      '&playButton=false&smallPlayButton=false&volumeControl=false&fullscreenButton=false&settingsControl=false&playsinline=true';
+    f.setAttribute('allow', 'autoplay; fullscreen');
+    f.setAttribute('tabindex', '-1');
+    f.setAttribute('aria-hidden', 'true');
+    f.addEventListener('load', function() { setTimeout(function() { box.classList.add('ready'); }, 500); });
+    box.appendChild(f);
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { load(e.target); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '200px 0px' });
+    tiles.forEach(function(t) { io.observe(t); });
+  } else {
+    tiles.forEach(load);
+  }
 })();
 
 document.addEventListener('DOMContentLoaded', function() {
