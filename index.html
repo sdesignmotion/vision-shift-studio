@@ -128,44 +128,61 @@ section{padding:5rem 2.5rem;}
 .section-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:3rem;display:flex;align-items:center;justify-content:center;gap:1.5rem;}
 .section-label::before,.section-label::after{content:'';flex:1;height:0.5px;background:var(--border);}
 
-/* ─── SERVICES: full-width rows with a giant ghost word behind ──────────── */
-#services{padding-left:0;padding-right:0;}
+/* ─── SERVICES: compact full-width rows with a ghost word behind ───────── */
+#services{padding:clamp(2.5rem,5vw,3.5rem) 0;}
 #services .section-label{padding:0 clamp(1.2rem,4vw,2.5rem);}
-.svc-head{max-width:1100px;margin:0 auto 4rem;padding:0 clamp(1.2rem,4vw,2.5rem);text-align:center;}
-.svc-title{font-size:clamp(26px,3.6vw,44px);font-weight:700;line-height:1.15;letter-spacing:-1px;max-width:640px;margin:0 auto .9rem;}
+.svc-head{max-width:1100px;margin:0 auto 2.5rem;padding:0 clamp(1.2rem,4vw,2.5rem);text-align:center;}
+.svc-title{font-size:clamp(22px,2.8vw,34px);font-weight:700;line-height:1.15;letter-spacing:-1px;max-width:640px;margin:0 auto .8rem;}
 .svc-sub{font-size:13px;color:var(--muted);line-height:1.9;max-width:480px;margin:0 auto;}
 .svc-list{border-bottom:0.5px solid rgba(255,255,255,0.07);}
-.svc-row{position:relative;overflow:hidden;border-top:0.5px solid rgba(255,255,255,0.07);padding:clamp(2.2rem,4.5vw,4rem) 0;}
+.svc-row{position:relative;overflow:hidden;border-top:0.5px solid rgba(255,255,255,0.07);padding:clamp(1.5rem,3vw,2.6rem) 0;}
 .svc-row::before{content:'';position:absolute;inset:0;background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(201,150,58,0.10),transparent 60%);opacity:0;transition:opacity .4s ease;pointer-events:none;}
 .svc-row:hover::before{opacity:1;}
-.svc-bgword{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(100px,18vw,300px);font-weight:800;line-height:.8;letter-spacing:-0.04em;color:rgba(255,255,255,0.03);white-space:nowrap;pointer-events:none;user-select:none;transition:color .5s ease,transform .8s cubic-bezier(0.22,1,0.36,1);}
-.svc-row:hover .svc-bgword{color:rgba(201,150,58,0.07);}
-.svc-row:nth-child(odd):hover .svc-bgword{transform:translate(calc(-50% + 4vw),-50%);}
-.svc-row:nth-child(even):hover .svc-bgword{transform:translate(calc(-50% - 4vw),-50%);}
-.svc-row-inner{position:relative;z-index:1;display:grid;grid-template-columns:clamp(100px,13vw,200px) minmax(0,1fr);align-items:center;gap:clamp(1.5rem,4vw,4.5rem);/* side gap = page margin + the 5vw left/right nudge, so the shifted rows never touch the edge */
-  width:min(860px,calc(100% - 2 * (clamp(1.5rem,6vw,5rem) + 5vw)));margin:0 auto;}
-/* rows alternate: first sits a little right of centre, the next a little left */
-.svc-row:nth-child(odd) .svc-row-inner{position:relative;left:5vw;}
-.svc-row:nth-child(even) .svc-row-inner{position:relative;left:-5vw;}
-.svc-icon{width:clamp(72px,8vw,120px);height:clamp(72px,8vw,120px);color:var(--gold);}
+.svc-bgword{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(70px,11vw,180px);font-weight:800;line-height:.8;letter-spacing:-0.04em;color:rgba(255,255,255,0.03);white-space:nowrap;pointer-events:none;user-select:none;transition:color .5s ease,transform .8s cubic-bezier(0.22,1,0.36,1);}
+/* ghost word drifts a little to the right on hover — same direction on every row */
+.svc-row:hover .svc-bgword{color:rgba(201,150,58,0.07);transform:translate(calc(-50% + 2vw),-50%);}
+.svc-row-inner{position:relative;z-index:1;display:grid;grid-template-columns:clamp(70px,8vw,120px) minmax(0,1fr);align-items:center;gap:clamp(1.2rem,3vw,3rem);
+  /* side gap = page margin + the 5vw left/right nudge, so the shifted rows never touch the edge */
+  width:min(740px,calc(100% - 2 * (clamp(1.5rem,6vw,5rem) + 5vw)));margin:0 auto;}
+/* rows alternate: one sits a little right of centre, the next a little left */
+.svc-row[data-side="r"] .svc-row-inner{left:5vw;}
+.svc-row[data-side="l"] .svc-row-inner{left:-5vw;}
+.svc-icon{width:clamp(44px,4.6vw,64px);height:clamp(44px,4.6vw,64px);color:var(--gold);}
 .svc-icon svg{width:100%;height:100%;display:block;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round;}
 .svc-icon svg *{stroke-dasharray:1;stroke-dashoffset:0;}
 .svc-row:hover .svc-icon svg *{animation:iconDraw 1.1s ease;}
 @keyframes iconDraw{from{stroke-dashoffset:1;}to{stroke-dashoffset:0;}}
-.svc-body h3{font-size:clamp(30px,4.4vw,60px);font-weight:600;letter-spacing:-0.01em;line-height:1.1;text-transform:none;margin-bottom:.8rem;}
-.svc-body p{font-size:clamp(15px,1.4vw,19px);color:rgba(240,240,240,0.62);line-height:1.6;max-width:640px;}
-.svc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(1.4rem,2.2vw,2rem);}
+.svc-body h3{font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-0.01em;line-height:1.1;text-transform:none;margin-bottom:.5rem;}
+.svc-body p{font-size:clamp(13px,1.05vw,15px);color:rgba(240,240,240,0.62);line-height:1.6;max-width:520px;}
+.svc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(1rem,1.6vw,1.4rem);}
 /* pill buttons, same as the original cards */
 .svc-tag{font-family:inherit;font-size:11px;letter-spacing:.5px;padding:5px 13px;border:0.5px solid rgba(255,255,255,0.18);border-radius:50px;background:transparent;color:rgba(240,240,240,0.6);cursor:pointer;transition:border-color .3s ease,color .3s ease,background-color .3s ease;}
 .svc-row:hover .svc-tag{border-color:rgba(201,150,58,0.5);color:rgba(240,240,240,0.85);}
 .svc-row .svc-tag:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,150,58,0.1);}
 .svc-tag:focus-visible{outline:2px solid var(--gold);outline-offset:4px;}
-.svc-cta-row{display:flex;justify-content:center;margin-top:4rem;padding:0 1.2rem;}
+/* "more" toggle — same circle + plus/cross as the menu button */
+.svc-more-row{display:flex;justify-content:center;border-top:0.5px solid rgba(255,255,255,0.07);padding:1.6rem 0;}
+.svc-more-btn{display:inline-flex;align-items:center;gap:1rem;background:none;border:0;padding:0;cursor:pointer;color:var(--gold);font-family:inherit;font-size:10px;letter-spacing:4px;text-transform:uppercase;font-weight:600;}
+.svc-more-icon{position:relative;width:42px;height:42px;border-radius:50%;border:0.5px solid rgba(255,255,255,0.18);transition:border-color .25s ease,background-color .25s ease,transform .45s cubic-bezier(0.34,1.56,0.64,1);}
+.svc-more-icon span{position:absolute;top:50%;left:50%;width:16px;height:1.5px;margin:-0.75px 0 0 -8px;background:#fff;border-radius:2px;}
+.svc-more-icon span:last-child{transform:rotate(90deg);}
+.svc-more-btn:hover .svc-more-icon,.svc-more-btn[aria-expanded="true"] .svc-more-icon{border-color:var(--gold);background:rgba(201,150,58,0.08);}
+.svc-more-btn[aria-expanded="true"] .svc-more-icon{transform:rotate(45deg);}
+.svc-more-btn:focus-visible{outline:2px solid var(--gold);outline-offset:6px;border-radius:50px;}
+/* hidden rows slide open under the button */
+.svc-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s cubic-bezier(0.22,1,0.36,1);}
+.svc-more.open{grid-template-rows:1fr;}
+.svc-more-inner{min-height:0;overflow:hidden;visibility:hidden;transition:visibility 0s linear .6s;}
+.svc-more.open .svc-more-inner{visibility:visible;transition-delay:0s;}
+.svc-more .svc-row{opacity:0;transform:translateY(20px);transition:opacity .4s ease,transform .5s cubic-bezier(0.22,1,0.36,1);}
+.svc-more.open .svc-row{opacity:1;transform:none;transition-delay:.2s;}
+.svc-more.open .svc-row:nth-child(2){transition-delay:.32s;}
+.svc-cta-row{display:flex;justify-content:center;margin-top:3rem;padding:0 1.2rem;}
 @media(max-width:700px){
-  .svc-row-inner,.svc-row:nth-child(odd) .svc-row-inner,.svc-row:nth-child(even) .svc-row-inner{grid-template-columns:1fr;gap:1.2rem;width:auto;margin:0;left:0;padding:0 1.2rem;}
-  .svc-icon{width:64px;height:64px;}
+  .svc-row-inner,.svc-row[data-side] .svc-row-inner{grid-template-columns:1fr;gap:1rem;width:auto;margin:0;left:0;padding:0 1.2rem;}
+  .svc-icon{width:48px;height:48px;}
 }
-@media(prefers-reduced-motion:reduce){.svc-bgword,.svc-row:hover .svc-bgword{transition:none;transform:translate(-50%,-50%);}.svc-row:hover .svc-icon svg *{animation:none;}}
+@media(prefers-reduced-motion:reduce){.svc-bgword,.svc-row:hover .svc-bgword{transition:none;transform:translate(-50%,-50%);}.svc-row:hover .svc-icon svg *{animation:none;}.svc-more,.svc-more .svc-row,.svc-more-icon{transition:none;}}
 
 .portfolio-section{background:var(--bg2);padding:5rem 2.5rem;overflow-anchor:none;}
 
@@ -181,10 +198,10 @@ section{padding:5rem 2.5rem;}
 .type-box.active .type-box-overlay{background:rgba(0,0,0,0);}
 /* title + short caption sit below each box */
 .type-info{padding:1.4rem .4rem 0;text-align:center;cursor:pointer;}
-.type-title{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:.5rem;transition:color .3s ease,letter-spacing .35s ease;}
+.type-title{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:.5rem;transition:color .3s ease,letter-spacing .35s ease,margin-bottom .4s ease;}
 .type-caption{font-size:13px;color:var(--muted);line-height:1.7;max-height:4em;overflow:hidden;transition:opacity .3s ease,max-height .4s ease;}
-.type-item.is-active .type-caption{opacity:0;max-height:0;}
-.type-item.is-active .type-title{margin-bottom:0;}
+.type-grid.has-active .type-caption{opacity:0;max-height:0;}
+.type-grid.has-active .type-title{margin-bottom:0;}
 .type-item:hover .type-title{color:var(--gold);letter-spacing:4px;}
 .type-item.is-active .type-title{color:var(--gold);letter-spacing:4px;}
 .type-box.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 20px 50px rgba(201,150,58,0.25);transform:scale(1.04);z-index:2;}
@@ -457,7 +474,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
     <p class="svc-sub">From the first cut to the final frame. Pick one service or combine them.</p>
   </div>
   <div class="svc-list">
-    <article class="svc-row reveal-up">
+    <article class="svc-row reveal-up" data-side="r">
       <span class="svc-bgword" aria-hidden="true">CAPTURE</span>
       <div class="svc-row-inner">
         <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2" pathLength="1"/><polyline points="16,11 21,8 21,16 16,13" pathLength="1"/></svg></div>
@@ -468,7 +485,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
         </div>
       </div>
     </article>
-    <article class="svc-row reveal-up">
+    <article class="svc-row reveal-up" data-side="l">
       <span class="svc-bgword" aria-hidden="true">CRAFT</span>
       <div class="svc-row-inner">
         <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" pathLength="1"/><polygon points="10,9 16,12 10,15" pathLength="1"/></svg></div>
@@ -479,7 +496,7 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
         </div>
       </div>
     </article>
-    <article class="svc-row reveal-up">
+    <article class="svc-row reveal-up" data-side="r">
       <span class="svc-bgword" aria-hidden="true">ANIMATE</span>
       <div class="svc-row-inner">
         <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="12,3 21,8 12,13 3,8" pathLength="1"/><polyline points="3,12 12,17 21,12" pathLength="1"/><polyline points="3,16 12,21 21,16" pathLength="1"/></svg></div>
@@ -490,7 +507,8 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
         </div>
       </div>
     </article>
-    <article class="svc-row reveal-up">
+    <div class="svc-more" id="svcMore"><div class="svc-more-inner">
+    <article class="svc-row" data-side="l">
       <span class="svc-bgword" aria-hidden="true">CREATE</span>
       <div class="svc-row-inner">
         <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="5" pathLength="1"/><rect x="11" y="11" width="9" height="9" rx="1.5" pathLength="1"/></svg></div>
@@ -501,8 +519,26 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
         </div>
       </div>
     </article>
+    <article class="svc-row" data-side="r">
+      <span class="svc-bgword" aria-hidden="true">CAST</span>
+      <div class="svc-row-inner">
+        <div class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2" pathLength="1"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" pathLength="1"/><circle cx="17" cy="9" r="2.4" pathLength="1"/><path d="M16.5 14.2c2.6.2 4.5 2.4 4.5 5" pathLength="1"/></svg></div>
+        <div class="svc-body">
+          <h3>Casting &amp; Production Support</h3>
+          <p>Talent casting, location scouting and on-set support that keep your shoot running smoothly.</p>
+          <div class="svc-tags"><button type="button" class="svc-tag" data-type="Casting">Casting</button><button type="button" class="svc-tag" data-type="Location scouting">Location scouting</button><button type="button" class="svc-tag" data-type="On-set support">On-set support</button></div>
+        </div>
+      </div>
+    </article>
+    </div></div>
+    <div class="svc-more-row">
+      <button class="svc-more-btn" id="svcMoreBtn" type="button" aria-expanded="false" aria-controls="svcMore">
+        <span class="svc-more-icon" aria-hidden="true"><span></span><span></span></span>
+        <span class="svc-more-label">More</span>
+      </button>
+    </div>
   </div>
-  <div class="svc-cta-row reveal-up">
+<div class="svc-cta-row reveal-up">
     <a class="hero-cta mag-btn" href="#contact">Get a Quote</a>
   </div>
 </section>
@@ -630,6 +666,9 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
         </optgroup>
         <optgroup label="Graphic Design">
           <option>Thumbnails</option><option>Posters</option><option>Visual identity</option>
+        </optgroup>
+        <optgroup label="Casting &amp; Production Support">
+          <option>Casting</option><option>Location scouting</option><option>On-set support</option>
         </optgroup>
         <option>Other</option>
       </select>
@@ -950,7 +989,7 @@ document.querySelectorAll('.type-box').forEach(function(box) {
 
     document.querySelectorAll('.type-box').forEach(function(b) { b.classList.remove('active'); });
     document.querySelectorAll('.type-item').forEach(function(i) { i.classList.remove('is-active'); });
-    if (grid) grid.classList.remove('has-open');
+    if (grid) grid.classList.remove('has-open', 'has-active');
 
     if (alreadyOpen) {
       activeCat = null;
@@ -962,6 +1001,7 @@ document.querySelectorAll('.type-box').forEach(function(box) {
     }
 
     box.classList.add('active');
+    if (grid) grid.classList.add('has-active');
     var item = box.closest('.type-item');
     if (item) item.classList.add('is-active');
     activeCat = cat;
@@ -1451,6 +1491,20 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       if (form) form.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
+  });
+})();
+
+/* ─── SERVICES: MORE / LESS TOGGLE ─── */
+(function() {
+  var btn = document.getElementById('svcMoreBtn');
+  var more = document.getElementById('svcMore');
+  if (!btn || !more) return;
+  var label = btn.querySelector('.svc-more-label');
+  btn.addEventListener('click', function() {
+    var open = !more.classList.contains('open');
+    more.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (label) label.textContent = open ? 'Less' : 'More';
   });
 })();
 </script>
