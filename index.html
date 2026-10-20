@@ -139,8 +139,11 @@ section{padding:5rem 2.5rem;}
 .svc-row::before{content:'';position:absolute;inset:0;background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(201,150,58,0.10),transparent 60%);opacity:0;transition:opacity .4s ease;pointer-events:none;}
 .svc-row:hover::before{opacity:1;}
 .svc-bgword{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(100px,18vw,300px);font-weight:800;line-height:.8;letter-spacing:-0.04em;color:rgba(255,255,255,0.03);white-space:nowrap;pointer-events:none;user-select:none;transition:color .5s ease,transform .8s cubic-bezier(0.22,1,0.36,1);}
-.svc-row:hover .svc-bgword{color:rgba(201,150,58,0.07);transform:translate(-50%,-50%) scale(1.03);}
-.svc-row-inner{position:relative;z-index:1;display:grid;grid-template-columns:clamp(100px,13vw,200px) minmax(0,1fr);align-items:center;gap:clamp(1.5rem,4vw,4.5rem);width:min(860px,calc(100% - 2 * clamp(1.2rem,5vw,4rem)));margin:0 auto;}
+.svc-row:hover .svc-bgword{color:rgba(201,150,58,0.07);}
+.svc-row:nth-child(odd):hover .svc-bgword{transform:translate(calc(-50% + 4vw),-50%);}
+.svc-row:nth-child(even):hover .svc-bgword{transform:translate(calc(-50% - 4vw),-50%);}
+.svc-row-inner{position:relative;z-index:1;display:grid;grid-template-columns:clamp(100px,13vw,200px) minmax(0,1fr);align-items:center;gap:clamp(1.5rem,4vw,4.5rem);/* side gap = page margin + the 5vw left/right nudge, so the shifted rows never touch the edge */
+  width:min(860px,calc(100% - 2 * (clamp(1.5rem,6vw,5rem) + 5vw)));margin:0 auto;}
 /* rows alternate: first sits a little right of centre, the next a little left */
 .svc-row:nth-child(odd) .svc-row-inner{position:relative;left:5vw;}
 .svc-row:nth-child(even) .svc-row-inner{position:relative;left:-5vw;}
@@ -179,7 +182,9 @@ section{padding:5rem 2.5rem;}
 /* title + short caption sit below each box */
 .type-info{padding:1.4rem .4rem 0;text-align:center;cursor:pointer;}
 .type-title{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:.5rem;transition:color .3s ease,letter-spacing .35s ease;}
-.type-caption{font-size:13px;color:var(--muted);line-height:1.7;}
+.type-caption{font-size:13px;color:var(--muted);line-height:1.7;max-height:4em;overflow:hidden;transition:opacity .3s ease,max-height .4s ease;}
+.type-item.is-active .type-caption{opacity:0;max-height:0;}
+.type-item.is-active .type-title{margin-bottom:0;}
 .type-item:hover .type-title{color:var(--gold);letter-spacing:4px;}
 .type-item.is-active .type-title{color:var(--gold);letter-spacing:4px;}
 .type-box.active{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 20px 50px rgba(201,150,58,0.25);transform:scale(1.04);z-index:2;}
@@ -369,6 +374,21 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   .portfolio-section{padding:3rem 1.2rem;}
   .hero-headline{letter-spacing:-1px;}
 }
+
+/* ─── PHONE: ALL TEXT CENTRED ──────────────────────────────────────────── */
+@media(max-width:760px){
+  .svc-body{text-align:center;}
+  .svc-icon{margin:0 auto;}
+  .svc-body p{margin-left:auto;margin-right:auto;}
+  .svc-tags{justify-content:center;}
+  .about-content{text-align:center;}
+  .stat{text-align:center;}
+  footer{justify-content:center;text-align:center;}
+}
+@media(max-width:860px){
+  .contact-intro{text-align:center;}
+  .contact-intro p{margin-left:auto;margin-right:auto;}
+}
 </style>
 </head>
 <body>
@@ -492,6 +512,16 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
   <div class="section-label reveal-left">Selected work</div>
   <div class="type-grid reveal-up" id="typeGrid">
     <div class="type-item">
+      <div class="type-box" data-cat="visual">
+        <img alt="Visual Production" loading="lazy">
+        <div class="type-box-overlay"></div>
+      </div>
+      <div class="type-info">
+        <h3 class="type-title">Visual Production</h3>
+        <p class="type-caption">Ads, music videos and promo films.</p>
+      </div>
+    </div>
+    <div class="type-item">
       <div class="type-box" data-cat="events">
         <img alt="Events" loading="lazy">
         <div class="type-box-overlay"></div>
@@ -509,16 +539,6 @@ footer span{font-size:11px;color:var(--muted);letter-spacing:1px;}
       <div class="type-info">
         <h3 class="type-title">Dance</h3>
         <p class="type-caption">Promos, concepts and choreography films.</p>
-      </div>
-    </div>
-    <div class="type-item">
-      <div class="type-box" data-cat="visual">
-        <img alt="Visual Production" loading="lazy">
-        <div class="type-box-overlay"></div>
-      </div>
-      <div class="type-info">
-        <h3 class="type-title">Visual Production</h3>
-        <p class="type-caption">Ads, music videos and promo films.</p>
       </div>
     </div>
   </div>
